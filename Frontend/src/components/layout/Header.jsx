@@ -6,20 +6,20 @@ import logout from "../../assets/icons/user_add.svg";
 export default function Header() {
   return (
     <header className="header">
-      <h2>Directorio Digital</h2>
+      <h2 className="header_title">Directorio Digital</h2>
       <nav className="navbar">
         <ul className="nav">
           <li>
-            <NavLink to="/">Inicio</NavLink>
+            <NavLink to="/Home">Inicio</NavLink>
           </li>
           <li>
-            <NavLink to="/">Vacantes</NavLink>
+            <NavLink to="/Vacantes">Vacantes</NavLink>
           </li>
           <li>
-            <NavLink to="/">Directorio</NavLink>
+            <NavLink to="/Directorio">Directorio</NavLink>
           </li>
           <li>
-            <NavLink to="/">ParaEmpresas</NavLink>
+            <NavLink to="/Empresas">ParaEmpresas</NavLink>
           </li>
         </ul>
       </nav>
