@@ -1,0 +1,116 @@
+.empresasTitle-container {
+  display: flex;
+  width: 100dvw;
+  height: 165px;
+  align-items: center;
+  color: black;
+}
+.empresasTitle {
+  color: black;
+}
+.empresasSubtitle {
+  display: flex;
+  color: gray;
+  max-width: 1000px;
+  text-align: center;
+  margin: 0;
+}
+.title_plans {
+  text-align: center;
+  color: black;
+  margin-top: 40px;
+  font-size: 24px;
+}
+.empresasPlans-container {
+  display: flex;
+  align-items: center;
+  width: 90vw;
+  gap: 20px;
+  margin: 0 auto 40px;
+  flex-direction: row;
+  justify-content: center;
+}
+.plan-card {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  border: 1px solid lightgray;
+  border-radius: 10px;
+  padding: 20px;
+  width: 300px;
+  height: 500px;
+  color: black;
+  position: relative;
+  overflow: hidden;
+}
+.plan-card-popular {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  border: 3px solid #10b981;
+  border-radius: 10px;
+  padding: 20px;
+  width: 300px;
+  height: 500px;
+  color: black;
+  position: relative;
+  overflow: hidden;
+}
+.popular-badge {
+  position: absolute;
+  top: 30px;
+  right: -40px;
+  background: #10b981;
+  color: white;
+  padding: 5px 40px;
+  transform: rotate(45deg);
+  font-size: 0.85em;
+  font-weight: bold;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+  z-index: 10;
+}
+.plan-title {
+  font-size: 20px;
+  font-weight: bold;
+  margin-bottom: 10px;
+}
+.plan-price {
+  font-size: 35px;
+  font-weight: bold;
+  margin: 10px 0;
+}
+.planmas {
+  margin: 0;
+  display: flex;
+  justify-content: flex-start;
+}
+.plan-features {
+  margin: 10px 0;
+  color: black;
+  list-style: none;
+  padding-left: 0;
+}
+.plan-features .feature {
+  position: relative;
+  padding-left: 28px;
+  margin-bottom: 6px;
+}
+.plan-features .feature::before {
+  content: "✓";
+  color: #16a249;
+  position: absolute;
+  left: 0;
+  top: 50%;
+  transform: translateY(-50%);
+  font-weight: 700;
+}
+.plan-button {
+  background-color: #16a249;
+  color: white;
+  border: none;
+  border-radius: 5px;
+  padding: 10px 20px;
+  cursor: pointer;
+  margin-top: auto;
+  width: 90%;
+}

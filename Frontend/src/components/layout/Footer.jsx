@@ -17,7 +17,7 @@ export default function Footer() {
 
         <div>
           <h2>Enlaces Rapidos</h2>
-          <ul>
+          <ul className="container_datosFooter">
             <li>Inicio</li>
             <li>Vacantes</li>
             <li>Directorio</li>

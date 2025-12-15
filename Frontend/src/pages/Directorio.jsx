@@ -19,6 +19,10 @@ export default function Directorio() {
           <Companies_list />
           <Companies_list />
           <Companies_list />
+          <Companies_list />
+          <Companies_list />
+          <Companies_list />
+          <Companies_list />
         </main>
         <aside className="directory_ads">
           <Aside_adds />

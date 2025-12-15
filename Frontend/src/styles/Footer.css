@@ -24,8 +24,6 @@
 }
 .footer_container p,
 h2,
-li,
-ul,
 div {
   color: white;
   list-style: none;
@@ -35,6 +33,12 @@ div {
 .footer_presentacion p {
   width: 500px;
   color: white;
+}
+.container_datosFooter {
+  color: white;
+  list-style: none;
+  display: flex;
+  flex-direction: column;
 }
 .container_piePagina {
   display: flex;
