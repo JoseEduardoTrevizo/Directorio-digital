@@ -82,10 +82,14 @@ export default function Filter_directory() {
           onChange={(e) => setSelectedCategory(e.target.value)}
         >
           <option>Todas las categorías</option>
-          <option>Agrícola</option>
-          <option>Manufacturera</option>
-          <option>Alimenticia</option>
-          <option>Remolques</option>
+          <option>Agrícola y Ganadero</option>
+          <option>Tallers y Refagciones</option>
+          <option>Comida y Hospedaje</option>
+          <option>Maquinaria Industrial</option>
+          <option>Fabricas</option>
+          <option>Autos y Transportes</option>
+          <option>Materiales para Construccion</option>
+          <option>Servicios y Articulos Diversos</option>
         </select>
       </div>
 

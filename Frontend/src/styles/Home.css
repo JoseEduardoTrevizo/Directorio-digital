@@ -48,8 +48,13 @@
   height: 40px;
   border-top-left-radius: 10px;
   border-bottom-left-radius: 10px;
-  border: none;
+  border: 1px solid #e5e7eb;
   margin-top: 25px;
+}
+.hero-section_search:focus {
+  border-color: #10b981;
+  background: #ffffff;
+  outline: none;
 }
 .hero-button_search {
   height: 42px;

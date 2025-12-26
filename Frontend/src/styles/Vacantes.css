@@ -1,0 +1,109 @@
+.containerSearch {
+  position: relative;
+  background: #ffffff;
+  border-radius: 12px;
+  padding: 20px 24px;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.3);
+  display: flex;
+  gap: 16px;
+  align-items: center;
+  max-width: 1400px;
+  margin: 0 auto 25px;
+  flex-direction: row;
+}
+.inputSearch {
+  flex: 1;
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 12px 16px;
+  background: #f8f9fa;
+  border: 1px solid #e5e7eb;
+  border-radius: 8px;
+  transition: all 0.2s ease;
+  width: 200px;
+}
+.inputSearch:focus {
+  border-color: #10b981;
+  background: #ffffff;
+  box-shadow: 0 0 0 3px rgba(16, 185, 129, 0.1);
+  outline: none;
+}
+.inputSearch::placeholder {
+  color: #9ca3af;
+}
+/* Selectores de filtro */
+.filterSelect {
+  flex: 0 0 280px;
+  padding: 12px 16px;
+  background: #f8f9fa;
+  border: 1px solid #e5e7eb;
+  border-radius: 8px;
+  font-size: 15px;
+  color: #111827;
+  cursor: pointer;
+  appearance: none;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='20' height='20' viewBox='0 0 20 20' fill='none'%3E%3Cpath d='M5 7.5L10 12.5L15 7.5' stroke='%239ca3af' stroke-width='1.5' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E");
+  background-repeat: no-repeat;
+  background-position: right 12px center;
+  padding-right: 40px;
+  transition: all 0.2s ease;
+}
+
+.filterSelect:hover {
+  border-color: #d1d5db;
+  background-color: #ffffff;
+}
+
+.filterSelect:focus {
+  border-color: #10b981;
+  background-color: #ffffff;
+  outline: none;
+  box-shadow: 0 0 0 3px rgba(16, 185, 129, 0.1);
+}
+/* Botón de filtrar */
+.filter-button {
+  flex: 0 0 auto;
+  padding: 12px 32px;
+  background: #16a249;
+  color: #ffffff;
+  border: none;
+  border-radius: 8px;
+  font-size: 15px;
+  font-weight: 400;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  white-space: nowrap;
+  width: 150px;
+}
+
+.filter-button:hover {
+  background: #059669;
+}
+
+.filter-button:active {
+  transform: translateY(0);
+}
+
+.filter-icon {
+  width: 18px;
+  height: 18px;
+}
+.imgFilter {
+  margin-right: 10px;
+}
+.containerBanerVacante {
+  margin: auto;
+  width: 90%;
+  height: 200px;
+  overflow: hidden;
+  border-radius: 8px;
+}
+.imgbannerVacante {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: center;
+}
