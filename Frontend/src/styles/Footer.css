@@ -10,7 +10,7 @@
   flex-direction: row;
   margin: auto;
   margin-top: 25px;
-  width: 95dvw;
+  width: 100%;
   justify-content: space-around;
   border-bottom: solid 1px;
   border-bottom-color: white;
@@ -46,7 +46,7 @@ div {
   justify-content: space-between;
   margin: auto;
   font-size: 12px;
-  width: 95dvw;
+  width: 95%;
 }
 .container_piePagina p,
 div {

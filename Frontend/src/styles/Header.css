@@ -1,7 +1,7 @@
 .header {
   display: flex;
   height: 80px;
-  width: 100dvw;
+  width: 100%;
   flex-direction: row;
   justify-content: space-around;
   align-items: center;
@@ -74,6 +74,7 @@
   justify-content: center;
   color: white;
   border: none;
+  text-decoration: none;
   height: 40px;
   width: 170px;
   padding: 10px 20px;

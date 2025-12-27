@@ -30,10 +30,10 @@ export default function Header() {
           Iniciar Sesion
         </button>
 
-        <button className="btn btn-register">
+        <NavLink to="/Registro" className="btn btn-register">
           <img src={logout} alt="Logout" className="logout" />
           Registrate
-        </button>
+        </NavLink>
       </div>
     </header>
   );

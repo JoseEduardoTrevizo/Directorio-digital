@@ -7,7 +7,7 @@
   display: flex;
   gap: 16px;
   align-items: center;
-  max-width: 1400px;
+  width: 90dvw;
   margin: 0 auto 25px;
   flex-direction: row;
 }
