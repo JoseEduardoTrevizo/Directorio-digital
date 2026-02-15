@@ -1,0 +1,101 @@
+.profile-page_Container {
+  display: flex;
+}
+.profile-header {
+  max-height: 250px;
+  position: relative;
+}
+.profile-portada {
+  width: 100%;
+  height: 300px;
+  object-fit: cover;
+}
+.profile-picture {
+  width: 150px;
+  height: 150px;
+  border-radius: 50%;
+  object-fit: cover;
+  border: 2px solid #16a249;
+}
+.profile-content {
+  position: absolute;
+  display: flex;
+  flex-direction: row;
+  top: 230px;
+  left: 180px;
+  max-width: 700px;
+  width: 100%;
+  margin: auto;
+}
+.profile-content-Header {
+  display: flex;
+  justify-content: flex-start;
+  flex-direction: column;
+  max-width: 500px;
+  width: 100%;
+  top: 250px;
+  margin-left: 20px;
+}
+.profile-name {
+  font-size: 24px;
+  font-weight: bold;
+  margin-top: 65px;
+  margin-bottom: 0;
+  color: black;
+}
+.profile-bio {
+  font-size: 16px;
+  color: #555;
+  margin-top: 5px;
+}
+.btn-edit-profile {
+  background-color: #16a249;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-top: 80px;
+  margin-left: auto;
+  color: white;
+  border: none;
+  text-decoration: none;
+  height: 30px;
+  width: 130px;
+  padding: 10px 5px;
+  border-radius: 5px;
+  font-size: 14px;
+  cursor: pointer;
+  transition: background-color 300ms;
+}
+.btn-edit-profile:hover {
+  background-color: #059669;
+}
+.iconEdit {
+  height: 16px;
+  width: 16px;
+  margin-right: 8px;
+}
+
+/* Estilos para la sección de contenido del perfil */
+.content_Container {
+  display: flex;
+  max-width: 1200px;
+  width: 100%;
+  margin: 190px auto 0;
+  gap: 40px;
+}
+.nav-Profile {
+  border-bottom: 1px solid #ddd;
+  display: flex;
+  color: black;
+}
+.nav-Profile-list {
+  list-style: none;
+  display: flex;
+  flex-direction: row;
+  gap: 30px;
+  padding: 0;
+  margin: 0;
+}
+.nav_Content_Profile {
+  color: black;
+}

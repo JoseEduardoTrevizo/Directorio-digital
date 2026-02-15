@@ -1,0 +1,153 @@
+.card-Vacante {
+  display: flex;
+  flex-direction: column;
+  width: 435px;
+  height: 300px;
+  padding: 15px;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.04);
+  border: 1px solid #e5e7eb;
+  border-radius: 12px;
+  background: #f3f4f7;
+  transition: all 0.2s;
+  cursor: pointer;
+}
+.card-Vacante:hover {
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
+  cursor: pointer;
+}
+.header_Card-vacante {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+}
+.iconBusiness {
+  width: 30px;
+  height: 30px;
+  margin-right: 10px;
+}
+.subHeader_Card-vacante {
+  color: black;
+  margin-top: 10px;
+}
+.datos_vacante {
+  display: flex;
+  margin: 0;
+  margin-bottom: 4px;
+}
+.icon_Subheader {
+  width: 20px;
+  height: 20px;
+  margin-right: 10px;
+  filter: invert(53%) sepia(0%) saturate(0%) hue-rotate(73deg) brightness(95%)
+    contrast(87%);
+}
+.body_Card-vacante {
+  color: black;
+}
+.body_Descripcion {
+  display: flex;
+  max-height: 100px;
+  height: 100%;
+  overflow-y: auto;
+}
+
+/* === POPUP DE LAS VACANTES === */
+
+.popup-Vacante {
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  background: white;
+  border-radius: 12px;
+  padding: 32px;
+  max-width: 700px;
+  max-height: 90vh;
+  width: 90%;
+  overflow-y: hidden;
+  z-index: 1000;
+  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.2);
+}
+.popup_Card-vacante {
+  color: black;
+  margin-top: 10px;
+  margin-bottom: 15px;
+  display: flex;
+  flex-direction: row;
+  justify-content: space-around;
+}
+.company-info {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+}
+.title_Popup-vacante {
+  color: black;
+  margin: 0;
+}
+.popup_Overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: rgba(0, 0, 0, 0.6);
+  z-index: 999;
+  backdrop-filter: blur(2px);
+}
+.btn_Aplicar {
+  background-color: #16a249;
+  display: flex;
+  margin: 0 auto 0;
+  align-items: center;
+  justify-content: center;
+  color: white;
+  border: none;
+  text-decoration: none;
+  height: 40px;
+  width: 300px;
+  padding: 10px 20px;
+  border-radius: 5px;
+  font-size: 16px;
+  cursor: pointer;
+  transition: background-color 300ms;
+}
+.container_Habilidades {
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+  gap: 8px;
+  list-style: none;
+  padding: 0; /* IMPORTANTE: elimina el padding del ul */
+  margin: 12px 0 25px 0; /* IMPORTANTE: elimina márgenes laterales */
+  background-color: transparent;
+}
+.habilidad {
+  background: #e5e7eb;
+  color: #1a1a1a;
+  padding: 6px 16px;
+  border-radius: 20px;
+  font-size: 14px;
+  font-weight: 500;
+}
+/* Responsive: 2 columnas en tablets */
+@media (max-width: 1024px) {
+  .container_Card-vacante {
+    grid-template-columns: repeat(2, 1fr);
+    gap: 20px;
+    padding: 25px 25px 25px;
+  }
+  .card-Vacante {
+    width: 375px;
+    height: 300px;
+  }
+}
+
+/* Responsive: 1 columna en móviles */
+@media (max-width: 768px) {
+  .container_Card-vacante {
+    grid-template-columns: 1fr;
+    gap: 16px;
+    padding: 25px 10px 25px;
+  }
+}

@@ -1,0 +1,83 @@
+.hero-section {
+  display: flex;
+  flex-direction: column;
+  position: relative;
+  background-image: url("../assets/images/cuauhtemoc.jpg");
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+  min-height: 88vh;
+  mask-image: linear-gradient(to bottom, black 80%, transparent 100%);
+  -webkit-mask-image: linear-gradient(to bottom, black 75%, transparent 100%);
+}
+
+.hero-section_container {
+  position: absolute;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  top: 18%;
+  right: 20%;
+}
+.title_hero-section {
+  font-size: 78px;
+  width: 800px;
+  color: white;
+  margin: 0;
+  line-height: 75px;
+}
+.title_hero-section strong {
+  color: #fb923c;
+}
+.hero-section_eslogan {
+  font-size: 21px;
+  color: white;
+  width: 800px;
+  justify-content: center;
+  margin: 0;
+  margin-top: 20px;
+}
+.container_search {
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  align-items: center;
+}
+.hero-section_search {
+  width: 550px;
+  height: 40px;
+  border-top-left-radius: 10px;
+  border-bottom-left-radius: 10px;
+  border: 1px solid #e5e7eb;
+  margin-top: 55px;
+}
+.hero-section_search:focus {
+  border-color: #10b981;
+  background: #ffffff;
+  outline: none;
+}
+.hero-button_search {
+  height: 42px;
+  width: 130px;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  border-top-right-radius: 10px;
+  border-bottom-right-radius: 10px;
+  border: none;
+  margin-top: 55px;
+  background-color: #16a249;
+  color: white;
+}
+.hero-button_search:hover {
+  background-color: #059669;
+  cursor: pointer;
+}
+.hero-button_search img {
+  margin-left: 15px;
+  margin-right: 10px;
+}
+.category-buttons {
+  display: flex;
+  flex-direction: row;
+}
