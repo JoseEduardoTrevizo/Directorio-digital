@@ -1,3 +1,6 @@
+.content_Login {
+  padding-top: 60px;
+}
 .login_Title {
   font-size: 2em;
   color: #333;
@@ -6,7 +9,7 @@
   margin-bottom: 0;
 }
 .container_Login {
-  color: black;
+  color: #042442;
   display: flex;
   width: 25%;
   align-items: center;
@@ -34,12 +37,12 @@
   width: 100%;
 }
 .btn-register-login {
-  background-color: #16a249;
+  background-color: #042442;
   display: flex;
   margin: 0 auto 0;
   align-items: center;
   justify-content: center;
-  color: white;
+  color: #c6a75e;
   border: none;
   text-decoration: none;
   height: 40px;
@@ -50,6 +53,10 @@
   font-size: 16px;
   cursor: pointer;
   transition: background-color 300ms;
+}
+.btn-register-login:hover {
+  background-color: #0a3d6b;
+  border: solid 1px #c6a75e;
 }
 .container_Check {
   display: flex;

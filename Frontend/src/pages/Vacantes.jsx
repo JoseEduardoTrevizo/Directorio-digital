@@ -17,8 +17,10 @@ export default function Vacantes() {
   return (
     <>
       <div className="containerVacantes">
-        <div className="empresasTitle-container">
-          <h1 className="empresasTitle">Vacantes Disponibles</h1>
+        <div className="vacantes-container">
+          <h1 className="empresasTitle">
+            Vacantes <span>Disponibles</span>
+          </h1>
           <h2 className="empresasSubtitle">
             Encuentra la oportunidad perfecta entre cientos de vacantes de
             empresas lideres

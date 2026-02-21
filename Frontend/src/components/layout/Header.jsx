@@ -1,12 +1,28 @@
-import React from "react";
-import { NavLink } from "react-router-dom";
+import React, { useState, useEffect } from "react";
+import { NavLink, useLocation } from "react-router-dom";
 import login from "../../assets/icons/login.svg";
 import logout from "../../assets/icons/user_add.svg";
 
 export default function Header() {
+  const [scrolled, setScrolled] = useState(false);
+  const location = useLocation();
+
+  const isHome = location.pathname === "/Home" || location.pathname === "/";
+
+  useEffect(() => {
+    const handleScroll = () => {
+      setScrolled(window.scrollY > 10);
+    };
+    window.addEventListener("scroll", handleScroll);
+    return () => window.removeEventListener("scroll", handleScroll);
+  }, []);
+
+  const headerClass = !isHome
+    ? "header header--scrolled"
+    : `header ${scrolled ? "header--scrolled" : "header--transparent"}`;
   return (
-    <header className="header">
-      <h2 className="header_title">Directorio Digital</h2>
+    <header className={headerClass}>
+      <h2 className="header_title">Nexum</h2>
       <nav className="navbar">
         <ul className="nav">
           <li>
@@ -20,6 +36,9 @@ export default function Header() {
           </li>
           <li>
             <NavLink to="/Empresas">ParaEmpresas</NavLink>
+          </li>
+          <li>
+            <NavLink to="/Empresas">Nosotros</NavLink>
           </li>
         </ul>
       </nav>

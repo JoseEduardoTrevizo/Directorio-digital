@@ -1,5 +1,6 @@
 .profile-page_Container {
   display: flex;
+  padding-top: 60px;
 }
 .profile-header {
   max-height: 250px;
@@ -49,7 +50,7 @@
   margin-top: 5px;
 }
 .btn-edit-profile {
-  background-color: #16a249;
+  background-color: #042442;
   display: flex;
   align-items: center;
   justify-content: center;

@@ -6,7 +6,7 @@ import lock from "../assets/icons/lock.svg";
 export default function Login() {
   return (
     <>
-      <main>
+      <main className="content_Login">
         <h1 className="login_Title">Iniciar Sesion en Directorio Digital</h1>
 
         <div className="container_Login">

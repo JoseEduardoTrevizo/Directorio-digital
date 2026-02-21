@@ -22,6 +22,7 @@ export default function Footer() {
             <li>Vacantes</li>
             <li>Directorio</li>
             <li>Para Empresas</li>
+            <li>Sobre Nosotros</li>
           </ul>
         </div>
 

@@ -1,5 +1,5 @@
 .registroTitle {
-  color: black;
+  color: #042442;
   margin: 25px auto 25px;
 }
 .registroSubtitle {
@@ -11,7 +11,7 @@
   margin-bottom: 15px;
 }
 .formulario {
-  color: black;
+  color: #042442;
   display: flex;
   width: 40%;
   align-items: center;
@@ -52,9 +52,9 @@
   transition: all 0.2s;
 }
 .input_Registro:focus {
-  border-color: #10b981;
+  border-color: rgb(198, 167, 94);
   background: #ffffff;
-  box-shadow: 0 0 0 3px rgba(16, 185, 129, 0.1);
+  box-shadow: 0 0 0 3px rgba(198, 167, 94, 0.1);
   outline: none;
 }
 .plan-select {
@@ -72,9 +72,9 @@
   margin-left: 15px;
 }
 .plan-select:focus {
-  border-color: #10b981;
+  border-color: #c6a75e;
   background: #ffffff;
-  box-shadow: 0 0 0 3px rgba(16, 185, 129, 0.1);
+  box-shadow: 0 0 0 3px rgba(198, 167, 94, 0.1);
   outline: none;
 }
 .search-input {
@@ -101,12 +101,12 @@
   margin-bottom: 15px;
 }
 .btn-register-paid {
-  background-color: #16a249;
+  background-color: #042442;
   display: flex;
   margin: 25px auto 25px;
   align-items: center;
   justify-content: center;
-  color: white;
+  color: #c6a75e;
   border: none;
   text-decoration: none;
   height: 40px;
@@ -115,8 +115,14 @@
   border-radius: 5px;
   font-size: 16px;
   cursor: pointer;
-  transition: background-color 300ms;
+  transition:
+    background-color 200ms,
+    transform 100ms,
+    box-shadow 200ms;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
 }
 .btn-register-paid:hover {
-  background-color: #059669;
+  background-color: #0a3d6b;
+  box-shadow: 0 6px 14px rgba(0, 0, 0, 0.35);
+  transform: translateY(-2px);
 }

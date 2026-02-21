@@ -1,13 +1,17 @@
 .empresasTitle-container {
   display: flex;
   width: 100%;
-  height: 165px;
+  height: 100%;
   align-items: center;
   color: black;
   overflow-x: hidden;
 }
 .empresasTitle {
-  color: black;
+  color: #042442;
+  font-size: 2.5rem;
+}
+.empresasTitle span {
+  color: #c6a75e;
 }
 .empresasSubtitle {
   display: flex;
@@ -39,7 +43,7 @@
   border-radius: 10px;
   padding: 20px;
   width: 300px;
-  height: 600px;
+  height: 550px;
   color: black;
   position: relative;
   overflow: hidden;
@@ -48,11 +52,11 @@
   display: flex;
   flex-direction: column;
   align-items: center;
-  border: 3px solid #10b981;
+  border: 3px solid #c6a75e;
   border-radius: 10px;
-  padding: 20px;
+  padding: 19px;
   width: 300px;
-  height: 600px;
+  height: 550px;
   color: black;
   position: relative;
   overflow: hidden;
@@ -61,7 +65,7 @@
   position: absolute;
   top: 30px;
   right: -40px;
-  background: #10b981;
+  background: #c6a75e;
   color: white;
   padding: 5px 40px;
   transform: rotate(45deg);
@@ -106,9 +110,9 @@
   font-weight: 700;
 }
 .plan-button {
-  background-color: #16a249;
-  color: white;
-  border: none;
+  background-color: #042442;
+  color: #c6a75e;
+  border: solid 0.5px #c6a75e;
   border-radius: 5px;
   padding: 10px 20px;
   cursor: pointer;
