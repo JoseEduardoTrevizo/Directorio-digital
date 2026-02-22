@@ -1,11 +1,61 @@
-import React from "react";
-import { NavLink } from "react-router-dom";
+import React, { useState } from "react";
+import { useNavigate } from "react-router-dom";
+import { registrarEmpresa } from "../services/registroServices.js";
 import name from "../assets/icons/account.svg";
 import lock from "../assets/icons/lock.svg";
 import company from "../assets/icons/apartment.svg";
 import emailCorp from "../assets/icons/email.svg";
 
 export default function Registro() {
+  const navigate = useNavigate();
+
+  const [formData, setFormData] = useState({
+    nombre: "",
+    email: "",
+    industria: "",
+    contraseña: "",
+    confirmarContraseña: "",
+    planId: "1", // ID del plan en tu BD
+  });
+
+  const [error, setError] = useState("");
+  const [cargando, setCargando] = useState(false);
+
+  const handleChange = (e) => {
+    setFormData({ ...formData, [e.target.name]: e.target.value });
+  };
+
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+    setError("");
+
+    // Validación de contraseñas en el frontend
+    if (formData.contraseña !== formData.confirmarContraseña) {
+      return setError("Las contraseñas no coinciden");
+    }
+    if (formData.contraseña.length < 8) {
+      return setError("La contraseña debe tener al menos 8 caracteres");
+    }
+
+    try {
+      setCargando(true);
+      await registrarEmpresa(formData);
+      // navigate("/pago"); // Redirige al pago tras registro exitoso
+    } catch (err) {
+      console.log("Tipo de error:", err.type);
+      console.log("Mensaje:", err.message);
+      console.log("Error completo:", err);
+      if (err.type === "NETWORK_ERROR") {
+        setError("⚠️ " + err.message);
+      } else if (err.type === "VALIDATION_ERROR") {
+        setError(err.message); // Viene del backend, ya es legible
+      } else {
+        setError("Ocurrió un error inesperado. Intenta de nuevo.");
+      }
+    } finally {
+      setCargando(false);
+    }
+  };
   return (
     <>
       <div className="containerVacantes">
@@ -18,7 +68,8 @@ export default function Registro() {
               Registra tu empresa y accede al mejor talento con nuestros planes
             </h3>
 
-            <div className="formulario_Container">
+            <form className="formulario_Container" onSubmit={handleSubmit}>
+              {error && <p className="formulario_error">{error}</p>}
               <div className="seccion_Info">
                 <label className="formulario_label">Nombre de la Empresa</label>
                 <div className="input-container">
@@ -26,6 +77,10 @@ export default function Registro() {
                   <input
                     className="input_Registro"
                     placeholder="Tu Empresa "
+                    name="nombre"
+                    value={formData.nombre}
+                    onChange={handleChange}
+                    required
                   ></input>
                 </div>
               </div>
@@ -37,7 +92,12 @@ export default function Registro() {
                   <input
                     className="input_Registro"
                     placeholder="Email Corporativo"
-                  ></input>
+                    type="email"
+                    name="email"
+                    value={formData.email}
+                    onChange={handleChange}
+                    required
+                  />
                 </div>
               </div>
 
@@ -45,10 +105,34 @@ export default function Registro() {
                 <label className="formulario_label">Industria</label>
                 <div className="input-container">
                   <img src={company} alt="" className="input-icon" />
-                  <input
-                    className="input_Registro"
-                    placeholder="Selecciona tu Industria"
-                  ></input>
+                  <select
+                    className="input_Registro input_select"
+                    name="industria"
+                    value={formData.industria}
+                    onChange={handleChange}
+                    required
+                  >
+                    <option value="" disabled>
+                      Selecciona tu Industria
+                    </option>
+                    <option value="Manufactura">Manufactura</option>
+                    <option value="Agricultura">
+                      Agricultura y Agroindustria
+                    </option>
+                    <option value="Construccion">Construcción</option>
+                    <option value="Tecnologia">Tecnología y Software</option>
+                    <option value="Salud">Salud y Medicina</option>
+                    <option value="Educacion">Educación</option>
+                    <option value="Transporte">Transporte y Logística</option>
+                    <option value="Comercio">Comercio y Retail</option>
+                    <option value="Alimentos">Alimentos y Bebidas</option>
+                    <option value="Servicios Financieros">
+                      Servicios Financieros
+                    </option>
+                    <option value="Turismo">Turismo y Hospitalidad</option>
+                    <option value="Energia">Energía y Utilities</option>
+                    <option value="Otro">Otro</option>
+                  </select>
                 </div>
               </div>
 
@@ -59,7 +143,12 @@ export default function Registro() {
                   <input
                     className="input_Registro"
                     placeholder="••••••••"
-                  ></input>
+                    type="password"
+                    name="contraseña"
+                    value={formData.contraseña}
+                    onChange={handleChange}
+                    required
+                  />
                 </div>
               </div>
 
@@ -70,19 +159,33 @@ export default function Registro() {
                   <input
                     className="input_Registro"
                     placeholder="••••••••"
-                  ></input>
+                    type="password"
+                    name="confirmarContraseña"
+                    value={formData.confirmarContraseña}
+                    onChange={handleChange}
+                    required
+                  />
                 </div>
               </div>
-              <select className="plan-select">
-                <option>Plan Básico - $4,999 MXN/año</option>
-                <option>Plan Premium - $8,999 MXN/año</option>
-                <option>Plan Enterprise - $15,999 MXN/año</option>
+              <select
+                className="plan-select"
+                name="planId"
+                value={formData.planId}
+                onChange={handleChange}
+              >
+                <option value="1">Plan Básico - $349</option>
+                <option value="2">Plan PRO - $699</option>
+                <option value="3">Plan Premium - $949</option>
               </select>
 
-              <NavLink to="" className="btn btn-register-paid">
-                Registrate y procede al pago
-              </NavLink>
-            </div>
+              <button
+                type="submit"
+                className="btn btn-register-paid"
+                disabled={cargando}
+              >
+                {cargando ? "Registrando..." : "Registrate y procede al pago"}
+              </button>
+            </form>
           </div>
         </div>
       </div>

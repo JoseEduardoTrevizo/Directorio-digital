@@ -126,3 +126,16 @@
   box-shadow: 0 6px 14px rgba(0, 0, 0, 0.35);
   transform: translateY(-2px);
 }
+.formulario_error {
+  color: #dc2626;
+  background: #fef2f2;
+  border: 1px solid #fecaca;
+  border-radius: 6px;
+  padding: 10px 14px;
+  font-size: 14px;
+  margin-bottom: 10px;
+}
+.input_select {
+  appearance: none;
+  cursor: pointer;
+}
