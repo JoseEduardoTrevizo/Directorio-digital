@@ -50,7 +50,7 @@ export default function Empresas() {
             <div class="popular-badge">MÁS POPULAR</div>
             <h3 className="plan-title">Plan Premium</h3>
             <p className="plan-price">$949 MXN/mes</p>
-            <p className="planmas">Todo lo del Planes +</p>
+            <p className="planmas">Todo de los Planes +</p>
             <ul className="plan-features">
               <li className="feature">
                 Banner publicitario rotativo en página de inicio
@@ -59,7 +59,6 @@ export default function Empresas() {
               <li className="feature">
                 Posicionamiento destacado en su categoría
               </li>
-              <li className="feature">Badge “Recomendado”</li>
               <li className="feature">Diferentes ubicaciones</li>
               <li className="feature">Estadísticas avanzadas</li>
             </ul>

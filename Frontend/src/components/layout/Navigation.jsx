@@ -7,6 +7,7 @@ import Empresas from "../../pages/Empresas";
 import Registro from "../../pages/Registro";
 import Login from "../../pages/Login";
 import Profile from "../../pages/Profile";
+import Nosotros from "../../pages/Nosotros";
 export default function Navigation() {
   return (
     <div className="container_Navigation">
@@ -19,6 +20,7 @@ export default function Navigation() {
         <Route path="/registro" element={<Registro />} />
         <Route path="/login" element={<Login />} />
         <Route path="/profile" element={<Profile />} />
+        <Route path="/nosotros" element={<Nosotros />} />
       </Routes>
     </div>
   );

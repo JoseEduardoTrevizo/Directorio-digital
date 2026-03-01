@@ -1,0 +1,516 @@
+.container_nosotros {
+  padding-top: 60px;
+}
+.hero_container {
+  position: relative;
+  min-height: 100vh;
+  display: flex;
+  align-items: center;
+  overflow: hidden;
+  background:
+    radial-gradient(ellipse 60% 50% at 50% -10%, #1a3a6e 0%, transparent 60%),
+    radial-gradient(ellipse 60% 50% at 80% 60%, #0f2756 0%, transparent 80%),
+    linear-gradient(180deg, #0a1628 0%, #0d1f3c 80%, #fff 100%);
+  font-family: "Sora", sans-serif;
+  padding: 0 1.5rem;
+  padding-top: 5rem;
+}
+
+/* ─── Diagonal grid lines ────────────────────────────── */
+.hero_grid_lines {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  gap: 11%;
+  transform: skewX(-20deg) translateX(-5%);
+  pointer-events: none;
+  opacity: 0.06;
+}
+
+.hero_grid_line {
+  width: 1px;
+  background: linear-gradient(
+    to bottom,
+    transparent 0%,
+    #6eaaff 30%,
+    #6eaaff 70%,
+    transparent 100%
+  );
+  flex-shrink: 0;
+}
+
+/* ─── Glow blobs ─────────────────────────────────────── */
+.hero_glow {
+  position: absolute;
+  border-radius: 50%;
+  filter: blur(90px);
+  pointer-events: none;
+  animation: heroGlowPulse 6s ease-in-out infinite alternate;
+}
+
+.hero_glow--left {
+  width: 480px;
+  height: 480px;
+  left: -120px;
+  top: 10%;
+  background: radial-gradient(circle, #1a4faa55, transparent 70%);
+  animation-delay: 0s;
+}
+
+.hero_glow--right {
+  width: 380px;
+  height: 380px;
+  right: -80px;
+  top: 30%;
+  background: radial-gradient(circle, #0c3a8855, transparent 70%);
+  animation-delay: 3s;
+}
+
+@keyframes heroGlowPulse {
+  from {
+    opacity: 0.6;
+    transform: scale(1);
+  }
+  to {
+    opacity: 1;
+    transform: scale(1.12);
+  }
+}
+
+/* ─── Content ────────────────────────────────────────── */
+.hero_content {
+  position: relative;
+  z-index: 2;
+  text-align: center;
+  max-width: 820px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 1.4rem;
+  animation: heroFadeUp 0.9s cubic-bezier(0.22, 1, 0.36, 1) both;
+}
+
+@keyframes heroFadeUp {
+  from {
+    opacity: 0;
+    transform: translateY(32px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/* ─── Eyebrow ────────────────────────────────────────── */
+.hero_eyebrow {
+  font-family: "Inter", sans-serif;
+  font-size: 0.75rem;
+  font-weight: 600;
+  letter-spacing: 0.22em;
+  color: #4da3ff;
+  text-transform: uppercase;
+  animation: heroFadeUp 0.9s cubic-bezier(0.22, 1, 0.36, 1) 0.05s both;
+}
+
+/* ─── Title ──────────────────────────────────────────── */
+.hero_title {
+  margin: 0;
+  font-family: "Sora", sans-serif;
+  font-size: clamp(2.6rem, 6.5vw, 5.2rem);
+  font-weight: 800;
+  line-height: 1.08;
+  color: #ffffff;
+  letter-spacing: -0.02em;
+  animation: heroFadeUp 0.9s cubic-bezier(0.22, 1, 0.36, 1) 0.12s both;
+}
+
+/* ─── Subtitle ───────────────────────────────────────── */
+.hero_subtitle {
+  margin: 0;
+  font-family: "Inter", sans-serif;
+  font-size: clamp(1rem, 2vw, 1.15rem);
+  font-weight: 400;
+  color: #a8bdd8;
+  line-height: 1.65;
+  max-width: 560px;
+  animation: heroFadeUp 0.9s cubic-bezier(0.22, 1, 0.36, 1) 0.2s both;
+}
+
+/* ─── Actions ────────────────────────────────────────── */
+.hero_actions {
+  display: flex;
+  gap: 1rem;
+  flex-wrap: wrap;
+  justify-content: center;
+  margin-top: 0.6rem;
+  animation: heroFadeUp 0.9s cubic-bezier(0.22, 1, 0.36, 1) 0.3s both;
+}
+
+/* ─── Buttons ────────────────────────────────────────── */
+.hero_btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  padding: 0.85rem 2rem;
+  border-radius: 999px;
+  font-family: "Inter", sans-serif;
+  font-size: 0.95rem;
+  font-weight: 600;
+  cursor: pointer;
+  border: none;
+  transition:
+    transform 0.2s ease,
+    box-shadow 0.2s ease,
+    background 0.2s ease;
+  white-space: nowrap;
+}
+
+.hero_btn--primary {
+  background: #042442;
+  color: #c6a75e;
+  box-shadow: 0 4px 24px #2979ff55;
+}
+
+.hero_btn--primary:hover {
+  background-color: #0a3d6b;
+  transform: translateY(-2px);
+}
+
+.hero_btn--secondary {
+  background: #c6a75e;
+  color: #042442;
+  text-decoration: none;
+  justify-content: center;
+  box-shadow: 0 2px 12px rgba(0, 0, 0, 0.15);
+}
+
+.hero_btn--secondary:hover {
+  background-color: #e7c26c;
+  transform: translateY(-2px);
+  box-shadow: 0 6px 20px rgba(0, 0, 0, 0.2);
+}
+
+.hero_btn_arrow {
+  display: inline-block;
+  transition: transform 0.2s ease;
+}
+
+/* ─── Scroll reveal utility ─────────────────────────── */
+.scroll_reveal {
+  opacity: 0;
+  transform: translateY(32px);
+}
+
+.scroll_reveal.visible {
+  opacity: 1;
+  transform: translateY(0);
+  animation: heroFadeUp 0.9s cubic-bezier(0.22, 1, 0.36, 1) both;
+}
+
+.hero_btn--primary:hover .hero_btn_arrow {
+  transform: translateX(4px);
+}
+/*Seccion sobre nosotros*/
+.about_container {
+  background: #ffffff;
+  padding: 7rem 1.5rem;
+  display: flex;
+  justify-content: center;
+  font-family: "Sora", sans-serif;
+}
+
+/* ─── Content wrapper ────────────────────────────────── */
+.content_about {
+  max-width: 780px;
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+  gap: 1.2rem;
+}
+
+/* ─── Eyebrow ────────────────────────────────────────── */
+.about_eyebrow {
+  font-family: "Inter", sans-serif;
+  font-size: 0.72rem;
+  font-weight: 600;
+  letter-spacing: 0.2em;
+  color: #0d1f3c;
+  text-transform: uppercase;
+}
+
+/* ─── Title ──────────────────────────────────────────── */
+.about_title {
+  margin: 0;
+  font-family: "Sora", sans-serif;
+  font-size: clamp(2.4rem, 5.5vw, 4rem);
+  font-weight: 800;
+  line-height: 1.1;
+  color: #0d1f3c;
+  letter-spacing: -0.02em;
+}
+
+/* ─── Body paragraphs ────────────────────────────────── */
+.about_body {
+  display: flex;
+  flex-direction: column;
+  gap: 1.5rem;
+  margin-top: 1rem;
+}
+
+.about_paragraph {
+  margin: 0;
+  font-family: "Inter", sans-serif;
+  font-size: clamp(0.95rem, 1.8vw, 1.1rem);
+  font-weight: 400;
+  color: #2b3a55;
+  line-height: 1.7;
+}
+
+.about_paragraph strong {
+  font-weight: 700;
+  color: #0d1f3c;
+}
+/* Seccion inspiracion*/
+.inspiration_container {
+  background: linear-gradient(to bottom, #042442 85%, #fff 100%);
+  padding: 7rem 1.5rem;
+  display: flex;
+  justify-content: center;
+  font-family: "Sora", sans-serif;
+}
+.content_inspiration {
+  max-width: 1000px;
+  width: 100%;
+  height: 500px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+  gap: 1.2rem;
+}
+.inspiration-eyebrow {
+  color: #5da2f3;
+}
+.inspiration-title {
+  color: white;
+}
+.inspiration_body {
+  display: flex;
+  flex-direction: row;
+  gap: 2rem;
+  margin-top: 25px;
+}
+.card_valores {
+  background: rgba(255, 255, 255, 0.1);
+  border-radius: 12px;
+  padding: 1.5rem;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.8rem;
+  max-width: 250px;
+}
+.card_valores:hover {
+  background: rgba(255, 255, 255, 0.2);
+  transform: translateY(-5px);
+  transition: all 300ms;
+}
+.content-icon_valores {
+  background: #214776;
+  border-radius: 8px;
+  padding: 0.5rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.icon_valores {
+  width: 50px;
+  height: 50px;
+}
+.card_title {
+  margin: 0;
+  margin-top: 15px;
+}
+.card_paragraph {
+  margin: 0;
+}
+.mision_content {
+  display: flex;
+  flex-direction: row;
+  gap: 2rem;
+  justify-content: center;
+}
+.mision_container {
+  padding: 5rem 5rem 0 5rem;
+}
+.container_card-mision {
+  background: rgba(204, 204, 204, 0.2);
+  padding: 7rem 1.5rem;
+  border-radius: 16px;
+  display: flex;
+  max-width: 500px;
+  width: 100%;
+  height: 200px;
+  justify-content: center;
+  font-family: "Sora", sans-serif;
+}
+.card-mision,
+.paragraph-mision {
+  color: #042442;
+}
+/* Seccion diferencias*/
+.diferent_body {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 3rem 1.5rem;
+  background: #ffffff;
+  font-family: "Inter", sans-serif;
+}
+
+/* ─── Card ───────────────────────────────────────────── */
+.diferent_card {
+  width: 100%;
+  max-width: 780px;
+  border: 1px solid #e2e8f0;
+  border-radius: 16px;
+  overflow: hidden;
+}
+
+/* ─── Header ─────────────────────────────────────────── */
+.diferent_header {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+}
+
+.diferent_header_col {
+  display: flex;
+  align-items: center;
+  gap: 0.55rem;
+  padding: 1.1rem 1.8rem;
+}
+
+.diferent_header_col--traditional {
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  background: #f7f8fa;
+  border-right: 1px solid #e2e8f0;
+}
+
+.diferent_header_col--nexum {
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  background: #0d1f3c;
+}
+
+.diferent_header_label {
+  font-family: "Sora", sans-serif;
+  font-size: 0.95rem;
+  font-weight: 700;
+}
+
+.diferent_header_col--traditional .diferent_header_label {
+  color: #0d1f3c;
+}
+
+.diferent_header_col--nexum .diferent_header_label {
+  color: #ffffff;
+  letter-spacing: 0.04em;
+}
+
+/* ─── Rows ───────────────────────────────────────────── */
+.diferent_row {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  border-top: 1px solid #e2e8f0;
+}
+
+.diferent_cell {
+  display: flex;
+  align-items: center;
+  gap: 0.65rem;
+  padding: 1.15rem 1.8rem;
+  font-size: 0.95rem;
+  color: #2b3a55;
+  font-weight: 400;
+}
+
+.diferent_cell--traditional {
+  display: flex;
+  flex-direction: row;
+  background: #ffffff;
+  border-right: 1px solid #e2e8f0;
+  color: #8898aa;
+}
+
+.diferent_cell--nexum {
+  display: flex;
+  flex-direction: row;
+  background: #ffffff;
+  color: #0d1f3c;
+  font-weight: 500;
+}
+
+/* ─── Icons ──────────────────────────────────────────── */
+.diferent_icon {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 20px;
+  height: 20px;
+  border-radius: 50%;
+  font-size: 0.6rem;
+  font-weight: 700;
+  flex-shrink: 0;
+  border: 1.5px solid;
+}
+
+.diferent_icon--bad {
+  color: #e05252;
+  border-color: #e05252;
+}
+
+.diferent_icon--good {
+  color: #0d1f3c;
+  border-color: #0d1f3c;
+}
+
+.diferent_header_col--nexum .diferent_icon--good {
+  color: #ffffff;
+  border-color: #ffffff;
+}
+/*Seccion unete a nosotros*/
+.join_container {
+  background: #042442;
+  padding: 7rem 1.5rem;
+  display: flex;
+  justify-content: center;
+  font-family: "Sora", sans-serif;
+}
+
+/* ─── Content wrapper ────────────────────────────────── */
+.content_join {
+  max-width: 780px;
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+  gap: 1.2rem;
+}
+.join {
+  color: #5da2f3;
+}
+.join-title {
+  color: white;
+  width: 980px;
+}
+.join_btn_arrow {
+  display: inline-block;
+  transition: transform 0.2s ease;
+  margin-left: 15px;
+}
