@@ -1,8 +1,6 @@
 .footer {
-  background-color: #111827;
-  mask-image: linear-gradient(to top, black 80%, transparent 90%);
-  -webkit-mask-image: linear-gradient(to top, black 80%, transparent 90%);
-  display: flex;
+  background-color: #042442;
+
   flex-direction: column;
 }
 .footer_container {
@@ -12,8 +10,10 @@
   margin-top: 25px;
   width: 100%;
   justify-content: space-around;
-  border-bottom: solid 1px;
-  border-bottom-color: white;
+  border-bottom: solid 0.5px;
+  border-bottom-color: rgb(198, 167, 94);
+  border-top: 1px solid transparent;
+  border-image: linear-gradient(to right, transparent, #c9a96e, transparent) 1;
 }
 .datos {
   display: flex;
@@ -23,12 +23,24 @@
   margin-right: 15px;
 }
 .footer_container p,
-h2,
 div {
   color: white;
   list-style: none;
   display: flex;
   flex-direction: column;
+}
+.title_footer {
+  list-style: none;
+  display: flex;
+  flex-direction: column;
+  color: #c6a75e;
+}
+.title_footer-contacto {
+  margin-left: 35px;
+  list-style: none;
+  display: flex;
+  flex-direction: column;
+  color: #c6a75e;
 }
 .footer_presentacion p {
   width: 500px;

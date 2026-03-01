@@ -8,7 +8,7 @@ export default function Footer() {
     <footer className="footer">
       <div className="footer_container">
         <div className="footer_presentacion">
-          <h2>EmpleoLink</h2>
+          <h2 className="title_footer">EmpleoLink</h2>
           <p>
             La plataforma líder en búsqueda de empleo en México. Conectamos el
             mejor talento con las mejores oportunidades laborales.
@@ -16,7 +16,7 @@ export default function Footer() {
         </div>
 
         <div>
-          <h2>Enlaces Rapidos</h2>
+          <h2 className="title_footer">Enlaces Rapidos</h2>
           <ul className="container_datosFooter">
             <li>Inicio</li>
             <li>Vacantes</li>
@@ -27,7 +27,7 @@ export default function Footer() {
         </div>
 
         <div>
-          <h2>Contacto</h2>
+          <h2 className="title_footer-contacto">Contacto</h2>
           <ul>
             <li className="datos">
               <img src={email} />
