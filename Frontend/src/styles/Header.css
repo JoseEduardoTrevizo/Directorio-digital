@@ -65,7 +65,8 @@
   display: flex;
   flex-direction: row;
   width: 350px;
-  justify-content: space-between;
+  justify-content: flex-end;
+  gap: 20px;
 }
 .btn-login {
   background-color: #042442;
@@ -87,7 +88,26 @@
 }
 
 .login-icon {
-  margin-right: 10px;
+  margin-right: 5px;
+}
+.btn-logout {
+  background-color: #c6a75e;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: #042442;
+  border: none;
+  text-decoration: none;
+  height: 40px;
+  width: 170px;
+  padding: 10px 20px;
+  border-radius: 5px;
+  font-size: 16px;
+  cursor: pointer;
+  transition: background-color 300ms;
+}
+.btn-logout:hover {
+  background-color: #e7c26c;
 }
 .btn-register {
   background-color: #c6a75e;
@@ -109,7 +129,7 @@
   background-color: #e7c26c;
 }
 .logout {
-  margin-right: 10px;
+  margin-right: 5px;
 }
 .category-buttons {
   display: flex;

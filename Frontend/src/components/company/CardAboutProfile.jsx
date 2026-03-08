@@ -1,11 +1,20 @@
 import React from "react";
+import { useAuth } from "../../contexts/AuthContext";
 import mail from "../../assets/icons/mail.svg";
 import phone from "../../assets/icons/call.svg";
 import web from "../../assets/icons/web.svg";
 import map from "../../assets/images/google-maps.jpg";
 import edit from "../../assets/icons/edit.svg";
 
-export default function CardAboutProfile() {
+export default function CardAboutProfile({ profileUserId }) {
+  const { userId } = useAuth();
+
+  console.log("userId (logueado):", userId); // debe ser null si no hay sesión
+  console.log("profileUserId (prop):", profileUserId);
+
+  const isOwnProfile =
+    userId != null && String(userId) === String(profileUserId);
+
   return (
     <>
       <main className="container_About">
@@ -14,7 +23,9 @@ export default function CardAboutProfile() {
             <h2 className="titleCard_Profile">
               Informacion detallada de la empresa
             </h2>
-            <img className="iconProfile edit" src={edit} alt="Edit" />
+            {isOwnProfile && (
+              <img className="iconProfile edit" src={edit} alt="Edit" />
+            )}
           </div>
 
           <div className="container_Contacto">

@@ -1,11 +1,11 @@
 import React from "react";
 import CardAboutProfile from "../company/CardAboutProfile";
 
-export default function AcercaDeProfile() {
+export default function AcercaDeProfile({ profileUserId }) {
   return (
     <>
       <div className="nav_Content_Profile">
-        <CardAboutProfile />
+        <CardAboutProfile profileUserId={profileUserId} />
       </div>
     </>
   );

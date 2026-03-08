@@ -3,17 +3,20 @@ import InicioProfile from "./InicioProfile";
 import AcercaDeProfile from "./AcercaDeProfile";
 import EmpleosProfile from "./EmpleosProfile";
 
-export default function NavigationProfile({ activeTab = "acerca" }) {
+export default function NavigationProfile({
+  activeTab = "acerca",
+  profileUserId,
+}) {
   const renderContent = () => {
     switch (activeTab) {
       case "inicio":
-        return <InicioProfile />;
+        return <InicioProfile profileUserId={profileUserId} />;
       case "acerca":
-        return <AcercaDeProfile />;
+        return <AcercaDeProfile profileUserId={profileUserId} />;
       case "empleos":
-        return <EmpleosProfile />;
+        return <EmpleosProfile profileUserId={profileUserId} />;
       default:
-        return <AcercaDeProfile />;
+        return <AcercaDeProfile profileUserId={profileUserId} />;
     }
   };
 

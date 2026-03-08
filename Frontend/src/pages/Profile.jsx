@@ -1,4 +1,5 @@
 import React, { useState } from "react";
+import { useAuth } from "../contexts/AuthContext";
 import portada from "../assets/images/cuauhtemoc.jpg";
 import profile from "../assets/images/company-logo.jpg";
 import editProfileIcon from "../assets/icons/edit.svg";
@@ -6,6 +7,7 @@ import NavigationProfile from "../components/layout/NavigationProfile";
 
 export default function Profile() {
   const [activeTab, setActiveTab] = useState("acerca");
+  const { currentUser } = useAuth();
 
   const tabs = [
     { id: "inicio", label: "Inicio" },
@@ -13,6 +15,7 @@ export default function Profile() {
     { id: "empleos", label: "Empleos" },
   ];
 
+  const profileUserId = currentUser?.id;
   return (
     <>
       <div className="profile-page">
@@ -57,7 +60,10 @@ export default function Profile() {
             </div>
 
             <div className="nav_Content_Profile">
-              <NavigationProfile activeTab={activeTab} />
+              <NavigationProfile
+                activeTab={activeTab}
+                profileUserId={profileUserId}
+              />
             </div>
           </div>
         </div>

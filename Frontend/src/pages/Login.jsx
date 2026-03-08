@@ -1,9 +1,39 @@
-import React from "react";
-import { NavLink } from "react-router";
-import email from "../assets/icons/account.svg";
+import React, { useState } from "react";
+import { NavLink, useNavigate } from "react-router";
+import { useAuth } from "../contexts/AuthContext";
+import { loginService } from "../services/authService";
+import user from "../assets/icons/account.svg";
 import lock from "../assets/icons/lock.svg";
 
 export default function Login() {
+  const { login } = useAuth();
+  const navigate = useNavigate();
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
+  const [generalError, setGeneralError] = useState("");
+  const [loading, setLoading] = useState(false);
+  const [fieldErrors, setFieldErrors] = useState({});
+
+  async function handleSubmit() {
+    setGeneralError("");
+    setFieldErrors({});
+    setLoading(true);
+
+    try {
+      const { token } = await loginService(email, password);
+      login(token);
+      navigate("/profile");
+    } catch (err) {
+      if (err.validationErrors) {
+        setFieldErrors(err.validationErrors);
+      } else {
+        setGeneralError(err.message);
+      }
+    } finally {
+      setLoading(false);
+    }
+  }
+
   return (
     <>
       <main className="content_Login">
@@ -16,11 +46,16 @@ export default function Login() {
             <div className="seccion_Info">
               <label className="formulario_label">Email</label>
               <div className="input-container">
-                <img src={email} alt="" className="input-icon" />
+                <img src={user} alt="" className="input-icon" />
                 <input
-                  className="input_Registro"
+                  className={`input_Registro ${fieldErrors.email ? "input-error" : ""}`}
                   placeholder="Tu@empresa.com"
-                ></input>
+                  type="email"
+                  value={email}
+                  onChange={(evt) => {
+                    setEmail(evt.target.value);
+                  }}
+                />
               </div>
             </div>
 
@@ -28,23 +63,42 @@ export default function Login() {
               <label className="formulario_label">Contraseña</label>
               <div className="input-container">
                 <img src={lock} alt="" className="input-icon" />
-                <input className="input_Registro" placeholder="••••••••" />
+                <input
+                  className="input_Registro"
+                  placeholder="••••••••"
+                  type="password"
+                  value={password}
+                  onChange={(evt) => {
+                    setPassword(evt.target.value);
+                  }}
+                />
               </div>
             </div>
 
             <div className="container_Check">
-              <div className="check">
-                <input type="checkbox" />
-                <p className="text_Recordarme">Recordarme</p>
-              </div>
               <NavLink className="link-to_Olvidaste" to="">
                 ¿Olvidaste tu contraseña?
               </NavLink>
             </div>
 
-            <NavLink to="/profile" className="btn btn-register-login">
-              Iniciar Sesion
-            </NavLink>
+            {generalError && (
+              <p className="general-error-text">{generalError}</p>
+            )}
+
+            {fieldErrors.password && (
+              <p className="field-error-text">{fieldErrors.password}</p>
+            )}
+
+            {fieldErrors.email && (
+              <p className="field-error-text">{fieldErrors.email}</p>
+            )}
+            <button
+              className="btn btn-register-login"
+              onClick={handleSubmit}
+              disabled={loading}
+            >
+              {loading ? "Iniciando..." : "Iniciar Sesión"}
+            </button>
 
             <div className="footer_Login">
               <p className="formulario_label">

@@ -1,10 +1,15 @@
 import React, { useState, useEffect } from "react";
-import { NavLink, useLocation } from "react-router-dom";
+import { NavLink, useLocation, useNavigate } from "react-router-dom";
+import { useAuth } from "../../contexts/AuthContext";
 import login from "../../assets/icons/login.svg";
-import logout from "../../assets/icons/user_add.svg";
+import logoutIcon from "../../assets/icons/logout.svg";
+import register from "../../assets/icons/user_add.svg";
 
 export default function Header() {
   const [scrolled, setScrolled] = useState(false);
+  const { isLoggedIn, logout } = useAuth();
+  const navigate = useNavigate();
+
   const location = useLocation();
 
   const isHome = location.pathname === "/Home" || location.pathname === "/";
@@ -20,6 +25,11 @@ export default function Header() {
   const headerClass = !isHome
     ? "header header--scrolled"
     : `header ${scrolled ? "header--scrolled" : "header--transparent"}`;
+
+  function handleLogout() {
+    logout();
+    navigate("/login");
+  }
   return (
     <header className={headerClass}>
       <h2 className="header_title">Nexum</h2>
@@ -44,15 +54,24 @@ export default function Header() {
       </nav>
 
       <div className="container_buttons">
-        <NavLink to="/Login" className="btn btn-login">
-          <img src={login} alt="Login" className="login-icon" />
-          Iniciar Sesion
-        </NavLink>
+        {!isLoggedIn && (
+          <NavLink to="/Login" className="btn btn-login">
+            <img src={login} alt="Login" className="login-icon" />
+            Iniciar Sesion
+          </NavLink>
+        )}
 
-        <NavLink to="/Registro" className="btn btn-register">
-          <img src={logout} alt="Logout" className="logout" />
-          Registrate
-        </NavLink>
+        {isLoggedIn ? (
+          <button onClick={handleLogout} className="btn btn-logout">
+            <img src={logoutIcon} alt="Logout" className="logout" />
+            Cerrar Sesion
+          </button>
+        ) : (
+          <NavLink to="/Registro" className="btn btn-register">
+            <img src={register} alt="Logout" className="logout" />
+            Registrate
+          </NavLink>
+        )}
       </div>
     </header>
   );
