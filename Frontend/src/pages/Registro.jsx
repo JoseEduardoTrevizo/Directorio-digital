@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
+import Select from "react-select";
 import { registrarEmpresa } from "../services/registroServices.js";
 import name from "../assets/icons/account.svg";
 import lock from "../assets/icons/lock.svg";
@@ -8,7 +9,21 @@ import emailCorp from "../assets/icons/email.svg";
 
 export default function Registro() {
   const navigate = useNavigate();
-
+  const opciones = [
+    { value: "Manufactura", label: "Manufactura" },
+    { value: "Agricultura", label: "Agricultura y Agroindustria" },
+    { value: "Construccion", label: "Construcción" },
+    { value: "Tecnologia", label: "Tecnología y Software" },
+    { value: "Salud", label: "Salud y Medicina" },
+    { value: "Educacion", label: "Educación" },
+    { value: "Transporte", label: "Transporte y Logística" },
+    { value: "Comercio", label: "Comercio y Retail" },
+    { value: "Alimentos", label: "Alimentos y Bebidas" },
+    { value: "FinancieroS", label: "Servicios Financieros" },
+    { value: "Turismo", label: "Turismo y Hospitalidad" },
+    { value: "Energia", label: "Energía y Utilities" },
+    { value: "Otro", label: "Otro" },
+  ];
   const [formData, setFormData] = useState({
     nombre: "",
     email: "",
@@ -56,6 +71,44 @@ export default function Registro() {
       setCargando(false);
     }
   };
+
+  const planes = {
+  "1": {
+    nombre: "Plan Básico",
+    precio: "$349 MXN/mes",
+    features: [
+      "Perfil básico en el directorio",
+      "Información de contacto",
+      "Descripción breve (150-200 palabras)",
+      "1-3 Imágenes",
+      "Enlace a sitio web",
+      "Integración Google Maps",
+    ],
+  },
+  "2": {
+    nombre: "Plan PRO",
+    precio: "$699 MXN/mes",
+    features: [
+      "Todo lo del Plan Básico +",
+      "4-6 imágenes para mostrar",
+      "1 Vacante al Mes",
+      'Badge "Recomendado"',
+      "Estadísticas básicas de búsquedas",
+    ],
+  },
+  "3": {
+    nombre: "Plan Premium",
+    precio: "$949 MXN/mes",
+    features: [
+      "Todo de los Planes +",
+      "Banner publicitario rotativo en página de inicio",
+      "3 Vacantes al Mes",
+      "Posicionamiento destacado en su categoría",
+      "Diferentes ubicaciones",
+      "Estadísticas avanzadas",
+    ],
+  },
+};
   return (
     <>
       <div className="containerVacantes">
@@ -105,34 +158,14 @@ export default function Registro() {
                 <label className="formulario_label">Industria</label>
                 <div className="input-container">
                   <img src={company} alt="" className="input-icon" />
-                  <select
-                    className="input_Registro input_select"
-                    name="industria"
-                    value={formData.industria}
-                    onChange={handleChange}
-                    required
-                  >
-                    <option value="" disabled>
-                      Selecciona tu Industria
-                    </option>
-                    <option value="Manufactura">Manufactura</option>
-                    <option value="Agricultura">
-                      Agricultura y Agroindustria
-                    </option>
-                    <option value="Construccion">Construcción</option>
-                    <option value="Tecnologia">Tecnología y Software</option>
-                    <option value="Salud">Salud y Medicina</option>
-                    <option value="Educacion">Educación</option>
-                    <option value="Transporte">Transporte y Logística</option>
-                    <option value="Comercio">Comercio y Retail</option>
-                    <option value="Alimentos">Alimentos y Bebidas</option>
-                    <option value="Servicios Financieros">
-                      Servicios Financieros
-                    </option>
-                    <option value="Turismo">Turismo y Hospitalidad</option>
-                    <option value="Energia">Energía y Utilities</option>
-                    <option value="Otro">Otro</option>
-                  </select>
+                  <Select
+                    options={opciones}
+                    placeholder="Selecciona tu Industria"
+                    classNamePrefix="select"
+                    onChange={(selected) =>
+                      setFormData({ ...formData, industria: selected.value })
+                    }
+                  />
                 </div>
               </div>
 
@@ -177,6 +210,21 @@ export default function Registro() {
                 <option value="2">Plan PRO - $699</option>
                 <option value="3">Plan Premium - $949</option>
               </select>
+
+              <div className="resumPlan">
+                <h3 className="resumPlan_title">
+                  Resumen del Plan Seleccionado:
+                </h3>
+                <p className="resumPlan_precio">
+                  {planes[formData.planId].nombre} —{" "}
+                  {planes[formData.planId].precio}
+                </p>
+                <ul className="resumPlan_list">
+                  {planes[formData.planId].features.map((feature, index) => (
+                    <li key={index}>{feature}</li>
+                  ))}
+                </ul>
+              </div>
 
               <button
                 type="submit"

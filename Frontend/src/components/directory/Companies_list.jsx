@@ -17,7 +17,7 @@ export default function Companies_list({ onClick }) {
         <div className="company-details">
           <div className="detail-item">
             <span className="detail-icon">📍</span>
-            <span className="detail-text">direcciones</span>
+            <span className="detail-text">Boulevard Jorge castillo km 4.5</span>
           </div>
           <div className="detail-row">
             <div className="detail-item">

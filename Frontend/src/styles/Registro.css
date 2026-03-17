@@ -138,4 +138,128 @@
 .input_select {
   appearance: none;
   cursor: pointer;
+  max-height: 50px;
+}
+/* Input visible */
+.select__control {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  background-color: #1a1a2e;
+  border: 1px solid #444;
+  border-radius: 8px;
+  box-shadow: none;
+  height: 15px;
+  padding: 0 8px;
+}
+.select__value-container {
+  padding: 0 8px;
+}
+
+.select__indicators {
+  padding: 0 8px;
+}
+
+.select__control:hover {
+  border-color: #c6a75e;
+}
+
+.select__control--is-focused {
+  border-color: #c6a75e !important;
+  box-shadow: none !important;
+}
+
+/* Texto seleccionado */
+.select__single-value {
+  color: black;
+}
+
+/* Placeholder */
+.select__placeholder {
+  color: #888;
+}
+
+/* Lista desplegada */
+.select__menu {
+  background-color: #f3f4f7 !important;
+  border: none;
+  border-radius: 8px;
+  max-height: 220px;
+  overflow: hidden;
+}
+
+/* Scroll interno */
+.select__menu-list {
+  max-height: 220px;
+  padding: 4px;
+}
+
+.select__menu-list::-webkit-scrollbar {
+  width: 6px;
+}
+
+.select__menu-list::-webkit-scrollbar-thumb {
+  background: #042442;
+  border-radius: 4px;
+}
+
+.select__menu-list::-webkit-scrollbar-track {
+  background: #111;
+}
+
+/* Cada opción */
+.select__option {
+  color: #888 !important;
+  background-color: transparent !important;
+  border-radius: 6px;
+  padding: 10px 12px;
+  cursor: pointer;
+}
+
+.select__option:hover,
+.select__option--is-focused {
+  background-color: #2d2d4e !important;
+  color: #fff !important;
+}
+
+.select__option--is-selected {
+  background-color: #c6a75e !important;
+  color: #1a1a2e !important;
+}
+.select__option--is-selected:hover,
+.select__option--is-selected.select__option--is-focused {
+  background-color: #d4b86a !important; /* ← dorado más claro al hacer hover sobre el seleccionado */
+  color: #1a1a2e !important;
+}
+
+.select__option:active {
+  background-color: #c6a75e;
+}
+
+/* Flecha */
+.select__dropdown-indicator {
+  color: #7c3aed;
+}
+
+.select__dropdown-indicator:hover {
+  color: #ffffff;
+}
+
+/* Quitar línea separadora */
+.select__indicator-separator {
+  display: none;
+}
+.resumPlan {
+  display: flex;
+  margin-left: 24px;
+  flex-direction: column;
+  gap: 8px;
+  color: #888;
+}
+.resumPlan_title {
+  margin-bottom: 0;
+}
+.resumPlan_precio,
+.resumPlan_list {
+  margin: 0;
 }

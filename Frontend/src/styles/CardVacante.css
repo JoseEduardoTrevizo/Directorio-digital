@@ -1,7 +1,7 @@
 .card-Vacante {
   display: flex;
   flex-direction: column;
-  width: 435px;
+  max-width: 435px;
   height: 300px;
   padding: 15px;
   box-shadow: 0 2px 8px rgba(0, 0, 0, 0.04);

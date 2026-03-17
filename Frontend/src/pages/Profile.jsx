@@ -2,7 +2,6 @@ import React, { useState } from "react";
 import { useAuth } from "../contexts/AuthContext";
 import portada from "../assets/images/cuauhtemoc.jpg";
 import profile from "../assets/images/company-logo.jpg";
-import editProfileIcon from "../assets/icons/edit.svg";
 import NavigationProfile from "../components/layout/NavigationProfile";
 
 export default function Profile() {
@@ -26,7 +25,7 @@ export default function Profile() {
             <div className="profile-content">
               <img className="profile-picture" src={profile} alt="Profile" />
               <div className="profile-content-Header">
-                <h2 className="profile-name">Juan Pérez</h2>
+                <h2 className="profile-name">{currentUser.nombre || ""}</h2>
                 <p className="profile-bio">
                   Desarrollador web con 5 años de experiencia en creación de
                   aplicaciones modernas y responsivas.
