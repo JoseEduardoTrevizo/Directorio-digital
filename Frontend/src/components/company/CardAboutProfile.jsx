@@ -8,17 +8,18 @@ import edit from "../../assets/icons/edit.svg";
 import PopupEditProfiel from "../../utils/PopupEditProfiel";
 
 export default function CardAboutProfile({ profileUserId }) {
-  const { userId, currentUser } = useAuth();
+  const { userId, currentUser, updateCurrentUser } = useAuth();
   const [modalOpen, setModalOpen] = useState(false);
   const [empresaData, setEmpresaData] = useState({
     email: currentUser.email || "",
-    telefono: "+52 614-222-8989",
-    web: "https://techsolutions.mx",
-    sector: currentUser.industria || "",
-    tamano: "0 - 50 empleados",
-    horario: "Lunes a Viernes: 9:00 AM - 6:00 PM",
-    ubicacion: "Cuauhtemoc, Chihuahua",
-    direccion: "Av. Reforma 222, Cuauhtémoc, CDMX",
+    telefono: currentUser.telefono || "",
+    website: currentUser.web_site || "",
+    industria: currentUser.industria || "",
+    tamano_empresa: currentUser.tamano_empresa || "",
+    horario: currentUser.horario_atencion || "",
+    ubicacion: currentUser.ubicacion || "Cuauhtemoc, Chihuahua",
+    direccion: currentUser.direccion || "",
+    plan: currentUser.plan || "",
   });
 
   console.log("userId (logueado):", userId); // debe ser null si no hay sesión
@@ -27,6 +28,25 @@ export default function CardAboutProfile({ profileUserId }) {
 
   const isOwnProfile =
     userId != null && String(userId) === String(profileUserId);
+
+  const handleSave = (nuevaData) => {
+    setEmpresaData(nuevaData); // actualiza el estado local
+    updateCurrentUser({
+      // actualiza el context
+      email: nuevaData.email,
+      telefono: nuevaData.telefono,
+      web_site: nuevaData.website, // ojo: el context usa web_site
+      industria: nuevaData.industria,
+      tamano_empresa: nuevaData.tamano_empresa,
+      horario_atencion: nuevaData.horario, // el context usa horario_atencion
+      ubicacion: nuevaData.ubicacion,
+      direccion: nuevaData.direccion,
+      plan: nuevaData.plan,
+    });
+  };
+  const url = empresaData.website?.startsWith("http")
+    ? empresaData.website
+    : `https://${empresaData.website}`;
 
   return (
     <>
@@ -49,7 +69,7 @@ export default function CardAboutProfile({ profileUserId }) {
               <PopupEditProfiel
                 empresa={empresaData}
                 onClose={() => setModalOpen(false)}
-                onSave={(nuevaData) => setEmpresaData(nuevaData)}
+                onSave={handleSave}
               />
             )}
           </div>
@@ -58,32 +78,51 @@ export default function CardAboutProfile({ profileUserId }) {
             <h3 className="subtitleCard_Profile">Contacto</h3>
             <p className="textCard_Profile">
               <img className="iconProfile" src={mail} alt="E-mail" />
-              {currentUser.email}
+              {empresaData.email}
             </p>
             <p className="textCard_Profile">
-              <img className="iconProfile" src={phone} alt="Telefono" /> +52
-              614-222-8989
+              <img className="iconProfile" src={phone} alt="Telefono" />{" "}
+              {empresaData.telefono || ""}
             </p>
             <p className="textCard_Profile">
               <img className="iconProfile" src={web} alt="Web" />
-              https://techsolutions.mx
+              {empresaData.website && (
+                <a
+                  className="linkWeb"
+                  href={url}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                >
+                  {empresaData.website}
+                </a>
+              )}
             </p>
           </div>
 
           <div className="container_Conacto container-Sector">
             <div>
               <h3 className="subtitleCard_Profile">Sector</h3>
-              <p className="textCard_Profile">{currentUser.industria || ""}</p>
+              <p className="textCard_Profile">{empresaData.industria || ""}</p>
               <h3 className="subtitleCard_Profile">Tamaño de la empresa</h3>
-              <p className="textCard_Profile">0 - 50 empleados</p>
+              <p className="textCard_Profile">
+                {empresaData.tamano_empresa || "0"}
+              </p>
+              <h3 className="subtitleCard_Profile">Ubicación</h3>
+              <p className="textCard_Profile">
+                {empresaData.ubicacion || "Cuauhtemoc, Chihuahua"}
+              </p>
             </div>
             <div className="container_Sector-horario">
               <h3 className="subtitleCard_Profile">Horario de atención</h3>
               <p className="textCard_Profile">
-                Lunes a Viernaes: 9:00 AM - 6:00 PM
+                {empresaData.horario || "Lunes a Viernes"}
               </p>
-              <h3 className="subtitleCard_Profile">Ubicación</h3>
-              <p className="textCard_Profile">Cuauhtemoc, Chihuahua</p>
+              <h3 className="subtitleCard_Profile">Dirección</h3>
+              <p className="textCard_Profile">{empresaData.direccion || ""}</p>
+              <h3 className="subtitleCard_Profile">Plan actual</h3>
+              <p className="textCard_Profile profile_plan">
+                {empresaData.plan || ""}
+              </p>
             </div>
           </div>
 
@@ -97,7 +136,7 @@ export default function CardAboutProfile({ profileUserId }) {
               />
             </div>
             <p className="textCard_Profile ">
-              Av. Reforma 222, Cuauhtémoc, 06600 Ciudad de México, CDMX
+              {empresaData.direccion || "Av. Reforma 222, Cuauhtémoc, CDMX"}
             </p>
           </div>
         </div>

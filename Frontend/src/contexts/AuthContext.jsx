@@ -41,12 +41,17 @@ export function AuthProvider({ children }) {
     setCurrentUser(null);
   }
 
+  function updateCurrentUser(nuevosData) {
+    setCurrentUser((prev) => ({ ...prev, ...nuevosData }));
+  }
+
   const value = {
     currentUser, // { id, email, nombre, industria } o null
     userId: currentUser?.id || null, // Acceso rápido al ID
     isLoggedIn: !!currentUser, // true/false
     login,
     logout,
+    updateCurrentUser,
   };
 
   return <AuthContext.Provider value={value}>{children}</AuthContext.Provider>;

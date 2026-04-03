@@ -3,16 +3,17 @@ import { useAuth } from "../contexts/AuthContext";
 import actualizarPerfilService from "../services/actualizarPerfilService";
 
 export default function PopupEditProfiel({ empresa, onClose, onSave }) {
-  const { userId } = useAuth();
+  const { userId, currentUser, updateCurrentUser, login } = useAuth();
+  console.log("Usuario actual en PopupEditProfiel:", currentUser);
   const [formData, setFormData] = useState({
     email: empresa.email || "",
     telefono: empresa.telefono || "",
-    web: empresa.web || "",
-    sector: empresa.sector || "",
-    tamano: empresa.tamano || "",
+    website: empresa.website || "",
+    industria: empresa.industria || "",
+    tamano_empresa: empresa.tamano_empresa || "",
     horario: empresa.horario || "",
-    ubicacion: empresa.ubicacion || "",
     direccion: empresa.direccion || "",
+    ubicacion: empresa.ubicacion || "",
   });
   const [turnos, setTurnos] = useState(
     empresa.horario
@@ -28,17 +29,22 @@ export default function PopupEditProfiel({ empresa, onClose, onSave }) {
     evt.preventDefault();
     console.log("Token:", localStorage.getItem("token"));
     try {
-      await actualizarPerfilService.actualizarEmpresa(userId, {
-        email: formData.email,
-        telefono: formData.telefono,
-        website: formData.web,
-        industria: formData.sector,
-        tamano_empresa: formData.tamano,
-        horario: formData.horario,
-        ciudad: formData.ubicacion,
-        direccion: formData.direccion,
-      });
+      const respuesta = await actualizarPerfilService.actualizarEmpresa(
+        userId,
+        {
+          email: formData.email,
+          telefono: formData.telefono,
+          website: formData.website,
+          industria: formData.industria,
+          tamano_empresa: formData.tamano_empresa,
+          horario: formData.horario,
+          ubicacion: formData.ubicacion,
+          direccion: formData.direccion,
+        },
+      );
 
+      login(respuesta.token); // actualiza el token en el contexto
+      updateCurrentUser(formData);
       onSave(formData); // actualiza el estado del padre
       onClose();
     } catch (error) {
@@ -93,6 +99,7 @@ export default function PopupEditProfiel({ empresa, onClose, onSave }) {
                 name="email"
                 value={formData.email}
                 onChange={handleChange}
+                disabled={true} // no editable
                 placeholder={empresa.email || "correo@ejemplo.com"}
               />
             </div>
@@ -108,10 +115,10 @@ export default function PopupEditProfiel({ empresa, onClose, onSave }) {
             <div className="modal_field modal_field--full">
               <label>Sitio web</label>
               <input
-                name="web"
-                value={formData.web}
+                name="website"
+                value={formData.website}
                 onChange={handleChange}
-                placeholder={empresa.web || "https://"}
+                placeholder={empresa.website || "https://"}
               />
             </div>
           </div>
@@ -121,17 +128,17 @@ export default function PopupEditProfiel({ empresa, onClose, onSave }) {
             <div className="modal_field">
               <label>Sector</label>
               <input
-                name="sector"
-                value={formData.sector}
+                name="industria"
+                value={formData.industria}
                 onChange={handleChange}
-                placeholder={empresa.sector || "Tecnología"}
+                placeholder={empresa.industria || "Tecnología"}
               />
             </div>
             <div className="modal_field">
               <label>Tamaño de la empresa</label>
               <select
-                name="tamano"
-                value={formData.tamano}
+                name="tamano_empresa"
+                value={formData.tamano_empresa}
                 onChange={handleChange}
               >
                 <option value="">Selecciona un rango</option>

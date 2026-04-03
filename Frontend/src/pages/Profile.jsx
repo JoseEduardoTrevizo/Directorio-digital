@@ -14,7 +14,10 @@ export default function Profile() {
     { id: "empleos", label: "Empleos" },
   ];
 
+  if (!currentUser) return <p>Cargando...</p>;
+
   const profileUserId = currentUser?.id;
+  console.log("Datos del usuario en Profile.jsx:", currentUser);
   return (
     <>
       <div className="profile-page">

@@ -1,6 +1,8 @@
 const API_URL = "http://localhost:5000/api";
 
 const actualizarEmpresa = async (id, datos) => {
+  console.log("Datos enviados:", datos);
+  console.log("Payload enviado:", JSON.stringify(datos, null, 2));
   const response = await fetch(`${API_URL}/edit-profile/${id}`, {
     method: "PUT",
     headers: {
@@ -14,7 +16,8 @@ const actualizarEmpresa = async (id, datos) => {
     throw new Error("Error al actualizar la empresa");
   }
 
-  return await response.json();
+  const responseData = await response.json();
+  return responseData;
 };
 
 export default {
