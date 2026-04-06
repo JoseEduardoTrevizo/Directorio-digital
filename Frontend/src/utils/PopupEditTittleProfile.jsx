@@ -1,0 +1,96 @@
+import React, { useState } from "react";
+import actualizarPerfilService from "../services/actualizarPerfilService";
+import { useAuth } from "../contexts/AuthContext";
+
+export default function PopupEditTittleProfile({ onClose, onSave, empresa }) {
+  const [formData, setFormData] = useState({
+    nombre: empresa.nombre || "",
+    eslogan: empresa.eslogan || "",
+  });
+  const { userId, updateCurrentUser, login } = useAuth();
+
+  console.log("Empresa en Popup:", empresa.nombre);
+  console.log("eslogan en formData:", empresa.eslogan);
+  const handleChange = (e) => {
+    setFormData({ ...formData, [e.target.name]: e.target.value });
+  };
+
+  const handleSubmit = async (evt) => {
+    evt.preventDefault();
+    console.log("Token:", localStorage.getItem("token"));
+    console.log("nombre enviado:", formData.nombre);
+    console.log("eslogan enviado:", formData.eslogan);
+    try {
+      const respuesta =
+        await actualizarPerfilService.actualizarEncabezadoEmpresa(userId, {
+          nombre: formData.nombre,
+          eslogan: formData.eslogan,
+        });
+
+      login(respuesta.token); // actualiza el token en el contexto
+      updateCurrentUser(formData);
+      onSave(formData); // actualiza el estado del padre
+      onClose();
+    } catch (error) {
+      console.error("Error:", error);
+      alert("Hubo un error al guardar los cambios");
+    }
+  };
+  return (
+    <div className="modal_overlay" onClick={onClose}>
+      <div className="modal_container" onClick={(e) => e.stopPropagation()}>
+        <div className="modal_header">
+          <h2 className="modal_title">Editar Información</h2>
+          <button className="modal_close" onClick={onClose}>
+            ✕
+          </button>
+        </div>
+
+        <form className="modal_form" onSubmit={handleSubmit}>
+          <h3 className="modal_section">Contacto</h3>
+          <div className="modal_grid">
+            <div className="modal_field">
+              <label>Nombre de la empresa</label>
+              <input
+                name="nombre"
+                value={formData.nombre}
+                onChange={handleChange}
+                placeholder={empresa.nombre || "Nombre de la empresa"}
+              />
+            </div>
+            <div className="modal_field">
+              <label>Imagen del perfil</label>
+              <input
+                name="imagen"
+                value={formData.informacion}
+                onChange={handleChange}
+                max={200}
+                placeholder={empresa.telefono || "+52 614-000-0000"}
+              />
+            </div>
+            <div className="modal_field modal_field--full">
+              <label>Breve descripcion</label>
+              <input
+                name="eslogan"
+                value={formData.eslogan}
+                onChange={handleChange}
+                placeholder={
+                  empresa.eslogan || "Breve descripcion de la empresa"
+                }
+              />
+            </div>
+          </div>
+
+          <div className="modal_actions">
+            <button type="button" className="btn_cancelar" onClick={onClose}>
+              Cancelar
+            </button>
+            <button type="submit" className="btn_guardar">
+              Guardar cambios
+            </button>
+          </div>
+        </form>
+      </div>
+    </div>
+  );
+}

@@ -29,7 +29,7 @@ export default function PopupEditProfiel({ empresa, onClose, onSave }) {
     evt.preventDefault();
     console.log("Token:", localStorage.getItem("token"));
     try {
-      const respuesta = await actualizarPerfilService.actualizarEmpresa(
+      const respuesta = await actualizarPerfilService.actualizarDatosEmpresa(
         userId,
         {
           email: formData.email,

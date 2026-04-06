@@ -8,6 +8,7 @@ import Registro from "../../pages/Registro";
 import Login from "../../pages/Login";
 import Profile from "../../pages/Profile";
 import Nosotros from "../../pages/Nosotros";
+import PublicProfile from "../../pages/PublicProfile";
 export default function Navigation() {
   return (
     <div className="container_Navigation">
@@ -21,6 +22,8 @@ export default function Navigation() {
         <Route path="/login" element={<Login />} />
         <Route path="/profile" element={<Profile />} />
         <Route path="/nosotros" element={<Nosotros />} />
+        <Route path="/empresa/:id" element={<PublicProfile />} />{" "}
+        {/* Ruta para perfiles públicos de empresas */}
       </Routes>
     </div>
   );

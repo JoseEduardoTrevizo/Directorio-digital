@@ -89,6 +89,7 @@ export async function loginService(email, password) {
       nombre: data.user?.nombre,
       email: data.user?.email,
       industria: data.user?.industria,
+      plan: data.user?.plan,
     },
   };
 }

@@ -1,25 +1,60 @@
 const API_URL = "http://localhost:5000/api";
 
-const actualizarEmpresa = async (id, datos) => {
-  console.log("Datos enviados:", datos);
-  console.log("Payload enviado:", JSON.stringify(datos, null, 2));
-  const response = await fetch(`${API_URL}/edit-profile/${id}`, {
-    method: "PUT",
-    headers: {
-      "Content-Type": "application/json",
-      Authorization: `Bearer ${localStorage.getItem("token")}`,
-    },
-    body: JSON.stringify(datos),
-  });
+const actualizarDatosEmpresa = async (id, datos) => {
+  const token = localStorage.getItem("token");
+  if (!token) throw new Error("No hay sesión activa");
+  if (!id || !datos) throw new Error("ID y datos son requeridos");
 
-  if (!response.ok) {
-    throw new Error("Error al actualizar la empresa");
+  try {
+    const response = await fetch(`${API_URL}/edit-profile/${id}`, {
+      method: "PUT",
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: `Bearer ${token}`,
+      },
+      body: JSON.stringify(datos),
+    });
+
+    if (!response.ok) {
+      const errorData = await response.json().catch(() => ({}));
+      throw new Error(errorData.message || "Error al actualizar la empresa");
+    }
+
+    return await response.json();
+  } catch (error) {
+    console.error("Error en actualizarDatosEmpresa:", error);
+    throw error;
   }
-
-  const responseData = await response.json();
-  return responseData;
 };
 
+const actualizarEncabezadoEmpresa = async (id, datos) => {
+  const token = localStorage.getItem("token");
+  if (!token) throw new Error("No hay sesión activa");
+  if (!id || !datos) throw new Error("ID y datos son requeridos");
+  try {
+    const response = await fetch(`${API_URL}/edit-header/${id}`, {
+      method: "PUT",
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: `Bearer ${token}`,
+      },
+      body: JSON.stringify(datos),
+    });
+
+    if (!response.ok) {
+      const errorData = await response.json().catch(() => ({}));
+      console.log("Status:", response.status);
+      console.log("Respuesta del backend:", errorData); // ← agrega esto
+      throw new Error(errorData.message || "Error al actualizar el encabezado");
+    }
+
+    return await response.json();
+  } catch (error) {
+    console.error("Error en actualizarEncabezadoEmpresa:", error);
+    throw error;
+  }
+};
 export default {
-  actualizarEmpresa,
+  actualizarDatosEmpresa,
+  actualizarEncabezadoEmpresa,
 };

@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { useAuth } from "../../contexts/AuthContext";
 import mail from "../../assets/icons/mail.svg";
 import phone from "../../assets/icons/call.svg";
@@ -6,31 +6,31 @@ import web from "../../assets/icons/web.svg";
 import map from "../../assets/images/google-maps.jpg";
 import edit from "../../assets/icons/edit.svg";
 import PopupEditProfiel from "../../utils/PopupEditProfiel";
+import { obtenerEmpresaPorId } from "../../services/perfilPublicoService";
 
 export default function CardAboutProfile({ profileUserId }) {
-  const { userId, currentUser, updateCurrentUser } = useAuth();
+  const { userId, updateCurrentUser, currentUser } = useAuth();
   const [modalOpen, setModalOpen] = useState(false);
-  const [empresaData, setEmpresaData] = useState({
-    email: currentUser.email || "",
-    telefono: currentUser.telefono || "",
-    website: currentUser.web_site || "",
-    industria: currentUser.industria || "",
-    tamano_empresa: currentUser.tamano_empresa || "",
-    horario: currentUser.horario_atencion || "",
-    ubicacion: currentUser.ubicacion || "Cuauhtemoc, Chihuahua",
-    direccion: currentUser.direccion || "",
-    plan: currentUser.plan || "",
-  });
+  const [empresaData, setEmpresaData] = useState(null);
 
-  console.log("userId (logueado):", userId); // debe ser null si no hay sesión
-  console.log("profileUserId (prop):", profileUserId);
-  console.log("¿Es el perfil del usuario logueado?", currentUser.email);
+  console.log("empresaData:", empresaData);
+  useEffect(() => {
+    if (!profileUserId) return;
+    obtenerEmpresaPorId(profileUserId)
+      .then((data) => {
+        console.log("plan en empresaData:", data.plan);
+        setEmpresaData(data);
+      })
+      .catch(console.error);
+  }, [profileUserId]);
 
+  if (!empresaData) return <p>Cargando...</p>;
   const isOwnProfile =
     userId != null && String(userId) === String(profileUserId);
 
+  console.log("Empresa data en CardAboutProfile:", currentUser);
   const handleSave = (nuevaData) => {
-    setEmpresaData(nuevaData); // actualiza el estado local
+    setEmpresaData((prev) => ({ ...prev, ...nuevaData, plan: prev.plan })); // actualiza el estado local
     updateCurrentUser({
       // actualiza el context
       email: nuevaData.email,
@@ -41,7 +41,7 @@ export default function CardAboutProfile({ profileUserId }) {
       horario_atencion: nuevaData.horario, // el context usa horario_atencion
       ubicacion: nuevaData.ubicacion,
       direccion: nuevaData.direccion,
-      plan: nuevaData.plan,
+      plan: currentUser.plan, // mantenemos el plan actual
     });
   };
   const url = empresaData.website?.startsWith("http")
@@ -119,10 +119,14 @@ export default function CardAboutProfile({ profileUserId }) {
               </p>
               <h3 className="subtitleCard_Profile">Dirección</h3>
               <p className="textCard_Profile">{empresaData.direccion || ""}</p>
-              <h3 className="subtitleCard_Profile">Plan actual</h3>
-              <p className="textCard_Profile profile_plan">
-                {empresaData.plan || ""}
-              </p>
+              {isOwnProfile && (
+                <>
+                  <h3 className="subtitleCard_Profile">Plan actual</h3>
+                  <p className="textCard_Profile profile_plan">
+                    {empresaData.plan || ""}
+                  </p>
+                </>
+              )}
             </div>
           </div>
 

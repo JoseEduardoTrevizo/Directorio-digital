@@ -18,24 +18,49 @@
   object-fit: cover;
   border: 2px solid #16a249;
 }
+.profile-header-content {
+  display: flex;
+  justify-content: center;
+  max-width: 1200px;
+  width: 100%;
+  margin: -50px auto;
+}
 .profile-content {
-  position: absolute;
   display: flex;
   flex-direction: row;
-  top: 230px;
-  left: 180px;
-  max-width: 700px;
+  justify-content: space-between;
+  align-items: flex-start;
+
   width: 100%;
-  margin: auto;
+  padding-right: 25px;
+}
+.profile-contentTitle-picture {
+  display: flex;
+  gap: 10px;
+  flex-direction: row;
 }
 .profile-content-Header {
   display: flex;
   justify-content: flex-start;
   flex-direction: column;
-  max-width: 500px;
+  max-width: 550px;
   width: 100%;
   top: 250px;
   margin-left: 20px;
+}
+.content__sinSesion {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background: #042442;
+  height: 60vh;
+}
+.text-chargin {
+  color: white;
+  padding-top: 60px;
+  font-size: 18px;
+  text-align: center;
+  margin: 0;
 }
 .profile-name {
   font-size: 24px;
@@ -75,7 +100,10 @@
   width: 16px;
   margin-right: 8px;
 }
-
+.edit-title {
+  align-self: flex-start;
+  margin-top: 80px;
+}
 /* Estilos para la sección de contenido del perfil */
 .content_Container {
   display: flex;

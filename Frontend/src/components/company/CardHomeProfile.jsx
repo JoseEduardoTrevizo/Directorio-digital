@@ -1,11 +1,19 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { useAuth } from "../../contexts/AuthContext";
 import edit from "../../assets/icons/edit.svg";
 import imagen from "../../assets/icons/image.svg";
+import { obtenerEmpresaPorId } from "../../services/perfilPublicoService";
 
 export default function CardHomeProfile({ profileUserId }) {
   const [images, setImages] = useState([]);
   const { userId } = useAuth();
+
+  useEffect(() => {
+    if (!profileUserId) return;
+    obtenerEmpresaPorId(profileUserId)
+      .then((data) => setEmpresaData(data))
+      .catch(console.error);
+  }, [profileUserId]);
 
   const isOwnProfile =
     userId != null && String(userId) === String(profileUserId);

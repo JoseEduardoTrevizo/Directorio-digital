@@ -3,9 +3,17 @@ import { NavLink } from "react-router";
 import { useAuth } from "../../contexts/AuthContext";
 import hire from "../../assets/icons/edit.svg";
 import business from "../../assets/icons/business_center.svg";
+import { obtenerEmpresaPorId } from "../../services/perfilPublicoService";
 
 export default function CardHireProfile({ profileUserId }) {
   const { userId } = useAuth();
+
+  useEffect(() => {
+    if (!profileUserId) return;
+    obtenerEmpresaPorId(profileUserId)
+      .then((data) => setEmpresaData(data))
+      .catch(console.error);
+  }, [profileUserId]);
 
   const isOwnProfile =
     userId != null && String(userId) === String(profileUserId);

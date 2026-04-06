@@ -37,7 +37,7 @@ export default function Login() {
   return (
     <>
       <main className="content_Login">
-        <h1 className="login_Title">Iniciar Sesion en Directorio Digital</h1>
+        <h1 className="login_Title">Inicia Sesion en Nexum</h1>
 
         <div className="container_Login">
           <h2 className="formulario_Title">Acceso al Portal</h2>

@@ -1,20 +1,33 @@
 .content_Login {
   padding-top: 60px;
+  background: #042442;
 }
 .login_Title {
   font-size: 2em;
-  color: #333;
+  color: #c6a75e;
   text-align: center;
   margin-top: 20px;
   margin-bottom: 0;
 }
+.formulario_Title {
+  color: #c6a75e;
+}
+.formulario_Container {
+  padding: 0 10px 10px 10px;
+}
+.formulario_label {
+  color: #fff;
+}
 .container_Login {
-  color: #042442;
+  color: #fff;
   display: flex;
   width: 25%;
   align-items: center;
-  margin: 100px auto 100px;
-  background: #f3f4f7;
+  margin: 50px auto 100px;
+  background: rgba(255, 255, 255, 0.08);
+  backdrop-filter: blur(10px);
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  border-radius: 16px;
   box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
 }
 .input-container {
@@ -78,6 +91,7 @@
   display: flex;
   text-decoration: none;
   align-items: center;
+  color: #c6a75e;
 }
 .footer_Login {
   display: flex;
@@ -87,6 +101,7 @@
 .link-to_Register {
   text-decoration: none;
   margin-left: 10px;
+  color: #c6a75e;
 }
 .general-error-text {
   color: red;
