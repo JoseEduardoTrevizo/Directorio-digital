@@ -29,7 +29,9 @@
   box-shadow: 0 20px 60px rgba(0, 0, 0, 0.2);
   animation: slideUp 0.25s ease;
 }
-
+.modal_container--about {
+  max-width: 600px;
+}
 @keyframes slideUp {
   from {
     transform: translateY(20px);
@@ -104,13 +106,27 @@
   grid-template-columns: 1fr 1fr;
   gap: 12px;
 }
-
+.modal_grid--about {
+  grid-template-columns: 1fr;
+}
 .modal_field {
   display: flex;
   flex-direction: column;
   gap: 6px;
 }
-
+.text_about {
+  min-height: 120px;
+  max-height: 120px;
+  overflow-y: auto;
+  resize: vertical;
+  border-radius: 8px;
+  border: 1px solid #ddd;
+}
+.text_about:focus {
+  outline: none;
+  border-color: #c6a75e;
+  box-shadow: 0 0 0 3px rgba(198, 167, 94, 0.15);
+}
 .modal_field--full {
   grid-column: 1 / -1;
 }

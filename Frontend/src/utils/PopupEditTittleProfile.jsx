@@ -9,17 +9,12 @@ export default function PopupEditTittleProfile({ onClose, onSave, empresa }) {
   });
   const { userId, updateCurrentUser, login } = useAuth();
 
-  console.log("Empresa en Popup:", empresa.nombre);
-  console.log("eslogan en formData:", empresa.eslogan);
   const handleChange = (e) => {
     setFormData({ ...formData, [e.target.name]: e.target.value });
   };
 
   const handleSubmit = async (evt) => {
     evt.preventDefault();
-    console.log("Token:", localStorage.getItem("token"));
-    console.log("nombre enviado:", formData.nombre);
-    console.log("eslogan enviado:", formData.eslogan);
     try {
       const respuesta =
         await actualizarPerfilService.actualizarEncabezadoEmpresa(userId, {
@@ -65,7 +60,7 @@ export default function PopupEditTittleProfile({ onClose, onSave, empresa }) {
                 value={formData.informacion}
                 onChange={handleChange}
                 max={200}
-                placeholder={empresa.telefono || "+52 614-000-0000"}
+                placeholder={"Foto de perfil de la empresa"}
               />
             </div>
             <div className="modal_field modal_field--full">

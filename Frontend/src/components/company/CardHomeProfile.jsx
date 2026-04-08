@@ -2,21 +2,35 @@ import React, { useState, useEffect } from "react";
 import { useAuth } from "../../contexts/AuthContext";
 import edit from "../../assets/icons/edit.svg";
 import imagen from "../../assets/icons/image.svg";
+import PopupHomeProfile from "../../utils/PopupHomeProfile";
 import { obtenerEmpresaPorId } from "../../services/perfilPublicoService";
 
 export default function CardHomeProfile({ profileUserId }) {
+  const { userId, updateCurrentUser } = useAuth();
+  const [empresaData, setEmpresaData] = useState(null);
   const [images, setImages] = useState([]);
-  const { userId } = useAuth();
+  const [modalOpen, setModalOpen] = useState(false);
 
   useEffect(() => {
     if (!profileUserId) return;
     obtenerEmpresaPorId(profileUserId)
-      .then((data) => setEmpresaData(data))
+      .then((data) => {
+        console.log("plan en empresaData:", data);
+        setEmpresaData(data);
+      })
       .catch(console.error);
   }, [profileUserId]);
 
   const isOwnProfile =
     userId != null && String(userId) === String(profileUserId);
+
+  const handleSave = (nuevaData) => {
+    setEmpresaData((prev) => ({ ...prev, ...nuevaData })); // actualiza el estado local
+    updateCurrentUser({
+      // actualiza el context
+      informacion: nuevaData.about,
+    });
+  };
 
   const handleImageChange = (e) => {
     const files = Array.from(e.target.files);
@@ -55,19 +69,25 @@ export default function CardHomeProfile({ profileUserId }) {
           <div className="container-edit">
             <h2 className="titleCard_Profile">Acerca de la empresa</h2>
             {isOwnProfile && (
-              <img className="iconProfile edit" src={edit} alt="Edit" />
+              <img
+                className="iconProfile edit"
+                src={edit}
+                alt="Edit"
+                onClick={() => setModalOpen(true)}
+                style={{ cursor: "pointer" }}
+              />
+            )}
+
+            {modalOpen && (
+              <PopupHomeProfile
+                empresa={empresaData}
+                onClose={() => setModalOpen(false)}
+                onSave={handleSave}
+              />
             )}
           </div>
           <div className="container_Text">
-            <p className="textCard_Profile-home">
-              Empresa líder en desarrollo de software y soluciones tecnológicas
-              innovadoras para el mercado mexicano. Empresa líder en desarrollo
-              de software y soluciones tecnológicas innovadoras para el mercado
-              mexicano. Empresa líder en desarrollo de software y soluciones
-              tecnológicas innovadoras para el mercado mexicano. Empresa líder
-              en desarrollo de software y soluciones tecnológicas innovadoras
-              para el mercado mexicano.
-            </p>
+            <p className="textCard_Profile-home">{empresaData?.about}</p>
           </div>
         </div>
 

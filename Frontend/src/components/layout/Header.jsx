@@ -2,11 +2,13 @@ import React, { useState, useEffect } from "react";
 import { NavLink, useLocation, useNavigate } from "react-router-dom";
 import { useAuth } from "../../contexts/AuthContext";
 import login from "../../assets/icons/login.svg";
+import homeIcon from "../../assets/icons/homeIcon.svg";
 import logoutIcon from "../../assets/icons/logout.svg";
 import register from "../../assets/icons/user_add.svg";
 
 export default function Header() {
   const [scrolled, setScrolled] = useState(false);
+  const [menuOpen, setMenuOpen] = useState(false);
   const { isLoggedIn, logout } = useAuth();
   const navigate = useNavigate();
 
@@ -22,6 +24,15 @@ export default function Header() {
     return () => window.removeEventListener("scroll", handleScroll);
   }, []);
 
+  useEffect(() => {
+    const handleClickOutside = (e) => {
+      if (!e.target.closest(".user-menu-container")) {
+        setMenuOpen(false);
+      }
+    };
+    document.addEventListener("mousedown", handleClickOutside);
+    return () => document.removeEventListener("mousedown", handleClickOutside);
+  }, []);
   const headerClass = !isHome
     ? "header header--scrolled"
     : `header ${scrolled ? "header--scrolled" : "header--transparent"}`;
@@ -61,16 +72,43 @@ export default function Header() {
           </NavLink>
         )}
 
-        {isLoggedIn ? (
-          <button onClick={handleLogout} className="btn btn-logout">
-            <img src={logoutIcon} alt="Logout" className="logout" />
-            Cerrar Sesion
-          </button>
-        ) : (
+        {!isLoggedIn && (
           <NavLink to="/Registro" className="btn btn-register">
             <img src={register} alt="Logout" className="logout" />
             Registrate
           </NavLink>
+        )}
+
+        {isLoggedIn && (
+          <div className="user-menu-container">
+            <button
+              onClick={() => setMenuOpen(!menuOpen)}
+              className="btn btn-logout"
+            >
+              <img src={homeIcon} alt="Menu" className="menu-icon" />
+            </button>
+
+            {menuOpen && (
+              <div className="user-menu-dropdown">
+                <button
+                  onClick={() => {
+                    navigate("/profile");
+                    setMenuOpen(false);
+                  }}
+                >
+                  Ver perfil
+                </button>
+                <button
+                  onClick={() => {
+                    handleLogout();
+                    setMenuOpen(false);
+                  }}
+                >
+                  Cerrar sesión
+                </button>
+              </div>
+            )}
+          </div>
         )}
       </div>
     </header>

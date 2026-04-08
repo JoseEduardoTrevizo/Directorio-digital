@@ -54,7 +54,38 @@ const actualizarEncabezadoEmpresa = async (id, datos) => {
     throw error;
   }
 };
+
+const actualizarAcercaDeEmpresa = async (id, datos) => {
+  const token = localStorage.getItem("token");
+  if (!token) throw new Error("No hay sesión activa");
+  if (!id || !datos) throw new Error("ID y datos son requeridos");
+
+  try {
+    const response = await fetch(`${API_URL}/edit-about/${id}`, {
+      method: "PUT",
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: `Bearer ${token}`,
+      },
+      body: JSON.stringify(datos),
+    });
+
+    if (!response.ok) {
+      const errorData = await response.json().catch(() => ({}));
+      throw new Error(
+        errorData.message || "Error al actualizar la información de la empresa",
+      );
+    }
+
+    return await response.json();
+  } catch (error) {
+    console.error("Error en actualizarAcercaDeEmpresa:", error);
+    throw error;
+  }
+};
+
 export default {
   actualizarDatosEmpresa,
   actualizarEncabezadoEmpresa,
+  actualizarAcercaDeEmpresa,
 };
