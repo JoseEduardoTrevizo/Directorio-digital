@@ -1,20 +1,38 @@
-import React from "react";
+import React, { useState, useEffect } from "react";
+import directorioService from "../services/directorioService";
 import Filter_directory from "../components/directory/Filter_directory";
 import Companies_list from "../components/directory/Companies_list";
 import Aside_adds from "../components/directory/Aside_adds";
 import Aside_addsBottom from "../components/directory/Aside_addsBottom";
 import Popup_Company from "../components/directory/Popup_Company";
-import { useState } from "react";
 
 export default function Directorio() {
   const [isPopupOpen, setIsPopupOpen] = useState(false);
+  const [empresas, setEmpresas] = useState([]);
+  const [selectedEmpresa, setSelectedEmpresa] = useState(null);
 
-  const handleOpenPopup = () => {
+  useEffect(() => {
+    const fetchEmpresas = async () => {
+      try {
+        const data = await directorioService.obtenerEmpresas();
+        setEmpresas(data);
+        console.log("Empresas obtenidas:", data);
+      } catch (error) {
+        console.error("Error al cargar empresas:", error.message);
+      }
+    };
+
+    fetchEmpresas();
+  }, []);
+
+  const handleOpenPopup = (empresa) => {
+    setSelectedEmpresa(empresa);
     setIsPopupOpen(true);
   };
 
   const handleClosePopup = () => {
     setIsPopupOpen(false);
+    setSelectedEmpresa(null);
   };
   return (
     <>
@@ -25,16 +43,13 @@ export default function Directorio() {
             <Filter_directory />
           </aside>
           <main className="companies_list">
-            <Companies_list onClick={handleOpenPopup} />
-            <Companies_list onClick={handleOpenPopup} />
-            <Companies_list onClick={handleOpenPopup} />
-            <Companies_list onClick={handleOpenPopup} />
-            <Companies_list onClick={handleOpenPopup} />
-            <Companies_list />
-            <Companies_list />
-            <Companies_list />
-            <Companies_list />
-            <Companies_list />
+            {empresas.map((empresa) => (
+              <Companies_list
+                key={empresa.id}
+                empresa={empresa}
+                onClick={() => handleOpenPopup(empresa)}
+              />
+            ))}
           </main>
           <aside className="directory_ads">
             <Aside_adds />
@@ -45,7 +60,9 @@ export default function Directorio() {
         </div>
       </div>
 
-      {isPopupOpen && <Popup_Company onClose={handleClosePopup} />}
+      {isPopupOpen && (
+        <Popup_Company empresa={selectedEmpresa} onClose={handleClosePopup} />
+      )}
     </>
   );
 }

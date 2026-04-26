@@ -6,27 +6,27 @@ import shield from "../assets/icons/shield.svg";
 import compass from "../assets/icons/compass.svg";
 import { NavLink } from "react-router-dom";
 const rows = [
-  { traditional: "Solo listado", nexum: "Ecosistema estructurado" },
-  { traditional: "Publicación básica", nexum: "Posicionamiento estratégico" },
+  { traditional: "Solo listado", nexus: "Ecosistema estructurado" },
+  { traditional: "Publicación básica", nexus: "Posicionamiento estratégico" },
   {
     traditional: "Categorías saturadas",
-    nexum: "Categorías organizadas y jerarquizadas",
+    nexus: "Categorías organizadas y jerarquizadas",
   },
   {
     traditional: "Perfil mal estructurado",
-    nexum: "Perfil estructurado y profesional",
+    nexus: "Perfil estructurado y profesional",
   },
   {
     traditional: "Sin espacio publicitario",
-    nexum: "Espacio publicitario disponible",
+    nexus: "Espacio publicitario disponible",
   },
   {
     traditional: "Poca visibilidad",
-    nexum: "Enlaces dinámicos",
+    nexus: "Enlaces dinámicos",
   },
   {
     traditional: "Sin publicacion de vacantes",
-    nexum: "Publicación de vacantes",
+    nexus: "Publicación de vacantes",
   },
 ];
 export default function Nosotros() {
@@ -64,7 +64,7 @@ export default function Nosotros() {
           <div className="hero_glow hero_glow--right" aria-hidden="true" />
 
           <div className="hero_content">
-            <span className="hero_eyebrow">NEXUM</span>
+            <span className="hero_eyebrow">NEXUS</span>
             <h1 className="hero_title">
               La nueva puerta
               <br />
@@ -105,7 +105,7 @@ export default function Nosotros() {
             </h2>
             <div className="about_body">
               <p className="about_paragraph">
-                NEXUM nace con una idea clara: el comercio necesita algo más que
+                NEXUS nace con una idea clara: el comercio necesita algo más que
                 visibilidad. Necesita estructura. Necesita principios. Necesita{" "}
                 <strong>conexión estratégica.</strong>
               </p>
@@ -115,7 +115,7 @@ export default function Nosotros() {
                 <strong>organizado, confiable y preparado para escalar.</strong>
               </p>
               <p className="about_paragraph">
-                Cada negocio que forma parte de NEXUM no solo aparece. Se
+                Cada negocio que forma parte de NEXUS no solo aparece. Se
                 integra a un sistema que{" "}
                 <strong>impulsa su crecimiento.</strong>
               </p>
@@ -217,7 +217,7 @@ export default function Nosotros() {
                   </div>
                   <div className="diferent_header_col diferent_header_col--nexum">
                     <span className="diferent_icon diferent_icon--good">✓</span>
-                    <span className="diferent_header_label">NEXUM</span>
+                    <span className="diferent_header_label">NEXUS</span>
                   </div>
                 </div>
 
@@ -234,7 +234,7 @@ export default function Nosotros() {
                       <span className="diferent_icon diferent_icon--good">
                         ✓
                       </span>
-                      <span>{row.nexum}</span>
+                      <span>{row.nexus}</span>
                     </div>
                   </div>
                 ))}
@@ -245,13 +245,13 @@ export default function Nosotros() {
 
         <section className="join_container scroll_reveal">
           <div className="content_join">
-            <span className="about_eyebrow join">ÚNETE A NEXUM</span>
+            <span className="about_eyebrow join">ÚNETE A NEXUS</span>
             <h2 className="about_title join-title">
               Y forma parte de un ecosistema que impulsa el crecimiento
             </h2>
             <div className="about_body"></div>
             <NavLink className="hero_btn hero_btn--secondary" to="/registro">
-              Unete a NEXUM <span className="join_btn_arrow">→</span>
+              Unete a NEXUS <span className="join_btn_arrow">→</span>
             </NavLink>
           </div>
         </section>

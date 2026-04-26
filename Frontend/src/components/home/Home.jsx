@@ -1,7 +1,41 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import search from "../../assets/icons/search.svg";
+import euro from "../../assets/icons/euro.svg";
+import dolar from "../../assets/icons/money.svg";
+import cloud from "../../assets/icons/cloud.svg";
+import homeService from "../../services/homeService";
+import ExchangeChart from "../../utils/ExchangeChart";
 
 export default function Home() {
+  const [tipoCambio, setTipoCambio] = useState(null);
+  const [clima, setClima] = useState(null);
+  const [loadingClima, setLoadingClima] = useState(true);
+
+  useEffect(() => {
+    const fetchTipoCambio = async () => {
+      try {
+        const Data = await homeService.obtenerTipoCambioUSD();
+        setTipoCambio(Data);
+      } catch (error) {
+        console.error("Error al obtener el tipo de cambio:", error);
+      }
+    };
+
+    const fetchClima = async () => {
+      try {
+        const dataClima = await homeService.getClima("Cuauhtemoc");
+        setClima(dataClima);
+        setLoadingClima(false);
+      } catch (error) {
+        console.error("Error al obtener el clima:", error);
+        setLoadingClima(false);
+      }
+    };
+
+    fetchTipoCambio();
+    fetchClima();
+  }, []);
+
   return (
     <>
       <div className="hero-section">
@@ -76,6 +110,36 @@ export default function Home() {
           </div>
         </div>
       </div>
+
+      <section className="barra_Exchange">
+        <div className="containerWeather">
+          <img
+            src={clima?.icono || cloud}
+            alt="Weather"
+            className="weather-icon"
+          />
+          <div className="weather-info">
+            <p className="weather-location">{clima?.ciudad || ""}</p>
+
+            <p className="weather-temperature">
+              <strong>{`${clima?.temperatura}°C` || "28°C"}</strong>
+            </p>
+          </div>
+        </div>
+        <div className="nw-grid">
+          <div className="nw-item">
+            <ExchangeChart sym={dolar} moneda="usdTomxn" par="USD" dias={7} />
+          </div>
+
+          <div className="nw-item">
+            <ExchangeChart sym={euro} moneda="eurTomxn" par="EUR" dias={7} />
+          </div>
+
+          <div className="nw-item">
+            <ExchangeChart sym={dolar} moneda="cadTomxn" par="CAD" dias={7} />
+          </div>
+        </div>
+      </section>
     </>
   );
 }

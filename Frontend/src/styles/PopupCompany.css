@@ -90,11 +90,14 @@
   margin: 0;
   margin-bottom: 15px;
   display: flex;
+  align-items: center;
 }
 .image_pin {
   filter: invert(100%) sepia(0%) saturate(7496%) hue-rotate(134deg)
     brightness(88%) contrast(119%);
   margin-right: 8px;
+  height: 24px;
+  width: 24px;
 }
 .ubicacion_Container {
   color: black;

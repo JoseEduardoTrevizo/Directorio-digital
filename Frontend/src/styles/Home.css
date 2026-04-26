@@ -82,3 +82,113 @@
   display: flex;
   flex-direction: row;
 }
+.barra_Exchange {
+  width: 100%;
+  max-width: 1200px;
+  margin: auto;
+  padding: 28px 34px;
+  border-radius: 22px;
+  color: #fff;
+}
+.containerWeather {
+  display: flex;
+  flex-direction: row;
+  justify-content: flex-end;
+  align-items: center;
+  margin-bottom: 10px;
+}
+.weather-icon {
+  background-color: rgba(4, 36, 66, 0.5);
+  border-radius: 50%;
+  width: 40px;
+  height: 40px;
+  margin-right: 12px;
+}
+.weather-info {
+  display: flex;
+  width: 150px;
+  justify-content: space-between;
+  flex-direction: row;
+  color: #042442;
+}
+.nw-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 20px;
+}
+.nw-item {
+  padding: 10px;
+  border-radius: 16px;
+  background: linear-gradient(135deg, #042442, #132b45);
+  border: 1px solid rgba(198, 167, 94, 0.25);
+  box-shadow: 0 20px 40px rgba(0, 0, 0, 0.18);
+  backdrop-filter: blur(8px);
+}
+.exchange-chart {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+}
+.exchange-chart_header {
+  display: flex;
+  width: 50%;
+  flex-direction: column;
+  justify-content: space-between;
+}
+.exchange-chart_icon {
+  width: 30px;
+  height: 30px;
+  margin-right: 12px;
+  filter: invert(71%) sepia(70%) saturate(296%) hue-rotate(2deg) brightness(85%)
+    contrast(83%);
+  border: 2px solid #c6a75e;
+  border-radius: 50%;
+}
+.tipo_cambio {
+  font-size: 16px;
+  color: #c6a75e;
+}
+.valorChange {
+  display: flex;
+  text-align: center;
+  width: 100%;
+  height: 60px;
+  align-items: center;
+  font-size: 50px;
+}
+.fehcaActualizacion {
+  font-size: 14px;
+  color: #ccc;
+  margin: 0;
+  margin-top: 4px;
+}
+.exchange-chart_body {
+  display: flex;
+  width: 50%;
+  flex-direction: column;
+  align-items: flex-end;
+}
+
+.badge--alza {
+  color: #22c55e;
+}
+.badge--baja {
+  color: #ef4444;
+}
+.nw-footer {
+  margin-top: 24px;
+  display: flex;
+  justify-content: space-between;
+  border-radius: 16px;
+  background: linear-gradient(135deg, #0e1a2b, #132b45);
+  border: 1px solid rgba(198, 167, 94, 0.25);
+  box-shadow: 0 20px 40px rgba(0, 0, 0, 0.18);
+  font-size: 14px;
+  opacity: 0.85;
+}
+.nw-footer span {
+  font-size: 20px;
+  font-weight: 700;
+  display: block;
+  margin-bottom: 6px;
+}

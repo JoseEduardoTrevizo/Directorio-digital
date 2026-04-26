@@ -6,9 +6,10 @@ import name from "../assets/icons/account.svg";
 import lock from "../assets/icons/lock.svg";
 import company from "../assets/icons/apartment.svg";
 import emailCorp from "../assets/icons/email.svg";
+import direccion from "../assets/icons/location_on.svg";
+import telefono from "../assets/icons/call_2.svg";
 
 export default function Registro() {
-  const navigate = useNavigate();
   const opciones = [
     { value: "Manufactura", label: "Manufactura" },
     { value: "Agricultura", label: "Agricultura y Agroindustria" },
@@ -27,6 +28,8 @@ export default function Registro() {
   const [formData, setFormData] = useState({
     nombre: "",
     email: "",
+    direccion: "",
+    telefono: "",
     industria: "",
     contraseña: "",
     confirmarContraseña: "",
@@ -55,6 +58,14 @@ export default function Registro() {
     try {
       setCargando(true);
       await registrarEmpresa(formData);
+      formData.contraseña = "";
+      formData.confirmarContraseña = "";
+      formData.industria = "";
+      formData.nombre = "";
+      formData.email = "";
+      formData.direccion = "";
+      formData.telefono = "";
+      alert("Registro exitoso. Ahora puedes iniciar sesión.");
       // navigate("/pago"); // Redirige al pago tras registro exitoso
     } catch (err) {
       console.log("Tipo de error:", err.type);
@@ -63,7 +74,7 @@ export default function Registro() {
       if (err.type === "NETWORK_ERROR") {
         setError("⚠️ " + err.message);
       } else if (err.type === "VALIDATION_ERROR") {
-        setError(err.message); // Viene del backend, ya es legible
+        setError(err.message);
       } else {
         setError("Ocurrió un error inesperado. Intenta de nuevo.");
       }
@@ -73,42 +84,42 @@ export default function Registro() {
   };
 
   const planes = {
-  "1": {
-    nombre: "Plan Básico",
-    precio: "$349 MXN/mes",
-    features: [
-      "Perfil básico en el directorio",
-      "Información de contacto",
-      "Descripción breve (150-200 palabras)",
-      "1-3 Imágenes",
-      "Enlace a sitio web",
-      "Integración Google Maps",
-    ],
-  },
-  "2": {
-    nombre: "Plan PRO",
-    precio: "$699 MXN/mes",
-    features: [
-      "Todo lo del Plan Básico +",
-      "4-6 imágenes para mostrar",
-      "1 Vacante al Mes",
-      'Badge "Recomendado"',
-      "Estadísticas básicas de búsquedas",
-    ],
-  },
-  "3": {
-    nombre: "Plan Premium",
-    precio: "$949 MXN/mes",
-    features: [
-      "Todo de los Planes +",
-      "Banner publicitario rotativo en página de inicio",
-      "3 Vacantes al Mes",
-      "Posicionamiento destacado en su categoría",
-      "Diferentes ubicaciones",
-      "Estadísticas avanzadas",
-    ],
-  },
-};
+    1: {
+      nombre: "Plan Básico",
+      precio: "$349 MXN/mes",
+      features: [
+        "Perfil básico en el directorio",
+        "Información de contacto",
+        "Descripción breve (150-200 palabras)",
+        "1-3 Imágenes",
+        "Enlace a sitio web",
+        "Integración Google Maps",
+      ],
+    },
+    2: {
+      nombre: "Plan PRO",
+      precio: "$699 MXN/mes",
+      features: [
+        "Todo lo del Plan Básico +",
+        "4-6 imágenes para mostrar",
+        "1 Vacante al Mes",
+        'Badge "Recomendado"',
+        "Estadísticas básicas de búsquedas",
+      ],
+    },
+    3: {
+      nombre: "Plan Premium",
+      precio: "$949 MXN/mes",
+      features: [
+        "Todo de los Planes +",
+        "Banner publicitario rotativo en página de inicio",
+        "3 Vacantes al Mes",
+        "Posicionamiento destacado en su categoría",
+        "Diferentes ubicaciones",
+        "Estadísticas avanzadas",
+      ],
+    },
+  };
   return (
     <>
       <div className="containerVacantes">
@@ -124,7 +135,9 @@ export default function Registro() {
             <form className="formulario_Container" onSubmit={handleSubmit}>
               {error && <p className="formulario_error">{error}</p>}
               <div className="seccion_Info">
-                <label className="formulario_label">Nombre de la Empresa</label>
+                <label className="formulario_labelRegistro">
+                  Nombre de la Empresa
+                </label>
                 <div className="input-container">
                   <img src={name} alt="" className="input-icon" />
                   <input
@@ -139,7 +152,9 @@ export default function Registro() {
               </div>
 
               <div className="seccion_Info">
-                <label className="formulario_label">Email Corporativo</label>
+                <label className="formulario_labelRegistro">
+                  Email Corporativo
+                </label>
                 <div className="input-container">
                   <img src={emailCorp} alt="" className="input-icon" />
                   <input
@@ -155,7 +170,38 @@ export default function Registro() {
               </div>
 
               <div className="seccion_Info">
-                <label className="formulario_label">Industria</label>
+                <label className="formulario_labelRegistro">Direccion</label>
+                <div className="input-container">
+                  <img src={direccion} alt="" className="input-icon" />
+                  <input
+                    className="input_Registro"
+                    placeholder="Boulevard Jorge Castillo"
+                    name="direccion"
+                    value={formData.direccion}
+                    onChange={handleChange}
+                    required
+                  />
+                </div>
+              </div>
+
+              <div className="seccion_Info">
+                <label className="formulario_labelRegistro">Telefono</label>
+                <div className="input-container">
+                  <img src={telefono} alt="" className="input-icon" />
+                  <input
+                    className="input_Registro"
+                    placeholder="625-123-45-67"
+                    name="telefono"
+                    min={10}
+                    value={formData.telefono}
+                    onChange={handleChange}
+                    required
+                  />
+                </div>
+              </div>
+
+              <div className="seccion_Info">
+                <label className="formulario_labelRegistro">Industria</label>
                 <div className="input-container">
                   <img src={company} alt="" className="input-icon" />
                   <Select
@@ -170,7 +216,7 @@ export default function Registro() {
               </div>
 
               <div className="seccion_Info">
-                <label className="formulario_label">Contraseña</label>
+                <label className="formulario_labelRegistro">Contraseña</label>
                 <div className="input-container">
                   <img src={lock} alt="" className="input-icon" />
                   <input
@@ -186,7 +232,9 @@ export default function Registro() {
               </div>
 
               <div className="seccion_Info">
-                <label className="formulario_label">Confirmar Contraseña</label>
+                <label className="formulario_labelRegistro">
+                  Confirmar Contraseña
+                </label>
                 <div className="input-container">
                   <img src={lock} alt="" className="input-icon" />
                   <input

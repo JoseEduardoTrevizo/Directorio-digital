@@ -47,7 +47,7 @@ export default function Empresas() {
           </div>
 
           <div className="plan-card-popular">
-            <div class="popular-badge">MÁS POPULAR</div>
+            <div className="popular-badge">MÁS POPULAR</div>
             <h3 className="plan-title">Plan Premium</h3>
             <p className="plan-price">$949 MXN/mes</p>
             <p className="planmas">Todo de los Planes +</p>

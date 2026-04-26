@@ -86,7 +86,7 @@ export default function CardAboutProfile({ profileUserId }) {
             </p>
             <p className="textCard_Profile">
               <img className="iconProfile" src={web} alt="Web" />
-              {empresaData.website && (
+              {empresaData.website ? (
                 <a
                   className="linkWeb"
                   href={url}
@@ -95,6 +95,8 @@ export default function CardAboutProfile({ profileUserId }) {
                 >
                   {empresaData.website}
                 </a>
+              ) : (
+                "Sin sitio web"
               )}
             </p>
           </div>

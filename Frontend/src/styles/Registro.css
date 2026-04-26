@@ -36,7 +36,7 @@
   margin-bottom: 8px;
   margin: auto;
 }
-.formulario_label {
+.formulario_labelRegistro {
   display: flex;
   font-size: 14px;
   font-weight: 500;
@@ -52,7 +52,7 @@
   transition: all 0.2s;
 }
 .input_Registro:focus {
-  border-color: rgb(198, 167, 94);
+  border-color: #c6a75e;
   background: #ffffff;
   box-shadow: 0 0 0 3px rgba(198, 167, 94, 0.1);
   outline: none;
@@ -96,7 +96,6 @@
   font-size: 16px;
   font-family: sans-serif;
   color: #4b5563;
-
   margin: 0;
   margin-bottom: 15px;
 }
@@ -178,7 +177,17 @@
 .select__placeholder {
   color: #888;
 }
-
+.input-iconRegistro {
+  position: absolute;
+  left: 12px;
+  top: 50%;
+  transform: translateY(-50%);
+  width: 20px;
+  height: 20px;
+  pointer-events: none;
+  filter: invert(78%) sepia(20%) saturate(6%) hue-rotate(23deg) brightness(103%)
+    contrast(106%);
+}
 /* Lista desplegada */
 .select__menu {
   background-color: #f3f4f7 !important;

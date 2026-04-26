@@ -94,7 +94,7 @@
   margin-bottom: 8px;
 }
 
-.search-input {
+.search-inputDirectory {
   width: 100%;
   padding: 10px 14px;
   border: 1px solid #d1d5db;
@@ -234,8 +234,12 @@
 }
 .company-details {
   display: flex;
-  width: 200px;
+  width: 250px;
   justify-content: flex-end;
+}
+.icon-cardDirectorio {
+  filter: invert(94%) sepia(80%) saturate(867%) hue-rotate(317deg)
+    brightness(85%) contrast(79%);
 }
 /* === ASIDE ADDS === */
 .adds_container {

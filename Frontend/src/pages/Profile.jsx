@@ -19,8 +19,6 @@ export default function Profile() {
     { id: "empleos", label: "Empleos" },
   ];
 
-  console.log("eslogan", empresaData?.eslogan);
-  console.log("nombre", empresaData?.nombre);
   useEffect(() => {
     if (!profileUserId) return;
     fetch(`http://localhost:5000/api/empresa/${profileUserId}`)

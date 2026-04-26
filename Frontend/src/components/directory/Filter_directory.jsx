@@ -4,7 +4,7 @@ import { useState } from "react";
 export default function Filter_directory() {
   const [searchTerm, setSearchTerm] = useState("");
   const [selectedCategory, setSelectedCategory] = useState(
-    "Todas las categorías"
+    "Todas las categorías",
   );
   const [selectedLetter, setSelectedLetter] = useState("Todas");
   const companies = [
@@ -67,7 +67,7 @@ export default function Filter_directory() {
         <label className="filter-label">🔍 Buscar por nombre</label>
         <input
           type="text"
-          className="search-input"
+          className="search-inputDirectory"
           placeholder="Nombre de la empresa..."
           value={searchTerm}
           onChange={(e) => setSearchTerm(e.target.value)}

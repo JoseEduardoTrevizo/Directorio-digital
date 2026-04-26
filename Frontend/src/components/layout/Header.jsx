@@ -43,7 +43,7 @@ export default function Header() {
   }
   return (
     <header className={headerClass}>
-      <h2 className="header_title">Nexum</h2>
+      <h2 className="header_title">Nexus</h2>
       <nav className="navbar">
         <ul className="nav">
           <li>

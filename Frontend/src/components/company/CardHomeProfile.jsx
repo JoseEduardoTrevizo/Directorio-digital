@@ -2,6 +2,7 @@ import React, { useState, useEffect } from "react";
 import { useAuth } from "../../contexts/AuthContext";
 import edit from "../../assets/icons/edit.svg";
 import imagen from "../../assets/icons/image.svg";
+import notImagen from "../../assets/icons/bid_land.svg";
 import PopupHomeProfile from "../../utils/PopupHomeProfile";
 import { obtenerEmpresaPorId } from "../../services/perfilPublicoService";
 
@@ -87,13 +88,16 @@ export default function CardHomeProfile({ profileUserId }) {
             )}
           </div>
           <div className="container_Text">
-            <p className="textCard_Profile-home">{empresaData?.about}</p>
+            <p className="textCard_Profile-home">
+              {empresaData?.about ||
+                "La empresa aún no ha proporcionado información sobre sí misma."}
+            </p>
           </div>
         </div>
 
         <div className="container_Home">
-          <h2 className="titleCard_Profile">Tu empresa</h2>
-          {isOwnProfile && (
+          <h2 className="titleCard_Profile">Galeria</h2>
+          {isOwnProfile ? (
             <div className="container_UploadImage">
               <div className="upload_Area">
                 {images.length === 0 ? (
@@ -151,6 +155,36 @@ export default function CardHomeProfile({ profileUserId }) {
                     <button onClick={handleButtonClick} className="btn_Upload">
                       Subir imagen
                     </button>
+                  </>
+                )}
+              </div>
+            </div>
+          ) : (
+            <div className="container_UploadImage">
+              <div className="upload_Area">
+                {images.length === 0 ? (
+                  <div className="upload_Placeholder">
+                    <div className="icon_Camera">
+                      <img src={notImagen} alt="Cámara" />
+                    </div>
+                    <p className="upload_Text">
+                      La empresa aún no ha subido contenido promocional.
+                    </p>
+                  </div>
+                ) : (
+                  <>
+                    <div className="images_Grid">
+                      {images.map((image, index) => (
+                        <div key={image.id} className="banner_Container">
+                          <div className="banner_Image">
+                            <img
+                              src={image.preview}
+                              alt={`Banner ${index + 1}`}
+                            />
+                          </div>
+                        </div>
+                      ))}
+                    </div>
                   </>
                 )}
               </div>
