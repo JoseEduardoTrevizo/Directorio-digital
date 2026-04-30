@@ -134,7 +134,7 @@ export default function ExchangeChart({ sym, moneda, par = "USD", dias = 7 }) {
           {subio ? "▲" : "▼"} {Math.abs(data.cambioPct)}%
         </span>
         <span className={`badge ${subio ? "badge--alza" : "badge--baja"}`}>
-          {subio ? "+" : "-"} {data.diferenciaMxn}
+          {subio ? "+" : ""} {data.diferenciaMxn}
         </span>
       </div>
     </div>

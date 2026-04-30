@@ -5,6 +5,7 @@ import dolar from "../../assets/icons/money.svg";
 import cloud from "../../assets/icons/cloud.svg";
 import homeService from "../../services/homeService";
 import ExchangeChart from "../../utils/ExchangeChart";
+import CarouselNetflix from "./CarouselNetflix";
 
 export default function Home() {
   const [tipoCambio, setTipoCambio] = useState(null);
@@ -140,6 +141,8 @@ export default function Home() {
           </div>
         </div>
       </section>
+
+      <CarouselNetflix />
     </>
   );
 }

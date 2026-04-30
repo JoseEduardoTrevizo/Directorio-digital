@@ -3,17 +3,16 @@ import filtro from "../assets/icons/filter.svg";
 import bannerPublicitario from "../assets/adds/images.jpg";
 import Card_vacante from "../components/vacantes/Card_vacante";
 import Popup_vacante from "../components/vacantes/Popup_vacante";
+import Popup_aplicar from "../components/vacantes/Popup_aplicar";
 
 export default function Vacantes() {
   const [isPopupOpen, setIsPopupOpen] = useState(false);
+  const [popupAplicar, setPopupAplicar] = useState(false);
 
   const handleOpenPopup = () => {
     setIsPopupOpen(true);
   };
 
-  const handleClosePopup = () => {
-    setIsPopupOpen(false);
-  };
   return (
     <>
       <div className="containerVacantes">
@@ -60,7 +59,21 @@ export default function Vacantes() {
           <Card_vacante onClick={handleOpenPopup} />
           <Card_vacante onClick={handleOpenPopup} />
         </div>
-        {isPopupOpen && <Popup_vacante onClose={handleClosePopup} />}
+        {isPopupOpen && (
+          <Popup_vacante
+            onClose={() => {
+              setIsPopupOpen(false);
+            }}
+            onAplicar={() => {
+              setIsPopupOpen(false); // cierra el primero
+              setPopupAplicar(true); // abre el segundo
+            }}
+          />
+        )}
+
+        {popupAplicar && (
+          <Popup_aplicar onClose={() => setPopupAplicar(false)} />
+        )}
       </div>
     </>
   );

@@ -14,14 +14,17 @@ export default function Card_vacante({ onClick }) {
         </div>
 
         <div className="subHeader_Card-vacante">
-          <p className="datos_vacante">
-            {" "}
-            <img className="icon_Subheader" src={location} /> Cd.Cuauhtemoc
-          </p>
-          <p className="datos_vacante">
-            {" "}
-            <img className="icon_Subheader" src={paid} /> 45,000 - 65,000
-          </p>
+          <div>
+            <p className="datos_vacante">
+              {" "}
+              <img className="icon_Subheader" src={location} /> Cd.Cuauhtemoc
+            </p>
+            <p className="datos_vacante">
+              {" "}
+              <img className="icon_Subheader" src={paid} /> 45,000 - 65,000
+            </p>
+          </div>
+
           <p className="datos_vacante">
             {" "}
             <img className="icon_Subheader" src={calendar} /> 04/01/2026

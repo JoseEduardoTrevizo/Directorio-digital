@@ -1,0 +1,249 @@
+import React, { useEffect, useState } from "react";
+
+export default function Popup_aplicar({ onClose, vacante }) {
+  const [form, setForm] = useState({
+    nombre: "",
+    apellido: "",
+    edad: "",
+    domicilio: "",
+    telefono: "",
+    sexo: "",
+    fechaNacimiento: "",
+    estadoCivil: "",
+    email: "",
+    escolaridad: "",
+    tituloRecibido: "",
+    idiomas: "",
+    software: "",
+    maquinas: "",
+    otroTrabajos: "",
+    empresa: "",
+    puesto: "",
+    descripcion: "",
+    cv: null,
+  });
+
+  useEffect(() => {
+    document.body.style.overflow = "hidden";
+    return () => {
+      document.body.style.overflow = "unset";
+    };
+  }, []);
+
+  const handleChange = (e) => {
+    const { name, value, files } = e.target;
+    setForm((prev) => ({ ...prev, [name]: files ? files[0] : value }));
+  };
+
+  const handleSubmit = () => {
+    console.log("Aplicando a:", vacante, form);
+    // aquí llamas tu endpoint
+    onClose();
+  };
+
+  return (
+    <>
+      <div className="popup_Overlay" onClick={onClose}></div>
+      <div className="popup-Vacante">
+        <h3 className="apply-title">
+          Completa tu información para aplicar a esta posición
+        </h3>
+
+        <div className="body_Card-vacante">
+          <p className="apply-subTitle">Datos personales</p>
+          <div className="container_datosHeader">
+            <input
+              className="input_aplicar"
+              type="text"
+              name="nombre"
+              required
+              placeholder="Nombre completo*"
+              value={form.nombre}
+              onChange={handleChange}
+            />
+            <input
+              className="input_aplicar"
+              type="text"
+              name="apellido"
+              required
+              placeholder="Apellido completo*"
+              value={form.apellido}
+              onChange={handleChange}
+            />
+            <input
+              className="input_aplicar edad"
+              type="number"
+              name="edad"
+              required
+              placeholder="Edad*"
+              value={form.edad}
+              onChange={handleChange}
+            />
+          </div>
+
+          <div className="container_datosHeader">
+            <input
+              className="input_aplicar"
+              type="text"
+              name="domicilio"
+              required
+              placeholder="Domicilio*"
+              value={form.domicilio}
+              onChange={handleChange}
+            />
+            <input
+              className="input_aplicar"
+              type="tel"
+              name="telefono"
+              required
+              placeholder="Teléfono*"
+              value={form.telefono}
+              onChange={handleChange}
+            />
+            <input
+              className="input_aplicar sexo"
+              type="text"
+              name="sexo"
+              required
+              placeholder="Sexo*"
+              value={form.sexo}
+              onChange={handleChange}
+            />
+          </div>
+
+          <div className="container_datosHeader">
+            <input
+              className="input_aplicar"
+              type="text"
+              name="fechaNacimiento"
+              required
+              placeholder="Fecha de nacimiento*"
+              value={form.fechaNacimiento}
+              onChange={handleChange}
+            />
+            <input
+              className="input_aplicar"
+              type="text"
+              name="estadoCivil"
+              required
+              placeholder="Estado civil*"
+              value={form.estadoCivil}
+              onChange={handleChange}
+            />
+          </div>
+
+          <input
+            className="input_aplicar"
+            type="email"
+            name="email"
+            placeholder="Correo electrónico"
+            value={form.email}
+            onChange={handleChange}
+          />
+
+          <p className="apply-subTitle">Escolaridad</p>
+
+          <div className="container_datosHeader">
+            <input
+              className="input_aplicar"
+              type="text"
+              name="escolaridad"
+              required
+              placeholder="Ultimo grado de estudios*"
+              value={form.escolaridad}
+              onChange={handleChange}
+            />
+            <input
+              className="input_aplicar"
+              type="text"
+              name="tituloRecibido"
+              placeholder="Título recibido"
+              value={form.tituloRecibido}
+              onChange={handleChange}
+            />
+          </div>
+
+          <p className="apply-subTitle">Conocimientos generales</p>
+
+          <div className="container_datosHeader">
+            <input
+              className="input_aplicar"
+              type="text"
+              name="idiomas"
+              placeholder="Idiomas que dominas"
+              value={form.idiomas}
+              onChange={handleChange}
+            />
+            <input
+              className="input_aplicar"
+              type="text"
+              name="software"
+              placeholder="Software que dominas"
+              value={form.software}
+              onChange={handleChange}
+            />
+          </div>
+          <div className="container_datosHeader">
+            <input
+              className="input_aplicar"
+              type="text"
+              name="maquinas"
+              placeholder="Máquinas de oficina que operas"
+              value={form.maquinas}
+              onChange={handleChange}
+            />
+            <input
+              className="input_aplicar"
+              type="text"
+              name="otroTrabajos"
+              placeholder="Otros trabajos o funciones realizados"
+              value={form.otroTrabajos}
+              onChange={handleChange}
+            />
+          </div>
+
+          <p className="apply-subTitle">Empleo actual o anteriores</p>
+
+          <div className="container_datosHeader">
+            <input
+              className="input_aplicar"
+              type="text"
+              name="empresa"
+              required
+              placeholder="Nombre de la empresa*"
+              value={form.empresa}
+              onChange={handleChange}
+            />
+            <input
+              className="input_aplicar"
+              type="text"
+              name="puesto"
+              required
+              placeholder="Puesto*"
+              value={form.puesto}
+              onChange={handleChange}
+            />
+          </div>
+
+          <div className="container_datosHeader">
+            <textarea
+              className="input_aplicar descripcion"
+              name="descripcion"
+              required
+              placeholder="Actividades desempeñadas*"
+              value={form.descripcion}
+              onChange={handleChange}
+            />
+          </div>
+
+          <label className="label_cv">Adjuntar CV (PDF)</label>
+          <input type="file" name="cv" accept=".pdf" onChange={handleChange} />
+        </div>
+
+        <button className="btn_Aplicar" onClick={handleSubmit}>
+          Enviar solicitud
+        </button>
+      </div>
+    </>
+  );
+}

@@ -4,7 +4,7 @@ import location from "../../assets/icons/location.svg";
 import paid from "../../assets/icons/paid.svg";
 import calendar from "../../assets/icons/calendar.svg";
 
-export default function Popup_vacante({ onClose }) {
+export default function Popup_vacante({ onClose, onAplicar }) {
   useEffect(() => {
     document.body.style.overflow = "hidden";
     return () => {
@@ -49,17 +49,19 @@ export default function Popup_vacante({ onClose }) {
           </p>
         </div>
 
-        <div className="body_Card-vacante">
+        <div className="requisitos">
           <h4 className="title_Popup-vacante">Requisitos</h4>
-          <ul>
+          <ul className="requisitos_PopupVacante">
             <li>Experiencia mínima de 2 años en el puesto</li>
             <li>Conocimientos técnicos en el área</li>
+            <li>Disponibilidad para trabajar en equipo</li>
+            <li>Excelente comunicación y proactividad</li>
             <li>Disponibilidad para trabajar en equipo</li>
             <li>Excelente comunicación y proactividad</li>
           </ul>
         </div>
 
-        <div className="body_Card-vacante">
+        <div className="skills">
           <h4 className="title_Popup-vacante">Habilidades requeridas</h4>
           <ul className="container_Habilidades">
             <li className="habilidad">React</li>
@@ -69,7 +71,9 @@ export default function Popup_vacante({ onClose }) {
           </ul>
         </div>
 
-        <button className="btn_Aplicar">Aplicar Ahora</button>
+        <button className="btn_Aplicar" onClick={onAplicar}>
+          Aplicar Ahora
+        </button>
       </div>
     </>
   );

@@ -3,7 +3,7 @@
   flex-direction: column;
   max-width: 435px;
   height: 300px;
-  padding: 15px;
+  padding: 10px 15px;
   box-shadow: 0 2px 8px rgba(0, 0, 0, 0.04);
   border: 1px solid #e5e7eb;
   border-radius: 12px;
@@ -26,6 +26,9 @@
   margin-right: 10px;
 }
 .subHeader_Card-vacante {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
   color: black;
   margin-top: 10px;
 }
@@ -33,6 +36,8 @@
   display: flex;
   margin: 0;
   margin-bottom: 4px;
+  margin-right: 25px;
+  color: black;
 }
 .icon_Subheader {
   width: 20px;
@@ -41,12 +46,29 @@
   filter: invert(53%) sepia(0%) saturate(0%) hue-rotate(73deg) brightness(95%)
     contrast(87%);
 }
-.body_Card-vacante {
+
+.requisitos {
+  display: flex;
+  max-height: 200px;
+  height: 100%;
+  flex-direction: column;
   color: black;
+  overflow-y: auto;
+}
+.body_Card-vacante {
+  display: flex;
+  color: black;
+  height: auto;
+}
+.requisitos_PopupVacante {
+  display: flex;
+  flex-direction: column;
+  color: black;
+  overflow-y: auto;
 }
 .body_Descripcion {
   display: flex;
-  max-height: 100px;
+  max-height: 180px;
   height: 100%;
   overflow-y: auto;
 }
@@ -54,6 +76,7 @@
 /* === POPUP DE LAS VACANTES === */
 
 .popup-Vacante {
+  display: flex;
   position: fixed;
   top: 50%;
   left: 50%;
@@ -64,7 +87,8 @@
   max-width: 700px;
   max-height: 90vh;
   width: 90%;
-  overflow-y: hidden;
+  height: 100%;
+  overflow-y: auto;
   z-index: 1000;
   box-shadow: 0 8px 32px rgba(0, 0, 0, 0.2);
 }

@@ -1,0 +1,60 @@
+.body_Card-vacante {
+  display: flex;
+  flex-direction: column;
+  height: 800px;
+  overflow-y: auto;
+  padding: 0 10px;
+}
+.apply-title {
+  font-size: 24px;
+  font-weight: bold;
+  color: #c6a75e;
+  margin: 0;
+  margin-bottom: 10px;
+}
+.apply-subTitle {
+  font-size: 18px;
+  font-weight: bold;
+  color: #042442;
+  margin: 0;
+  margin-bottom: 20px;
+}
+
+.container_datosHeader {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  gap: 20px;
+}
+.input_aplicar {
+  width: 100%;
+  padding: 8px;
+  margin-bottom: 15px;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+}
+.edad {
+  max-width: 100px;
+  width: 100%;
+}
+.sexo {
+  max-width: 100px;
+  width: 100%;
+}
+.descripcion {
+  width: 100%;
+  height: 120px;
+  padding: 8px;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+}
+.btn_Aplicar {
+  width: 100%;
+  padding: 10px;
+  background-color: #042442;
+  color: #c6a75e;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  margin-top: 25px;
+}

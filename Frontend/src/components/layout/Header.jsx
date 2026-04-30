@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { NavLink, useLocation, useNavigate } from "react-router-dom";
 import { useAuth } from "../../contexts/AuthContext";
+import enlace from "../../assets/images/enlace5.png";
 import login from "../../assets/icons/login.svg";
 import homeIcon from "../../assets/icons/homeIcon.svg";
 import logoutIcon from "../../assets/icons/logout.svg";
@@ -43,7 +44,9 @@ export default function Header() {
   }
   return (
     <header className={headerClass}>
-      <h2 className="header_title">Nexus</h2>
+      <h2 className="header_title">
+        <img src={enlace} alt="Enlace" className="logoEnlace" />
+      </h2>
       <nav className="navbar">
         <ul className="nav">
           <li>
@@ -74,7 +77,7 @@ export default function Header() {
 
         {!isLoggedIn && (
           <NavLink to="/Registro" className="btn btn-register">
-            <img src={register} alt="Logout" className="logout" />
+            <img src={register} alt="Register" className="icon-register" />
             Registrate
           </NavLink>
         )}

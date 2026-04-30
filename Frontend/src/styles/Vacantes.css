@@ -1,5 +1,6 @@
 .containerVacantes {
-  padding-top: 60px; /* altura del header (80px) + algo de margen */
+  padding-top: 60px;
+  background: #fff;
 }
 .vacantes-container {
   display: flex;

@@ -1,5 +1,6 @@
 .container_nosotros {
   padding-top: 60px;
+  background: #fff;
 }
 .hero_container {
   position: relative;
@@ -10,10 +11,26 @@
   background:
     radial-gradient(ellipse 60% 50% at 50% -10%, #1a3a6e 0%, transparent 60%),
     radial-gradient(ellipse 60% 50% at 80% 60%, #0f2756 0%, transparent 80%),
-    linear-gradient(180deg, #0a1628 0%, #0d1f3c 80%, #fff 100%);
+    linear-gradient(180deg, #0a1628 0%, #0d1f3c 100%);
   font-family: "Sora", sans-serif;
   padding: 0 1.5rem;
   padding-top: 5rem;
+}
+.hero_container::after {
+  content: "";
+  position: absolute;
+  inset: auto 0 0 0;
+  height: 230px;
+  background: linear-gradient(
+    to bottom,
+    rgba(255, 255, 255, 0) 0%,
+    rgba(255, 255, 255, 0.12) 20%,
+    rgba(255, 255, 255, 0.35) 45%,
+    rgba(255, 255, 255, 0.65) 70%,
+    rgba(255, 255, 255, 0.9) 88%,
+    #fff 100%
+  );
+  pointer-events: none;
 }
 
 /* ─── Diagonal grid lines ────────────────────────────── */
@@ -199,6 +216,7 @@
 .scroll_reveal {
   opacity: 0;
   transform: translateY(32px);
+  background: #fff;
 }
 
 .scroll_reveal.visible {
@@ -274,11 +292,28 @@
 }
 /* Seccion inspiracion*/
 .inspiration_container {
-  background: linear-gradient(to bottom, #042442 85%, #fff 100%);
+  position: relative;
+  background: #042442;
   padding: 7rem 1.5rem;
   display: flex;
   justify-content: center;
   font-family: "Sora", sans-serif;
+}
+.inspiration_container::after {
+  content: "";
+  position: absolute;
+  inset: auto 0 0 0;
+  height: 130px;
+  background: linear-gradient(
+    to bottom,
+    rgba(255, 255, 255, 0) 0%,
+    rgba(255, 255, 255, 0.12) 20%,
+    rgba(255, 255, 255, 0.35) 45%,
+    rgba(255, 255, 255, 0.65) 70%,
+    rgba(255, 255, 255, 0.9) 88%,
+    #fff 100%
+  );
+  pointer-events: none;
 }
 .content_inspiration {
   max-width: 1000px;
@@ -512,5 +547,5 @@
 .join_btn_arrow {
   display: inline-block;
   transition: transform 0.2s ease;
-  margin-left: 15px;
+  margin-left: 5px;
 }
