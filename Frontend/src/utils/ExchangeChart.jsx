@@ -1,13 +1,5 @@
 import React, { useEffect, useState } from "react";
 import dolar from "../assets/icons/money.svg";
-import {
-  LineChart,
-  Line,
-  XAxis,
-  YAxis,
-  Tooltip,
-  ResponsiveContainer,
-} from "recharts";
 import homeService from "../services/homeService";
 
 export default function ExchangeChart({ sym, moneda, par = "USD", dias = 7 }) {
@@ -59,6 +51,7 @@ export default function ExchangeChart({ sym, moneda, par = "USD", dias = 7 }) {
             display: "flex",
             flexDirection: "row",
             alignItems: "center",
+            height: "40px",
           }}
         >
           <img src={sym} alt="Dólar" className="exchange-chart_icon" />
@@ -68,74 +61,17 @@ export default function ExchangeChart({ sym, moneda, par = "USD", dias = 7 }) {
         <strong className="valorChange">
           {tipoCambio ? tipoCambio[moneda] : ""}
         </strong>
+        <div className="content_porcentaje">
+          <span className={`badge ${subio ? "badge--alza" : "badge--baja"}`}>
+            {subio ? "▲" : "▼"} ({Math.abs(data.cambioPct)}%)
+          </span>
+          <span className={`badge ${subio ? "badge--alza" : "badge--baja"}`}>
+            {subio ? "+" : ""} {data.diferenciaMxn}
+          </span>
+        </div>
         <p className="fehcaActualizacion">
-          Actualizado:
-          <br />
-          {tipoCambio ? formatearFecha(tipoCambio.fecha) : ""}
+          Actualizado: {tipoCambio ? formatearFecha(tipoCambio.fecha) : ""}
         </p>
-      </div>
-
-      <div className="exchange-chart_body">
-        <ResponsiveContainer width="100%" height={100}>
-          <LineChart data={data.historial}>
-            <XAxis
-              dataKey="fecha"
-              tick={{ fontSize: 11, fill: "#888" }}
-              tickFormatter={(val) => val.slice(5)} // muestra solo "MM-DD"
-              axisLine={{ strokeDasharray: "2 2", stroke: "#e0e0e0" }}
-              tickLine={false}
-            />
-            <YAxis
-              domain={["auto", "auto"]}
-              tick={{ fontSize: 11 }}
-              width={55}
-              axisLine={{ strokeDasharray: "2 2", stroke: "#e0e0e0" }}
-              tickLine={false}
-            />
-            <Tooltip
-              contentStyle={{
-                backgroundColor: "transparent", // fondo
-                border: "none",
-                borderRadius: "8px",
-                padding: "8px 12px",
-              }}
-              itemStyle={{
-                color: subio ? "#22c55e" : "#ef4444",
-                fontWeight: "bold",
-                fontSize: "10px",
-                marginTop: "35px",
-              }}
-              labelFormatter={() => null}
-              labelStyle={{
-                display: "none",
-              }}
-              formatter={(val) => [`${val} Mxn`]}
-              cursor={{
-                stroke: "#888",
-                strokeWidth: 1,
-                strokeDasharray: "4 4",
-              }}
-            />
-            <Line
-              type="monotone"
-              dataKey="mxn"
-              stroke={subio ? "#22c55e" : "#ef4444"}
-              strokeWidth={2}
-              dot={false}
-              activeDot={{
-                r: 4,
-                fill: subio ? "#22c55e" : "#ef4444",
-                strokeWidth: 0,
-              }}
-            />
-          </LineChart>
-        </ResponsiveContainer>
-        <span className={`badge ${subio ? "badge--alza" : "badge--baja"}`}>
-          {subio ? "▲" : "▼"} {Math.abs(data.cambioPct)}%
-        </span>
-        <span className={`badge ${subio ? "badge--alza" : "badge--baja"}`}>
-          {subio ? "+" : ""} {data.diferenciaMxn}
-        </span>
       </div>
     </div>
   );

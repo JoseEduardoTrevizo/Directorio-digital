@@ -8,7 +8,7 @@ import Popup_Company from "../components/directory/Popup_Company";
 
 export default function Directorio() {
   const [isPopupOpen, setIsPopupOpen] = useState(false);
-  const [empresas, setEmpresas] = useState([]);
+  const [empresas, setEmpresas] = useState(null);
   const [selectedEmpresa, setSelectedEmpresa] = useState(null);
 
   useEffect(() => {
@@ -19,6 +19,7 @@ export default function Directorio() {
         console.log("Empresas obtenidas:", data);
       } catch (error) {
         console.error("Error al cargar empresas:", error.message);
+        setEmpresas([]); // Establecer un array vacío para evitar errores de renderizado
       }
     };
 
@@ -34,6 +35,8 @@ export default function Directorio() {
     setIsPopupOpen(false);
     setSelectedEmpresa(null);
   };
+
+  if (empresas === null) return null;
   return (
     <>
       <div className="containerDirectorio">

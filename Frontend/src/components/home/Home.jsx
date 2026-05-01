@@ -112,37 +112,39 @@ export default function Home() {
         </div>
       </div>
 
-      <section className="barra_Exchange">
-        <div className="containerWeather">
-          <img
-            src={clima?.icono || cloud}
-            alt="Weather"
-            className="weather-icon"
-          />
-          <div className="weather-info">
-            <p className="weather-location">{clima?.ciudad || ""}</p>
+      <main className="main-home">
+        <section className="barra_Exchange">
+          <div className="containerWeather">
+            <img
+              src={clima?.icono || cloud}
+              alt="Weather"
+              className="weather-icon"
+            />
+            <div className="weather-info">
+              <p className="weather-location">{clima?.ciudad || ""}</p>
 
-            <p className="weather-temperature">
-              <strong>{`${clima?.temperatura}°C` || "28°C"}</strong>
-            </p>
+              <p className="weather-temperature">
+                <strong>{`${clima?.temperatura}°C` || "28°C"}</strong>
+              </p>
+            </div>
           </div>
-        </div>
-        <div className="nw-grid">
-          <div className="nw-item">
-            <ExchangeChart sym={dolar} moneda="usdTomxn" par="USD" dias={7} />
-          </div>
+          <div className="nw-grid">
+            <div className="nw-item">
+              <ExchangeChart sym={dolar} moneda="usdTomxn" par="USD" dias={7} />
+            </div>
 
-          <div className="nw-item">
-            <ExchangeChart sym={euro} moneda="eurTomxn" par="EUR" dias={7} />
-          </div>
+            <div className="nw-item">
+              <ExchangeChart sym={euro} moneda="eurTomxn" par="EUR" dias={7} />
+            </div>
 
-          <div className="nw-item">
-            <ExchangeChart sym={dolar} moneda="cadTomxn" par="CAD" dias={7} />
+            <div className="nw-item">
+              <ExchangeChart sym={dolar} moneda="cadTomxn" par="CAD" dias={7} />
+            </div>
           </div>
-        </div>
-      </section>
+        </section>
 
-      <CarouselNetflix />
+        <CarouselNetflix />
+      </main>
     </>
   );
 }
