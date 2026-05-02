@@ -1,4 +1,4 @@
-const API_URL = "http://localhost:5000/api";
+const API_URL = import.meta.env.VITE_API_URL;
 
 const actualizarDatosEmpresa = async (id, datos) => {
   const token = localStorage.getItem("token");
@@ -6,7 +6,7 @@ const actualizarDatosEmpresa = async (id, datos) => {
   if (!id || !datos) throw new Error("ID y datos son requeridos");
 
   try {
-    const response = await fetch(`${API_URL}/edit-profile/${id}`, {
+    const response = await fetch(`${API_URL}private/edit-profile/${id}`, {
       method: "PUT",
       headers: {
         "Content-Type": "application/json",
@@ -32,7 +32,7 @@ const actualizarEncabezadoEmpresa = async (id, datos) => {
   if (!token) throw new Error("No hay sesión activa");
   if (!id || !datos) throw new Error("ID y datos son requeridos");
   try {
-    const response = await fetch(`${API_URL}/edit-header/${id}`, {
+    const response = await fetch(`${API_URL}private/edit-header/${id}`, {
       method: "PUT",
       headers: {
         "Content-Type": "application/json",
@@ -61,7 +61,7 @@ const actualizarAcercaDeEmpresa = async (id, datos) => {
   if (!id || !datos) throw new Error("ID y datos son requeridos");
 
   try {
-    const response = await fetch(`${API_URL}/edit-about/${id}`, {
+    const response = await fetch(`${API_URL}private/edit-about/${id}`, {
       method: "PUT",
       headers: {
         "Content-Type": "application/json",

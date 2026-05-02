@@ -1,4 +1,4 @@
-const API_URL = "http://localhost:5000/api/";
+const API_URL = import.meta.env.VITE_API_URL;
 
 const obtenerTipoCambioUSD = async () => {
   try {
@@ -43,7 +43,7 @@ const getHistorico = async (base = "USD", dias = 7) => {
 
 const getClima = async (ciudad = "Cuauhtemoc") => {
   try {
-    const response = await fetch(`${API_URL}clima?ciudad=${ciudad}`);
+    const response = await fetch(`${API_URL}weather/clima?ciudad=${ciudad}`);
 
     if (!response.ok) throw new Error("Error al obtener el clima");
 

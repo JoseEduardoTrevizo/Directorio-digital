@@ -1,4 +1,4 @@
-const API_URL = "http://localhost:5000/api/auth";
+const API_URL = import.meta.env.VITE_API_URL;
 
 function handleHttpError(status, message) {
   switch (status) {
@@ -50,7 +50,7 @@ export async function loginService(email, password) {
   // 2. Hacer la petición
   let response;
   try {
-    response = await fetch(`${API_URL}/login`, {
+    response = await fetch(`${API_URL}auth/login`, {
       method: "POST",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify({ email, password }),

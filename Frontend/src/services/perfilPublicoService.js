@@ -1,8 +1,8 @@
-const API_URL = "http://localhost:5000/api";
+const API_URL = import.meta.env.VITE_API_URL;
 
 export const obtenerEmpresaPorId = async (id) => {
   try {
-    const response = await fetch(`${API_URL}/empresa/${id}`);
+    const response = await fetch(`${API_URL}public/empresa/${id}`);
     if (!response.ok) throw new Error("Error al obtener la empresa");
     return await response.json();
   } catch (error) {

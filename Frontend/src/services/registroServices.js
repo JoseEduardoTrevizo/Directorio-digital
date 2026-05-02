@@ -1,4 +1,4 @@
-const API_URL = "http://localhost:5000/api/empresas";
+const API_URL = import.meta.env.VITE_API_URL;
 
 // Errores personalizados para distinguir el tipo de fallo
 class NetworkError extends Error {
@@ -27,7 +27,7 @@ export const registrarEmpresa = async (datosEmpresa) => {
 
   // 1. Intenta hacer la petición — captura errores de red
   try {
-    response = await fetch(`${API_URL}/registro`, {
+    response = await fetch(`${API_URL}empresas/registro`, {
       method: "POST",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify(datosEmpresa),
