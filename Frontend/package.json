@@ -7,8 +7,8 @@
     "dev": "vite --open",
     "build": "vite build",
     "lint": "eslint .",
-    "preview": "vite preview",
-    "start": "serve -s dist -l $PORT"
+    "preview": "vite preview --port $PORT --host",
+    "start": "vite preview --port $PORT --host"
   },
   "dependencies": {
     "jwt-decode": "^4.0.0",
