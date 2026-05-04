@@ -1,5 +1,5 @@
 import React from "react";
-import logo from "../../assets/react.svg";
+import defaults from "../../assets/images/logotipo.png";
 import mail from "../../assets/icons/mail.svg";
 import telefono from "../../assets/icons/call.svg";
 import direccion from "../../assets/icons/location.svg";
@@ -10,7 +10,7 @@ export default function Companies_list({ onClick, empresa }) {
       <div className="company-card" onClick={onClick}>
         <div className="company-info">
           <span className="logo-placeholder">
-            {<img className="logo" src={logo} alt="Logo" />}
+            {<img className="logo" src={defaults} alt="Logo" />}
           </span>
           <div className="container_Title-card">
             <h3 className="company-name">{empresa.nombre}</h3>

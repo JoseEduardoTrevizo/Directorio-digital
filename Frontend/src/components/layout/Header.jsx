@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { NavLink, useLocation, useNavigate } from "react-router-dom";
 import { useAuth } from "../../contexts/AuthContext";
-import enlace from "../../assets/images/enlace5.png";
+import enlace from "../../assets/images/enlace7.png";
 import login from "../../assets/icons/login.svg";
 import homeIcon from "../../assets/icons/homeIcon.svg";
 import logoutIcon from "../../assets/icons/logout.svg";

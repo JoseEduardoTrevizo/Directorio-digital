@@ -64,7 +64,7 @@ export default function Nosotros() {
           <div className="hero_glow hero_glow--right" aria-hidden="true" />
 
           <div className="hero_content">
-            <span className="hero_eyebrow">ENLACE</span>
+            <span className="hero_eyebrow">ENLACE LOCAL</span>
             <h1 className="hero_title">
               La nueva puerta
               <br />
@@ -105,8 +105,8 @@ export default function Nosotros() {
             </h2>
             <div className="about_body">
               <p className="about_paragraph">
-                ENLACE nace con una idea clara: el comercio necesita algo más
-                que visibilidad. Necesita estructura. Necesita principios.
+                ENLACE LOCAL nace con una idea clara: el comercio necesita algo
+                más que visibilidad. Necesita estructura. Necesita principios.
                 Necesita <strong>conexión estratégica.</strong>
               </p>
               <p className="about_paragraph">
@@ -115,7 +115,7 @@ export default function Nosotros() {
                 <strong>organizado, confiable y preparado para escalar.</strong>
               </p>
               <p className="about_paragraph">
-                Cada negocio que forma parte de ENLACE no solo aparece. Se
+                Cada negocio que forma parte de ENLACE LOCAL no solo aparece. Se
                 integra a un sistema que{" "}
                 <strong>impulsa su crecimiento.</strong>
               </p>
@@ -217,7 +217,7 @@ export default function Nosotros() {
                   </div>
                   <div className="diferent_header_col diferent_header_col--nexum">
                     <span className="diferent_icon diferent_icon--good">✓</span>
-                    <span className="diferent_header_label">ENLACE</span>
+                    <span className="diferent_header_label">ENLACE LOCAL</span>
                   </div>
                 </div>
 
@@ -245,13 +245,13 @@ export default function Nosotros() {
 
         <section className="join_container scroll_reveal">
           <div className="content_join">
-            <span className="about_eyebrow join">ÚNETE A ENLACE</span>
+            <span className="about_eyebrow join">ÚNETE A ENLACE LOCAL</span>
             <h2 className="about_title join-title">
               Y forma parte de un ecosistema que impulsa el crecimiento
             </h2>
             <div className="about_body"></div>
             <NavLink className="hero_btn hero_btn--secondary" to="/registro">
-              Unete a ENLACE <span className="join_btn_arrow">→</span>
+              Unete a ENLACE LOCAL <span className="join_btn_arrow">→</span>
             </NavLink>
           </div>
         </section>

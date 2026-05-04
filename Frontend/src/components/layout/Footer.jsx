@@ -8,7 +8,7 @@ export default function Footer() {
     <footer className="footer">
       <div className="footer_container">
         <div className="footer_presentacion">
-          <h2 className="title_footer">ENLACE</h2>
+          <h2 className="title_footer">ENLACE LOCAL</h2>
           <p>
             La plataforma líder en búsqueda de empleo en México. Conectamos el
             mejor talento con las mejores oportunidades laborales.

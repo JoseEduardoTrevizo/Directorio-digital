@@ -124,7 +124,7 @@ export default function Registro() {
     <>
       <div className="containerVacantes">
         <div className="container_Registro">
-          <h1 className="registroTitle">Unete a Enlace</h1>
+          <h1 className="registroTitle">Unete a Enlace Local</h1>
 
           <div className="formulario">
             <h2 className="formulario_Title">Registra tu Empresa</h2>
