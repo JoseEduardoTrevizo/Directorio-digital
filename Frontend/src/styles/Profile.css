@@ -1,6 +1,7 @@
 .profile-page_Container {
   display: flex;
   padding-top: 60px;
+  background-color: #fff;
 }
 .profile-header {
   max-height: 250px;

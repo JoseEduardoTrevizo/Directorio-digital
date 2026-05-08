@@ -36,7 +36,25 @@ export default function Directorio() {
     setSelectedEmpresa(null);
   };
 
-  if (empresas === null) return null;
+  if (empresas === null)
+    return (
+      <div className="containerDirectorio">
+        <h2 className="directory-title">Directorio de Empresas</h2>
+        <div className="directory_container">
+          <aside className="directory_sidebar">
+            <Filter_directory />
+          </aside>
+          <main className="companies_list">
+            {Array.from({ length: 6 }).map((_, i) => (
+              <div key={i} className="skeleton-card" />
+            ))}
+          </main>
+          <aside className="directory_ads">
+            <Aside_adds />
+          </aside>
+        </div>
+      </div>
+    );
   return (
     <>
       <div className="containerDirectorio">

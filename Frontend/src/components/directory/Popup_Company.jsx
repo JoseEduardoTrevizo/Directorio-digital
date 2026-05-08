@@ -1,6 +1,6 @@
 import React, { useEffect } from "react";
 import { useNavigate } from "react-router";
-import logoCompany from "../../assets/react.svg";
+import logoCompany from "../../assets/images/logotipo.png";
 import open from "../../assets/icons/open.svg";
 import map from "../../assets/images/google-maps.jpg";
 import pin from "../../assets/icons/location.svg";
