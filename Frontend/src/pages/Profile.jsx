@@ -22,7 +22,7 @@ export default function Profile() {
 
   useEffect(() => {
     if (!profileUserId) return;
-    fetch(`${API_URL}/empresa/${profileUserId}`)
+    fetch(`${API_URL}empresa/${profileUserId}`)
       .then((res) => res.json())
       .then((data) => setEmpresaData(data))
       .catch(console.error);
