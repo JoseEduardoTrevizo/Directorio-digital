@@ -11,6 +11,7 @@ export default function Profile() {
   const { currentUser, userId, updateCurrentUser } = useAuth();
   const [empresaData, setEmpresaData] = useState(null);
   const [modalTitleOpen, setModalTitleOpen] = useState(false);
+  const API_URL = import.meta.env.VITE_API_URL;
 
   const profileUserId = currentUser?.id;
   const tabs = [
@@ -21,7 +22,7 @@ export default function Profile() {
 
   useEffect(() => {
     if (!profileUserId) return;
-    fetch(`http://localhost:5000/api/empresa/${profileUserId}`)
+    fetch(`${API_URL}/empresa/${profileUserId}`)
       .then((res) => res.json())
       .then((data) => setEmpresaData(data))
       .catch(console.error);
