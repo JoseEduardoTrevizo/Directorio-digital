@@ -13,12 +13,10 @@ export default function CardAboutProfile({ profileUserId }) {
   const [modalOpen, setModalOpen] = useState(false);
   const [empresaData, setEmpresaData] = useState(null);
 
-  console.log("empresaData:", empresaData);
   useEffect(() => {
     if (!profileUserId) return;
     obtenerEmpresaPorId(profileUserId)
       .then((data) => {
-        console.log("plan en empresaData:", data.plan);
         setEmpresaData(data);
       })
       .catch(console.error);
@@ -28,7 +26,6 @@ export default function CardAboutProfile({ profileUserId }) {
   const isOwnProfile =
     userId != null && String(userId) === String(profileUserId);
 
-  console.log("Empresa data en CardAboutProfile:", currentUser);
   const handleSave = (nuevaData) => {
     setEmpresaData((prev) => ({ ...prev, ...nuevaData, plan: prev.plan })); // actualiza el estado local
     updateCurrentUser({
