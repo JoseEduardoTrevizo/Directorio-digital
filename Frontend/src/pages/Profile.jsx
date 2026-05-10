@@ -35,13 +35,6 @@ export default function Profile() {
       </div>
     );
 
-  if (!empresaData)
-    return (
-      <div className="content__sinSesion">
-        <p className="text-chargin">Cargando...</p>
-      </div>
-    );
-
   const isOwnProfile =
     userId != null && String(userId) === String(profileUserId);
 
