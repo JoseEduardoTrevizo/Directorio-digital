@@ -22,7 +22,7 @@ export default function Profile() {
 
   useEffect(() => {
     if (!profileUserId) return;
-    fetch(`${API_URL}empresa/${profileUserId}`)
+    fetch(`${API_URL}/profile/empresa/${profileUserId}`)
       .then((res) => res.json())
       .then((data) => setEmpresaData(data))
       .catch(console.error);
@@ -32,6 +32,13 @@ export default function Profile() {
     return (
       <div className="content__sinSesion">
         <p className="text-chargin">Debes iniciar sesión para ver tu perfil.</p>
+      </div>
+    );
+
+  if (!empresaData)
+    return (
+      <div className="content__sinSesion">
+        <p className="text-chargin">Cargando...</p>
       </div>
     );
 
