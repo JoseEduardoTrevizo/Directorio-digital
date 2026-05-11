@@ -1,6 +1,7 @@
 /* ===== SECCIÓN GENERAL ===== */
 
 .carousel-netflix {
+  overflow: hidden;
   padding: 24px 0 48px;
   display: flex;
   flex-direction: column;
@@ -46,6 +47,9 @@
   align-items: center;
   gap: 0;
   position: relative;
+  overflow: hidden;
+  padding: 12px 0;
+  overflow: visible;
 }
 
 /* ===== TRACK ===== */

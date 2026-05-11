@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import actualizarPerfilService from "../services/actualizarPerfilService";
 import { useAuth } from "../contexts/AuthContext";
 
@@ -8,6 +8,13 @@ export default function PopupEditTittleProfile({ onClose, onSave, empresa }) {
     eslogan: empresa.eslogan || "",
   });
   const { userId, updateCurrentUser, login } = useAuth();
+
+  useEffect(() => {
+    document.body.style.overflow = "hidden";
+    return () => {
+      document.body.style.overflow = "unset";
+    };
+  }, []);
 
   const handleChange = (e) => {
     setFormData({ ...formData, [e.target.name]: e.target.value });

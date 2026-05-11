@@ -1,10 +1,9 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { useAuth } from "../contexts/AuthContext";
 import actualizarPerfilService from "../services/actualizarPerfilService";
 
 export default function PopupEditProfiel({ empresa, onClose, onSave }) {
   const { userId, currentUser, updateCurrentUser, login } = useAuth();
-  console.log("Usuario actual en PopupEditProfiel:", currentUser);
   const [formData, setFormData] = useState({
     email: empresa.email || "",
     telefono: empresa.telefono || "",
@@ -15,6 +14,12 @@ export default function PopupEditProfiel({ empresa, onClose, onSave }) {
     direccion: empresa.direccion || "",
     ubicacion: empresa.ubicacion || "",
   });
+  useEffect(() => {
+    document.body.style.overflow = "hidden";
+    return () => {
+      document.body.style.overflow = "unset";
+    };
+  }, []);
   const [turnos, setTurnos] = useState(
     empresa.horario
       ? [{ dias: "Lunes a Viernes", inicio: "9:00 AM", fin: "6:00 PM" }]
@@ -27,7 +32,6 @@ export default function PopupEditProfiel({ empresa, onClose, onSave }) {
 
   const handleSubmit = async (evt) => {
     evt.preventDefault();
-    console.log("Token:", localStorage.getItem("token"));
     try {
       const respuesta = await actualizarPerfilService.actualizarDatosEmpresa(
         userId,

@@ -113,6 +113,12 @@
   display: flex;
   flex-direction: column;
   gap: 6px;
+  margin-bottom: 10px;
+}
+.modal_hire {
+  display: flex;
+  flex-direction: row;
+  gap: 16px;
 }
 .text_about {
   min-height: 120px;
@@ -137,7 +143,8 @@
   color: #555;
 }
 
-.modal_field input {
+.modal_field input,
+textarea {
   padding: 10px 12px;
   border: 1px solid #ddd;
   border-radius: 8px;
@@ -147,8 +154,23 @@
   transition:
     border-color 0.2s,
     box-shadow 0.2s;
+  resize: none;
 }
-
+.textArea_vacante {
+  min-height: 80px;
+  max-height: 80px;
+  overflow-y: auto;
+  padding: 10px 12px;
+  border: 1px solid #ddd;
+  border-radius: 8px;
+  font-size: 0.9rem;
+  color: #1a1a2e;
+  outline: none;
+  transition:
+    border-color 0.2s,
+    box-shadow 0.2s;
+  resize: none;
+}
 .modal_field input:focus {
   border-color: #c6a75e;
   box-shadow: 0 0 0 3px rgba(198, 167, 94, 0.15);
@@ -161,6 +183,7 @@
 .modal_actions {
   display: flex;
   justify-content: flex-end;
+  flex-direction: row;
   gap: 10px;
   margin-top: 24px;
   padding-top: 16px;
