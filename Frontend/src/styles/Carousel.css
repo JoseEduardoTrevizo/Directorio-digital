@@ -18,19 +18,31 @@
 
 .carousel-category-header {
   display: flex;
-  align-items: center;
   gap: 14px;
-  padding: 0 52px;
+  width: 100%;
+  padding: 0 40px;
 }
 
 .carousel-category-title {
-  font-size: 13px;
-  font-weight: 600;
+  display: flex;
+  font-size: 18px;
+  font-weight: 700;
   text-transform: uppercase;
   letter-spacing: 3px;
-  color: #a0b0c8;
+  color: #c6a75e;
   white-space: nowrap;
   margin: 0;
+  flex-shrink: 0;
+}
+.carousel-category-title::after {
+  content: "";
+  display: block;
+  height: 1px;
+  width: 100%;
+  background: #c6a75e;
+  margin-left: 5px;
+  background: linear-gradient(90deg, rgba(198, 167, 94, 0.5) 0%);
+  margin-top: 15px;
 }
 
 .carousel-category-line {

@@ -7,22 +7,17 @@ export default function NavigationProfile({
   activeTab = "acerca",
   profileUserId,
 }) {
-  const renderContent = () => {
-    switch (activeTab) {
-      case "inicio":
-        return <InicioProfile profileUserId={profileUserId} />;
-      case "acerca":
-        return <AcercaDeProfile profileUserId={profileUserId} />;
-      case "empleos":
-        return <EmpleosProfile profileUserId={profileUserId} />;
-      default:
-        return <AcercaDeProfile profileUserId={profileUserId} />;
-    }
-  };
-
   return (
-    <>
-      <div className="container_NavigationProfile">{renderContent()}</div>
-    </>
+    <div className="container_NavigationProfile">
+      <div style={{ display: activeTab === "inicio" ? "block" : "none" }}>
+        <InicioProfile profileUserId={profileUserId} />
+      </div>
+      <div style={{ display: activeTab === "acerca" ? "block" : "none" }}>
+        <AcercaDeProfile profileUserId={profileUserId} />
+      </div>
+      <div style={{ display: activeTab === "empleos" ? "block" : "none" }}>
+        <EmpleosProfile profileUserId={profileUserId} />
+      </div>
+    </div>
   );
 }

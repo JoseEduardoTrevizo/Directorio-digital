@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 
-export default function Popup_aplicar({ onClose, vacante }) {
+export default function Popup_aplicar({ onClose, onBack, vacante }) {
   const [form, setForm] = useState({
     nombre: "",
     apellido: "",
@@ -31,8 +31,8 @@ export default function Popup_aplicar({ onClose, vacante }) {
   }, []);
 
   const handleChange = (e) => {
-    const { name, value, files } = e.target;
-    setForm((prev) => ({ ...prev, [name]: files ? files[0] : value }));
+    const { name, value } = e.target;
+    setForm((prev) => ({ ...prev, [name]: value }));
   };
 
   const handleSubmit = () => {
@@ -45,9 +45,16 @@ export default function Popup_aplicar({ onClose, vacante }) {
     <>
       <div className="popup_Overlay" onClick={onClose}></div>
       <div className="popup-Vacante">
-        <h3 className="apply-title">
-          Completa tu información para aplicar a esta posición
-        </h3>
+        <div className="metodo-header">
+          <button className="btn_backMetodo" onClick={onBack}>
+            ←
+          </button>
+          <div>
+            <h3 className="apply-title">
+              Completa tu información para aplicar a esta posición
+            </h3>
+          </div>
+        </div>
 
         <div className="body_Card-vacante">
           <p className="apply-subTitle">Datos personales</p>
@@ -235,9 +242,6 @@ export default function Popup_aplicar({ onClose, vacante }) {
               onChange={handleChange}
             />
           </div>
-
-          <label className="label_cv">Adjuntar CV (PDF)</label>
-          <input type="file" name="cv" accept=".pdf" onChange={handleChange} />
         </div>
 
         <button className="btn_Aplicar" onClick={handleSubmit}>

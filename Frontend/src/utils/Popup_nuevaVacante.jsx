@@ -1,33 +1,83 @@
 import React, { useEffect } from "react";
+import { useAuth } from "../contexts/AuthContext";
+import {
+  crearVacante,
+  obtenerVacantesPorEmpresa,
+  actualizarVacante,
+} from "../services/vacantesService.js";
+import TagInput from "./TagInput";
 
-export default function Popup_nuevaVacante({ onClose }) {
+export default function Popup_nuevaVacante({
+  empresaData,
+  onClose,
+  onSave,
+  onVacanteCreada,
+  vacanteInicial = null,
+}) {
+  const { userId, currentUser, updateCurrentUser, login } = useAuth();
+  const idEmpresa = empresaData.id; // Asegúrate de que empresaData tenga un campo 'id'
+  const [vacanteData, setVacanteData] = React.useState(null);
+  const esEdicion = vacanteInicial !== null;
   const [formData, setFormData] = React.useState({
-    puesto: "",
-    ciudad: "Cuauhtemoc, Chihuahua",
-    salarioMinimo: "",
-    salarioMaximo: "",
-    descripcion: "",
-    requisitos: "",
-    habilidades: "",
-    beneficios: "",
+    puesto: vacanteInicial?.puesto ?? "",
+    ciudad: vacanteInicial?.ciudad ?? "Cuauhtemoc, Chihuahua",
+    salarioMinimo: vacanteInicial?.salarioMinimo ?? "",
+    salarioMaximo: vacanteInicial?.salarioMaximo ?? "",
+    descripcion: vacanteInicial?.descripcion ?? "",
+    requisitos: vacanteInicial?.requisitos ?? "",
+    habilidades: vacanteInicial?.habilidades ?? [],
+    beneficios: vacanteInicial?.beneficios ?? "",
   });
+
   useEffect(() => {
     document.body.style.overflow = "hidden";
     return () => {
       document.body.style.overflow = "unset";
     };
   }, []);
-  const handleSubmit = (evt) => {
+
+  useEffect(() => {
+    if (!empresaData) return;
+    obtenerVacantesPorEmpresa(empresaData.id)
+      .then((data) => {
+        setVacanteData(data);
+      })
+      .catch(console.error);
+  }, [empresaData]);
+
+  const handleSubmit = async (evt) => {
     evt.preventDefault();
+    try {
+      if (esEdicion) {
+        await actualizarVacante(vacanteInicial.id, formData);
+      } else {
+        await crearVacante(idEmpresa, formData);
+      }
+      onVacanteCreada();
+      onClose();
+    } catch (error) {
+      console.error("Error al guardar la vacante:", error);
+    }
   };
+
   const handleChange = (e) => {
-    setFormData({ ...formData, [e.target.name]: e.target.value });
+    const { name, value } = e.target;
+
+    const capitalized = value.charAt(0).toUpperCase() + value.slice(1);
+
+    setFormData({
+      ...formData,
+      [name]: capitalized,
+    });
   };
+
   return (
     <div className="modal_overlay" onClick={onClose}>
       <div className="modal_container" onClick={(e) => e.stopPropagation()}>
         <div className="modal_header">
-          <h2 className="modal_title">Publicar nueva vacante</h2>
+          <h2 className="modal_title">
+            {esEdicion ? "Editar vacante" : "Publicar nueva vacante"}
+          </h2>
           <button className="modal_close" onClick={onClose}>
             ✕
           </button>
@@ -107,14 +157,13 @@ export default function Popup_nuevaVacante({ onClose }) {
           </div>
           <div className="modal_field">
             <label>Habilidades*</label>
-            <textarea
-              className="textArea_vacante"
-              name="habilidades"
+            <TagInput
               value={formData.habilidades}
-              onChange={handleChange}
-              placeholder="Conocimientos o habilidades necesarias para el puesto"
-              required
-            ></textarea>
+              onChange={(tags) =>
+                setFormData({ ...formData, habilidades: tags })
+              }
+              placeholder="Ej: Trabajo en equipo, manejo de computadora, herramientas de diseño, etc."
+            />
           </div>
           <div className="modal_field">
             <label>Loque ofrecemos*</label>

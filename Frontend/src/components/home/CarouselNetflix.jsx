@@ -174,7 +174,6 @@ function CarouselRow({ categoria }) {
     <div className="carousel-category">
       <div className="carousel-category-header">
         <h2 className="carousel-category-title">{categoria.titulo}</h2>
-        <div className="carousel-category-line" />
       </div>
 
       <div className="carousel-row">

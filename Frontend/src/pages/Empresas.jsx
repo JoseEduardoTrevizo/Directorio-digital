@@ -54,7 +54,7 @@ export default function Empresas() {
             <p className="planmas">Todo de los Planes +</p>
             <ul className="plan-features">
               <li className="feature">Carrusel destacado (rotación alta)</li>
-              <li className="feature">Vacante ilimitadas</li>
+              <li className="feature">Vacantes ilimitadas</li>
               <li className="feature">Badge "Recomendado"</li>
               <li className="feature">Multiples sucursales</li>
               <li className="feature">Estadísticas avanzadas</li>

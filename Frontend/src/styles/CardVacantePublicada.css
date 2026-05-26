@@ -1,4 +1,5 @@
 .content__card-vacante-publicada {
+  flex: 0 0 calc(33.333% - 14px);
   max-width: 450px;
   width: 100%;
   box-shadow: 0 2px 8px rgba(0, 0, 0, 0.04);
@@ -7,7 +8,6 @@
   background: #f3f4f7;
   transition: all 0.2s;
   padding: 15px;
-  cursor: pointer;
 }
 .content__card-vacante-publicada--header {
   display: flex;
@@ -24,6 +24,7 @@
 .icon_cardVacante {
   height: 24px;
   width: 24px;
+  cursor: pointer;
 }
 .content__card-vacante-publicada--body-title {
   color: #c6a75e;
@@ -40,8 +41,11 @@
   margin: 0;
 }
 .content__card-vacante-publicada--body-location {
+  display: flex;
+
   color: black;
   margin: 0;
+  height: 48px;
   margin-bottom: 10px;
   display: -webkit-box;
   -webkit-line-clamp: 2;

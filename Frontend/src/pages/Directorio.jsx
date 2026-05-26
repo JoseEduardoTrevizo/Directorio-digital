@@ -14,12 +14,14 @@ export default function Directorio() {
   useEffect(() => {
     const fetchEmpresas = async () => {
       try {
-        const data = await directorioService.obtenerEmpresas();
+        const [data] = await Promise.all([
+          directorioService.obtenerEmpresas(),
+          new Promise((resolve) => setTimeout(resolve, 800)), // mínimo 1.5s
+        ]);
         setEmpresas(data);
-        console.log("Empresas obtenidas:", data);
       } catch (error) {
         console.error("Error al cargar empresas:", error.message);
-        setEmpresas([]); // Establecer un array vacío para evitar errores de renderizado
+        setEmpresas([]);
       }
     };
 
@@ -36,25 +38,7 @@ export default function Directorio() {
     setSelectedEmpresa(null);
   };
 
-  if (empresas === null)
-    return (
-      <div className="containerDirectorio">
-        <h2 className="directory-title">Directorio de Empresas</h2>
-        <div className="directory_container">
-          <aside className="directory_sidebar">
-            <Filter_directory />
-          </aside>
-          <main className="companies_list">
-            {Array.from({ length: 6 }).map((_, i) => (
-              <div key={i} className="skeleton-card" />
-            ))}
-          </main>
-          <aside className="directory_ads">
-            <Aside_adds />
-          </aside>
-        </div>
-      </div>
-    );
+  const isLoading = empresas === null;
   return (
     <>
       <div className="containerDirectorio">
@@ -63,21 +47,33 @@ export default function Directorio() {
           <aside className="directory_sidebar">
             <Filter_directory />
           </aside>
+
           <main className="companies_list">
-            {empresas.map((empresa) => (
-              <Companies_list
-                key={empresa.id}
-                empresa={empresa}
-                onClick={() => handleOpenPopup(empresa)}
-              />
-            ))}
+            {isLoading ? (
+              <div className="loading-state">
+                <div className="spinner" />
+                <p>Cargando empresas...</p>
+              </div>
+            ) : (
+              empresas.map((empresa) => (
+                <Companies_list
+                  key={empresa.id}
+                  empresa={empresa}
+                  onClick={() => handleOpenPopup(empresa)}
+                />
+              ))
+            )}
           </main>
+
           <aside className="directory_ads">
             <Aside_adds />
           </aside>
-          <aside className="adds_bottom">
-            <Aside_addsBottom />
-          </aside>
+
+          {!isLoading && (
+            <aside className="adds_bottom">
+              <Aside_addsBottom />
+            </aside>
+          )}
         </div>
       </div>
 

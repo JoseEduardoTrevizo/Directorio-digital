@@ -6,11 +6,20 @@ import business from "../../assets/icons/business_center.svg";
 import { obtenerEmpresaPorId } from "../../services/perfilPublicoService";
 import Popup_nuevaVacante from "../../utils/Popup_nuevaVacante";
 import Card_vacantePublicada from "../../utils/Card_vacantePublicada";
+import PopupConfirm from "../../utils/PopupConfirm";
+import {
+  obtenerVacantesPorEmpresa,
+  eliminarVacante,
+} from "../../services/vacantesService";
 
 export default function CardHireProfile({ profileUserId }) {
   const { userId } = useAuth();
   const [empresaData, setEmpresaData] = useState(null);
+  const [vacantesData, setVacantesData] = useState({ vacantes: [] });
   const [modalOpen, setModalOpen] = useState(false);
+  const [modalDeleteOpen, setModalDeleteOpen] = useState(false);
+  const [vacanteIdToDelete, setVacanteIdToDelete] = useState(null);
+  const [vacanteToEdit, setVacanteToEdit] = useState(null);
 
   useEffect(() => {
     if (!profileUserId) return;
@@ -19,9 +28,41 @@ export default function CardHireProfile({ profileUserId }) {
       .catch(console.error);
   }, [profileUserId]);
 
+  useEffect(() => {
+    fetchVacantes();
+  }, [profileUserId]);
+
+  const fetchVacantes = () => {
+    if (!profileUserId) return;
+    obtenerVacantesPorEmpresa(profileUserId)
+      .then((data) => setVacantesData(data))
+      .catch(console.error);
+  };
+
   if (!empresaData) return <p>Cargando...</p>;
   const isOwnProfile =
     userId != null && String(userId) === String(profileUserId);
+
+  const handleOpenModalDelete = (vacanteId) => {
+    setVacanteIdToDelete(vacanteId);
+    setModalDeleteOpen(true);
+  };
+
+  const handleConfirmDelete = async () => {
+    try {
+      await eliminarVacante(vacanteIdToDelete);
+      setModalDeleteOpen(false);
+      setVacanteIdToDelete(null);
+      fetchVacantes(); // Actualiza la lista de vacantes después de eliminar
+    } catch (error) {
+      console.error("Error al eliminar la vacante:", error);
+    }
+  };
+
+  const handleOpenModalEdit = (vacante) => {
+    setVacanteToEdit(vacante);
+    setModalOpen(true);
+  };
 
   return (
     <>
@@ -42,20 +83,49 @@ export default function CardHireProfile({ profileUserId }) {
             </NavLink>
           )}
           {modalOpen && (
-            <Popup_nuevaVacante onClose={() => setModalOpen(false)} />
+            <Popup_nuevaVacante
+              empresaData={empresaData}
+              vacanteInicial={vacanteToEdit}
+              onClose={() => {
+                setModalOpen(false);
+                setVacanteToEdit(null);
+              }}
+              onVacanteCreada={fetchVacantes} // pasa la función para actualizar las vacantes
+            />
+          )}
+          {modalDeleteOpen && (
+            <PopupConfirm
+              openModal={modalDeleteOpen}
+              onClose={() => setModalDeleteOpen(false)}
+              confirmarDelete={() => handleConfirmDelete()}
+              puesto={
+                vacantesData.vacantes.find((v) => v.id === vacanteIdToDelete)
+                  ?.puesto
+              }
+            />
           )}
         </div>
 
         <div className="container_Contacto-hire">
-          <div className="container_no-vacancies">
-            <img className="business-icon" src={business} alt="Business" />
-            <p className="textCard_Profile">
-              No tienes vacantes publicadas aún <br /> Comienza publicando tu
-              primera vacante
-            </p>
-          </div>
-
-          <Card_vacantePublicada />
+          {vacantesData.vacantes.length === 0 ? (
+            <div className="container_no-vacancies">
+              <img className="business-icon" src={business} alt="Business" />
+              <p className="textCard_Profile">
+                No tienes vacantes publicadas aún <br /> Comienza publicando tu
+                primera vacante
+              </p>
+            </div>
+          ) : (
+            vacantesData.vacantes.map((vacante) => (
+              <Card_vacantePublicada
+                key={vacante.id}
+                vacante={vacante}
+                openConfirmDelete={() => handleOpenModalDelete(vacante.id)}
+                openEdit={() => handleOpenModalEdit(vacante)}
+                actualizarVacantes={fetchVacantes}
+              />
+            ))
+          )}
         </div>
       </main>
     </>

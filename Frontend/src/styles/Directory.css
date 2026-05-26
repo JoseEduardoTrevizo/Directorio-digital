@@ -243,6 +243,32 @@
   filter: invert(94%) sepia(80%) saturate(867%) hue-rotate(317deg)
     brightness(85%) contrast(79%);
 }
+.spinner {
+  width: 48px;
+  height: 48px;
+  border: 5px solid #e0e0e0;
+  border-top-color: #0d1f3c; /* tu color primario */
+  border-radius: 50%;
+  animation: spin 0.8s linear infinite;
+  margin: 60px auto;
+}
+
+@keyframes spin {
+  to {
+    transform: rotate(360deg);
+  }
+}
+.loading-state {
+  grid-column: 1 / -1;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 12px;
+  padding: 60px 0;
+  color: #888;
+  font-size: 14px;
+  width: 600px;
+}
 /* === ASIDE ADDS === */
 .adds_container {
   max-width: 300px;

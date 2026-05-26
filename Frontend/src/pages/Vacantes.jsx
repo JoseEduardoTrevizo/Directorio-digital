@@ -1,16 +1,41 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import filtro from "../assets/icons/filter.svg";
 import bannerPublicitario from "../assets/adds/images.jpg";
 import Card_vacante from "../components/vacantes/Card_vacante";
 import Popup_vacante from "../components/vacantes/Popup_vacante";
 import Popup_aplicar from "../components/vacantes/Popup_aplicar";
+import Popup_metodo from "../components/vacantes/Popup_metodo";
+import Popup_cv from "../components/vacantes/Popup_cv";
+import { vacantesDisponibles } from "../services/vacantesService";
 
 export default function Vacantes() {
-  const [isPopupOpen, setIsPopupOpen] = useState(false);
-  const [popupAplicar, setPopupAplicar] = useState(false);
+  const [popup, setPopup] = useState(null);
+  const [vacanteSeleccionada, setVacanteSeleccionada] = useState(null);
+  const [vacantesDisponiblesData, setVacantesDisponiblesData] = useState({
+    vacantes: [],
+  });
 
-  const handleOpenPopup = () => {
-    setIsPopupOpen(true);
+  useEffect(() => {
+    fetchVacantes();
+  }, []);
+
+  const fetchVacantes = async () => {
+    try {
+      const data = await vacantesDisponibles();
+      setVacantesDisponiblesData(data);
+    } catch (error) {
+      console.error("Error fetching vacantes:", error);
+    }
+  };
+
+  const handleOpenPopup = (vacante) => {
+    setVacanteSeleccionada(vacante);
+    setPopup("vacante");
+  };
+
+  const handleCloseAll = () => {
+    setPopup(null);
+    setVacanteSeleccionada(null);
   };
 
   return (
@@ -52,27 +77,47 @@ export default function Vacantes() {
         </div>
 
         <div className="container_Card-vacante">
-          <Card_vacante onClick={handleOpenPopup} />
-          <Card_vacante onClick={handleOpenPopup} />
-          <Card_vacante onClick={handleOpenPopup} />
-          <Card_vacante onClick={handleOpenPopup} />
-          <Card_vacante onClick={handleOpenPopup} />
-          <Card_vacante onClick={handleOpenPopup} />
+          {vacantesDisponiblesData.vacantes
+            .filter((vacante) => vacante.estatus === "Activa")
+            .map((vacante) => (
+              <Card_vacante
+                key={vacante.id}
+                vacante={vacante}
+                onClick={handleOpenPopup}
+              />
+            ))}
         </div>
-        {isPopupOpen && (
+        {popup === "vacante" && (
           <Popup_vacante
-            onClose={() => {
-              setIsPopupOpen(false);
-            }}
-            onAplicar={() => {
-              setIsPopupOpen(false); // cierra el primero
-              setPopupAplicar(true); // abre el segundo
-            }}
+            onClose={handleCloseAll}
+            onAplicar={() => setPopup("metodo")}
+            dataVacante={vacanteSeleccionada}
           />
         )}
 
-        {popupAplicar && (
-          <Popup_aplicar onClose={() => setPopupAplicar(false)} />
+        {popup === "metodo" && (
+          <Popup_metodo
+            vacante={vacanteSeleccionada}
+            onClose={handleCloseAll}
+            onFormulario={() => setPopup("formulario")}
+            onCV={() => setPopup("cv")}
+          />
+        )}
+
+        {popup === "formulario" && (
+          <Popup_aplicar
+            vacante={vacanteSeleccionada}
+            onClose={handleCloseAll}
+            onBack={() => setPopup("metodo")}
+          />
+        )}
+
+        {popup === "cv" && (
+          <Popup_cv
+            vacante={vacanteSeleccionada}
+            onClose={handleCloseAll}
+            onBack={() => setPopup("metodo")}
+          />
         )}
       </div>
     </>

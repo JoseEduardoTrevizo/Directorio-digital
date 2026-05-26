@@ -1,0 +1,53 @@
+.tag_input_container {
+  border: 1px solid #ccc;
+  border-radius: 6px;
+  padding: 6px 8px;
+  background: #fff;
+}
+
+.tags_wrapper {
+  display: flex;
+  flex-direction: row;
+  border: 1px solid #ddd;
+  background-color: #fff;
+  flex-wrap: wrap;
+  gap: 6px;
+  align-items: center;
+}
+
+.tags_wrapper input {
+  border: none;
+  outline: none;
+  flex: 1;
+  min-width: 120px;
+  font-size: 14px;
+  background-color: #fff;
+}
+
+.tag_chip {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  background: #e8f0fe;
+  color: #1a56db;
+  border-radius: 4px;
+  padding: 2px 8px;
+  font-size: 13px;
+}
+
+.tag_chip button {
+  background: none;
+  border: none;
+  cursor: pointer;
+  color: #1a56db;
+  font-size: 11px;
+  padding: 0;
+  line-height: 1;
+}
+
+.tag_hint {
+  display: block;
+  margin-top: 4px;
+  color: #888;
+  font-size: 11px;
+}
