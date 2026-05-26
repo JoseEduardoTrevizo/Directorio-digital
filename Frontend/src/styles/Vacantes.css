@@ -335,3 +335,124 @@
 .btn_enviarCV:hover {
   background: #0d1f3c;
 }
+/* ===== TABLET (max 1024px) ===== */
+@media (max-width: 1024px) {
+  .container_Card-vacante {
+    grid-template-columns: repeat(2, 1fr);
+    padding: 25px 32px;
+    gap: 16px;
+  }
+
+  .filterSelect {
+    flex: 0 0 180px;
+  }
+
+  .containerSearch {
+    width: 95vw;
+  }
+}
+@media (min-width: 1600px) {
+  .container_Card-vacante {
+    grid-template-columns: repeat(4, 1fr);
+    padding: 25px 32px;
+    gap: 16px;
+  }
+
+  .filterSelect {
+    flex: 0 0 180px;
+  }
+
+  .containerSearch {
+    width: 95vw;
+  }
+}
+/* ===== TABLET PEQUEÑA / MÓVIL GRANDE (max 768px) ===== */
+@media (max-width: 768px) {
+  .vacantes-container {
+    flex-direction: column;
+    height: auto;
+    padding: 24px 20px;
+    text-align: center;
+    gap: 8px;
+  }
+
+  .containerSearch {
+    flex-direction: column;
+    width: 92vw;
+    padding: 16px;
+    gap: 12px;
+  }
+
+  .inputSearch {
+    width: 100%;
+  }
+
+  .filterSelect {
+    flex: 1 1 100%;
+    width: 100%;
+  }
+
+  .filter-button {
+    width: 100%;
+  }
+
+  .containerBanerVacante {
+    height: 150px;
+    width: 95%;
+  }
+
+  .container_Card-vacante {
+    grid-template-columns: repeat(2, 1fr);
+    padding: 20px 16px;
+    gap: 14px;
+  }
+
+  /* Popups full-width en tablet */
+  .popup-Metodo {
+    width: 95%;
+    padding: 24px 20px;
+  }
+
+  .metodo-opciones {
+    flex-direction: column;
+  }
+}
+
+/* ===== MÓVIL (max 480px) ===== */
+@media (max-width: 480px) {
+  .container_Card-vacante {
+    grid-template-columns: 1fr;
+    padding: 16px 12px;
+    margin: auto;
+    gap: 12px;
+  }
+
+  .containerBanerVacante {
+    height: 120px;
+    width: 95%;
+  }
+
+  .empresasTitle {
+    font-size: 22px;
+  }
+
+  .empresasSubtitle {
+    font-size: 14px;
+  }
+
+  .containerSearch {
+    padding: 12px;
+    gap: 10px;
+  }
+
+  /* Popups en móvil */
+  .popup-Metodo {
+    width: 98%;
+    padding: 20px 14px;
+    border-radius: 12px;
+  }
+
+  .cv-acciones {
+    flex-direction: column;
+  }
+}

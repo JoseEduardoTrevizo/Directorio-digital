@@ -298,3 +298,176 @@
   color: #9ca3af;
   object-fit: cover;
 }
+/* ===== TABLET GRANDE (max 1200px) ===== */
+@media (max-width: 1200px) {
+  .directory_container {
+    grid-template-columns: 260px 1fr 260px;
+    gap: 16px;
+    padding: 16px;
+  }
+
+  .company-card {
+    min-width: unset;
+    padding: 16px 20px;
+  }
+
+  .container_filterCompanys,
+  .directory_sidebar {
+    max-width: 260px;
+  }
+
+  .adds_container,
+  .directory_ads {
+    max-width: 260px;
+  }
+}
+
+/* ===== TABLET (max 1024px) — se elimina columna de ads ===== */
+@media (max-width: 1024px) {
+  .directory_container {
+    grid-template-columns: 260px 1fr;
+    grid-template-rows: auto auto;
+  }
+
+  /* El banner bottom ocupa 2 columnas */
+  .adds_bottom {
+    grid-column: span 2;
+  }
+
+  /* Los ads del lado derecho se ocultan */
+  .directory_ads {
+    display: none;
+  }
+
+  .company-card {
+    min-width: unset;
+  }
+
+  .loading-state {
+    width: 100%;
+  }
+}
+
+/* ===== TABLET PEQUEÑA (max 768px) — sidebar colapsado arriba ===== */
+@media (max-width: 768px) {
+  .directory-title {
+    font-size: 1.8rem;
+    margin-top: 14px;
+  }
+
+  .directory_container {
+    grid-template-columns: 1fr;
+    padding: 12px;
+    gap: 16px;
+    min-height: unset;
+  }
+
+  /* Sidebar de filtros: ancho completo y sin sticky */
+  .directory_sidebar {
+    max-width: 100%;
+    min-height: unset;
+  }
+
+  .container_filterCompanys {
+    max-width: 100%;
+    position: static;
+    max-height: unset;
+  }
+
+  /* Grid de letras: más columnas para aprovechar el ancho */
+  .letter-grid {
+    grid-template-columns: repeat(9, 1fr);
+  }
+
+  /* Banner bottom: 1 columna */
+  .adds_bottom {
+    grid-column: span 1;
+    height: 180px;
+  }
+
+  .adds_containerBottom {
+    height: 180px;
+    padding: 0;
+  }
+
+  .add-sideBottom {
+    height: 180px;
+  }
+
+  .company-card {
+    height: auto;
+    padding: 14px 16px;
+    flex-wrap: wrap;
+    gap: 12px;
+  }
+
+  .company-details {
+    width: 100%;
+    justify-content: flex-start;
+  }
+
+  .loading-state {
+    width: 100%;
+  }
+}
+
+/* ===== MÓVIL (max 480px) ===== */
+@media (max-width: 480px) {
+  .directory-title {
+    font-size: 1.4rem;
+  }
+
+  .directory_container {
+    padding: 8px;
+    gap: 12px;
+  }
+
+  .letter-grid {
+    grid-template-columns: repeat(7, 1fr);
+    gap: 4px;
+  }
+
+  .letter-btn {
+    padding: 6px 4px;
+    font-size: 12px;
+  }
+
+  .company-card {
+    padding: 12px;
+    gap: 10px;
+    height: auto;
+  }
+
+  .company-info {
+    width: 100%;
+  }
+
+  .logo,
+  .logo-placeholder {
+    width: 70px;
+    height: 70px;
+  }
+
+  .company-name {
+    font-size: 15px;
+  }
+
+  .company-details {
+    width: 100%;
+    flex-direction: column;
+    gap: 4px;
+  }
+
+  .adds_bottom {
+    height: 130px;
+  }
+
+  .adds_containerBottom {
+    height: 130px;
+    padding: 0;
+  }
+
+  .add-sideBottom {
+    height: 130px;
+  }
+}

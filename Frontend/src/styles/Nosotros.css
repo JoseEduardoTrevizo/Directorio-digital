@@ -549,3 +549,202 @@
   transition: transform 0.2s ease;
   margin-left: 5px;
 }
+/* ===== TABLET (max 1024px) ===== */
+@media (max-width: 1024px) {
+  .hero_container {
+    padding-top: 4rem;
+  }
+
+  .inspiration_body {
+    flex-wrap: wrap;
+    justify-content: center;
+  }
+
+  .card_valores {
+    max-width: 200px;
+  }
+
+  .mision_content {
+    flex-direction: column;
+    align-items: center;
+  }
+
+  .container_card-mision {
+    max-width: 100%;
+    width: 100%;
+    height: auto;
+    padding: 3rem 2rem;
+  }
+
+  .mision_container {
+    padding: 4rem 3rem 0;
+  }
+
+  .join-title {
+    width: 100%;
+  }
+}
+
+/* ===== TABLET PEQUEÑA (max 768px) ===== */
+@media (max-width: 768px) {
+  /* Hero */
+  .hero_container {
+    padding: 5rem 1rem 2rem;
+    min-height: 80vh;
+  }
+
+  .hero_content {
+    gap: 1rem;
+  }
+
+  .hero_actions {
+    flex-direction: column;
+    align-items: center;
+    width: 100%;
+  }
+
+  .hero_btn {
+    width: 100%;
+    justify-content: center;
+  }
+
+  /* About */
+  .about_container {
+    padding: 4rem 1.2rem;
+  }
+
+  /* Inspiracion */
+  .content_inspiration {
+    height: auto;
+  }
+
+  .inspiration_container {
+    padding: 4rem 1.2rem 5rem;
+  }
+
+  .inspiration_body {
+    flex-direction: column;
+    align-items: center;
+    gap: 1.2rem;
+  }
+
+  .card_valores {
+    max-width: 100%;
+    width: 100%;
+  }
+
+  /* Mision */
+  .mision_container {
+    padding: 3rem 1.2rem 0;
+  }
+
+  .mision_content {
+    gap: 1.2rem;
+  }
+
+  .container_card-mision {
+    flex-direction: column;
+    padding: 2.5rem 1.5rem;
+    height: auto;
+  }
+
+  /* Diferencias */
+  .diferent_body {
+    padding: 2rem 0.5rem;
+  }
+
+  .diferent_cell {
+    padding: 1rem 1rem;
+    font-size: 0.85rem;
+  }
+
+  .diferent_header_col {
+    padding: 1rem;
+  }
+
+  .diferent_header_label {
+    font-size: 0.85rem;
+  }
+
+  /* Join */
+  .join_container {
+    padding: 4rem 1.2rem;
+  }
+
+  .join-title {
+    width: 100%;
+    font-size: clamp(1.6rem, 5vw, 2.4rem);
+  }
+}
+
+/* ===== MÓVIL (max 480px) ===== */
+@media (max-width: 480px) {
+  /* Hero */
+  .hero_container {
+    padding: 4.5rem 0.8rem 2rem;
+    min-height: 70vh;
+  }
+
+  .hero_glow--left,
+  .hero_glow--right {
+    width: 200px;
+    height: 200px;
+  }
+
+  /* About */
+  .about_container {
+    padding: 3rem 1rem;
+  }
+
+  /* Inspiracion */
+  .inspiration_container {
+    padding: 3rem 1rem 4rem;
+  }
+
+  /* Mision */
+  .mision_container {
+    padding: 2rem 1rem 0;
+  }
+
+  .container_card-mision {
+    padding: 2rem 1rem;
+    border-radius: 12px;
+  }
+
+  /* Diferencias — tabla responsive */
+  .diferent_card {
+    border-radius: 10px;
+  }
+
+  .diferent_cell {
+    padding: 0.85rem 0.7rem;
+    font-size: 0.78rem;
+    gap: 0.4rem;
+  }
+
+  .diferent_header_col {
+    padding: 0.85rem 0.7rem;
+    gap: 0.4rem;
+  }
+
+  .diferent_header_label {
+    font-size: 0.78rem;
+  }
+
+  .diferent_icon {
+    width: 16px;
+    height: 16px;
+    font-size: 0.5rem;
+    flex-shrink: 0;
+  }
+
+  /* Join */
+  .join_container {
+    padding: 3rem 1rem;
+  }
+
+  .hero_btn {
+    font-size: 0.88rem;
+    padding: 0.75rem 1.5rem;
+  }
+}

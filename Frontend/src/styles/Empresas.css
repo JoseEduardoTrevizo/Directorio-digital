@@ -119,3 +119,101 @@
   margin-top: auto;
   width: 90%;
 }
+/* ===== TABLET (max 1024px) ===== */
+@media (max-width: 1024px) {
+  .empresasTitle-container {
+    flex-direction: column;
+    text-align: center;
+    padding: 24px 20px;
+    gap: 10px;
+    height: auto;
+  }
+
+  .empresasTitle {
+    font-size: 2rem;
+    margin: 0;
+  }
+
+  .empresasPlans-container {
+    flex-wrap: wrap;
+    padding: 0 20px;
+    gap: 16px;
+  }
+
+  .plan-card,
+  .plan-card-popular {
+    width: 280px;
+  }
+}
+
+/* ===== TABLET PEQUEÑA (max 768px) ===== */
+@media (max-width: 768px) {
+  .empresasTitle {
+    font-size: 1.8rem;
+  }
+
+  .empresasSubtitle {
+    font-size: 15px;
+    padding: 0 10px;
+  }
+
+  .title_plans {
+    font-size: 20px;
+    margin-top: 24px;
+    padding: 0 16px;
+  }
+
+  .empresasPlans-container {
+    flex-direction: column;
+    align-items: center;
+    padding: 0 16px;
+    margin-bottom: 30px;
+  }
+
+  .plan-card,
+  .plan-card-popular {
+    width: 100%;
+    max-width: 420px;
+    height: auto; /* altura fija → automática */
+    padding: 24px 20px;
+  }
+
+  .plan-price {
+    font-size: 28px;
+  }
+}
+
+/* ===== MÓVIL (max 480px) ===== */
+@media (max-width: 480px) {
+  .empresasTitle {
+    font-size: 1.5rem;
+  }
+
+  .empresasSubtitle {
+    font-size: 14px;
+  }
+
+  .title_plans {
+    font-size: 18px;
+  }
+
+  .empresasPlans-container {
+    padding: 0 10px;
+    gap: 14px;
+  }
+
+  .plan-card,
+  .plan-card-popular {
+    width: 100%;
+    max-width: 100%;
+    padding: 20px 16px;
+  }
+
+  .plan-price {
+    font-size: 24px;
+  }
+
+  .plan-button {
+    width: 100%;
+  }
+}
