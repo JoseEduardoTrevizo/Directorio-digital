@@ -36,7 +36,6 @@ export default function Popup_aplicar({ onClose, onBack, vacante }) {
   };
 
   const handleSubmit = () => {
-    console.log("Aplicando a:", vacante, form);
     // aquí llamas tu endpoint
     onClose();
   };

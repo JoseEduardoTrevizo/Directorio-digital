@@ -1,7 +1,6 @@
 const API_URL = import.meta.env.VITE_API_URL;
 
 const obtenerEmpresas = async () => {
-  console.log("API_URL", import.meta.env.VITE_API_URL);
   try {
     const response = await fetch(`${API_URL}directorio/empresas`);
     if (!response.ok) throw new Error("Error al obtener las empresas");

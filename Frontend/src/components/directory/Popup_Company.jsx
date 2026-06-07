@@ -1,5 +1,6 @@
 import React, { useEffect } from "react";
 import { useNavigate } from "react-router";
+import Mapa from "../../utils/Mapa";
 import logoCompany from "../../assets/images/logotipo.png";
 import open from "../../assets/icons/open.svg";
 import map from "../../assets/images/google-maps.jpg";
@@ -28,12 +29,13 @@ export default function Popup_Company({ onClose, empresa }) {
       <div className="popup_Overlay" onClick={onClose}></div>
       <div className="popup_Container">
         <div className="popup_Header">
-          <img className="logo_Company" src={logoCompany} />
-          <div className="company_Title">
-            <h2 className="company_Name">{empresa.nombre}</h2>
-            <p className="company_Area">{empresa.industria}</p>
+          <div className="content-Header">
+            <img className="logo_Company" src={logoCompany} />
+            <div className="company_Title">
+              <h2 className="company_Name">{empresa.nombre}</h2>
+              <p className="company_Area">{empresa.industria}</p>
+            </div>
           </div>
-
           <button
             className="go_Perfil"
             onClick={() => navigate(`/empresa/${empresa.id}`)}
@@ -45,7 +47,9 @@ export default function Popup_Company({ onClose, empresa }) {
         <div className="container_Body">
           <div className="info_Container">
             <h2 className="title_body">Informacion de la empresa</h2>
-            <p>{empresa.about || ""}</p>
+            <p>
+              {empresa.about || "'Informacion de la empresa no disponible'"}
+            </p>
             <div className="container_data">
               <p>
                 {" "}
@@ -59,20 +63,35 @@ export default function Popup_Company({ onClose, empresa }) {
                 <img className="image_pin" src={email} />
                 {empresa.email}
               </p>
-              <p>
-                <img className="image_pin" src={calendar} />
-                {empresa.horario}
-              </p>
-              <p>
-                <img className="image_pin" src={web} />
-                {empresa.website}
-              </p>
+              {empresa.horario && (
+                <p>
+                  <img className="image_pin" src={calendar} />
+                  {empresa.horario}
+                </p>
+              )}
+              {empresa.website && (
+                <p>
+                  <img className="image_pin" src={web} />
+                  <a
+                    className="linkWeb"
+                    href={empresa.website}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                  >
+                    {empresa.website}
+                  </a>
+                </p>
+              )}
             </div>
           </div>
 
           <div className="ubicacion_Container">
-            <h2 className="ubicacion_Container title">Ubicacion</h2>
-            <img className="ubicacionContainer imagen_Map" src={map} />
+            <h2 className="ubicacion_Container-Title">Ubicacion</h2>
+            <Mapa
+              lat={empresa.latitud}
+              lng={empresa.longitud}
+              nombre={empresa.nombre}
+            />
           </div>
         </div>
       </div>

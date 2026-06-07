@@ -1,7 +1,8 @@
 import React, { useState, useEffect } from "react";
 import { useAuth } from "../contexts/AuthContext";
 import actualizarPerfilService from "../services/actualizarPerfilService";
-
+import DireccionAutocomplete from "../utils/DireccionAutocomplete";
+import MapaAjustable from "../utils/MapaAjustable";
 export default function PopupEditProfiel({ empresa, onClose, onSave }) {
   const { userId, currentUser, updateCurrentUser, login } = useAuth();
   const [formData, setFormData] = useState({
@@ -12,7 +13,9 @@ export default function PopupEditProfiel({ empresa, onClose, onSave }) {
     tamano_empresa: empresa.tamano_empresa || "",
     horario: empresa.horario || "",
     direccion: empresa.direccion || "",
-    ubicacion: empresa.ubicacion || "",
+    ubicacion: empresa.ciudad || "",
+    lat: empresa.latitud || null,
+    lng: empresa.longitud || null,
   });
   useEffect(() => {
     document.body.style.overflow = "hidden";
@@ -43,7 +46,9 @@ export default function PopupEditProfiel({ empresa, onClose, onSave }) {
           tamano_empresa: formData.tamano_empresa,
           horario: formData.horario,
           ubicacion: formData.ubicacion,
-          direccion: formData.direccion,
+          direccion: formData.direccion || empresa.direccion,
+          lat: formData.lat,
+          lng: formData.lng,
         },
       );
 
@@ -83,6 +88,18 @@ export default function PopupEditProfiel({ empresa, onClose, onSave }) {
       .map((t) => `${t.dias}: ${t.inicio} - ${t.fin}`)
       .join(" | ");
     setFormData({ ...formData, horario: horarioString });
+  };
+
+  const handleDireccionSelect = ({ direccion, lat, lng }) => {
+    setFormData((prev) => ({
+      ...prev,
+      direccion,
+      lat,
+      lng,
+    }));
+  };
+  const handleCoordsChange = ({ lat, lng }) => {
+    setFormData((prev) => ({ ...prev, lat, lng }));
   };
   return (
     <div className="modal_overlay" onClick={onClose}>
@@ -256,19 +273,30 @@ export default function PopupEditProfiel({ empresa, onClose, onSave }) {
                 placeholder={empresa.ubicacion || "Ciudad, Estado"}
               />
             </div>
-            <div className="modal_field modal_field--full">
+            <div className="modal_fiel modal_field--full">
               <label>Dirección completa</label>
-              <input
-                name="direccion"
-                value={formData.direccion}
-                onChange={handleChange}
-                placeholder={
-                  empresa.direccion || "Av. Ejemplo 123, Col. Centro"
-                }
+              <DireccionAutocomplete
+                className="form-control"
+                onSelect={handleDireccionSelect}
               />
+
+              {/* Muestra la dirección seleccionada */}
+              {formData.direccion && (
+                <p style={{ fontSize: 12, color: "black", marginTop: 4 }}>
+                  📍 {formData.direccion}
+                </p>
+              )}
             </div>
           </div>
 
+          <div className="container_MapPopup">
+            <MapaAjustable
+              lat={formData.lat || empresa.latitud}
+              lng={formData.lng || empresa.longitud}
+              nombre={empresa.nombre}
+              onCoordsChange={handleCoordsChange}
+            />
+          </div>
           <div className="modal_actions">
             <button type="button" className="btn_cancelar" onClick={onClose}>
               Cancelar

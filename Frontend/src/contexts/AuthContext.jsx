@@ -17,9 +17,6 @@ function getUserFromToken() {
       removeToken();
       return null;
     }
-    // Retorna todos los datos que pusiste en el payload del jwt.sign()
-    // { id, email, nombre, industria }
-    console.log("Usuario decodificado del token:", decoded);
     return decoded;
   } catch {
     removeToken();

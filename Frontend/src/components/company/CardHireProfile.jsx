@@ -15,11 +15,12 @@ import {
 export default function CardHireProfile({ profileUserId }) {
   const { userId } = useAuth();
   const [empresaData, setEmpresaData] = useState(null);
-  const [vacantesData, setVacantesData] = useState({ vacantes: [] });
+  const [vacantesData, setVacantesData] = useState(null);
   const [modalOpen, setModalOpen] = useState(false);
   const [modalDeleteOpen, setModalDeleteOpen] = useState(false);
   const [vacanteIdToDelete, setVacanteIdToDelete] = useState(null);
   const [vacanteToEdit, setVacanteToEdit] = useState(null);
+  const [loadingVacantes, setLoadingVacantes] = useState(true);
 
   useEffect(() => {
     if (!profileUserId) return;
@@ -34,12 +35,16 @@ export default function CardHireProfile({ profileUserId }) {
 
   const fetchVacantes = () => {
     if (!profileUserId) return;
-    obtenerVacantesPorEmpresa(profileUserId)
-      .then((data) => setVacantesData(data))
-      .catch(console.error);
+    setLoadingVacantes(true);
+
+    const delay = new Promise((resolve) => setTimeout(resolve, 500));
+
+    Promise.all([obtenerVacantesPorEmpresa(profileUserId), delay])
+      .then(([data]) => setVacantesData(data))
+      .catch(console.error)
+      .finally(() => setLoadingVacantes(false));
   };
 
-  if (!empresaData) return <p>Cargando...</p>;
   const isOwnProfile =
     userId != null && String(userId) === String(profileUserId);
 
@@ -99,7 +104,7 @@ export default function CardHireProfile({ profileUserId }) {
               onClose={() => setModalDeleteOpen(false)}
               confirmarDelete={() => handleConfirmDelete()}
               puesto={
-                vacantesData.vacantes.find((v) => v.id === vacanteIdToDelete)
+                vacantesData?.vacantes?.find((v) => v.id === vacanteIdToDelete)
                   ?.puesto
               }
             />
@@ -107,15 +112,11 @@ export default function CardHireProfile({ profileUserId }) {
         </div>
 
         <div className="container_Contacto-hire">
-          {vacantesData.vacantes.length === 0 ? (
-            <div className="container_no-vacancies">
-              <img className="business-icon" src={business} alt="Business" />
-              <p className="textCard_Profile">
-                No tienes vacantes publicadas aún <br /> Comienza publicando tu
-                primera vacante
-              </p>
+          {loadingVacantes ? (
+            <div className="loading-state">
+              <div className="spinner" />
             </div>
-          ) : (
+          ) : vacantesData?.vacantes?.length > 0 ? (
             vacantesData.vacantes.map((vacante) => (
               <Card_vacantePublicada
                 key={vacante.id}
@@ -125,6 +126,14 @@ export default function CardHireProfile({ profileUserId }) {
                 actualizarVacantes={fetchVacantes}
               />
             ))
+          ) : (
+            <div className="container_no-vacancies">
+              <img className="business-icon" src={business} alt="Business" />
+              <p className="textCard_Profile">
+                No tienes vacantes publicadas aún <br /> Comienza publicando tu
+                primera vacante
+              </p>
+            </div>
           )}
         </div>
       </main>

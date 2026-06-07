@@ -43,8 +43,6 @@ const actualizarEncabezadoEmpresa = async (id, datos) => {
 
     if (!response.ok) {
       const errorData = await response.json().catch(() => ({}));
-      console.log("Status:", response.status);
-      console.log("Respuesta del backend:", errorData); // ← agrega esto
       throw new Error(errorData.message || "Error al actualizar el encabezado");
     }
 

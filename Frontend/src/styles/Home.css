@@ -1,6 +1,8 @@
 .hero-section {
   display: flex;
   flex-direction: column;
+  justify-content: center;
+  align-items: center;
   position: relative;
   background:
     linear-gradient(rgba(13, 27, 43, 0.5), rgba(13, 27, 43, 0.5)),
@@ -25,13 +27,9 @@
   pointer-events: none;
 }
 .hero-section_container {
-  position: absolute;
   display: flex;
   flex-direction: column;
   justify-content: center;
-
-  top: 18%;
-  right: 20%;
 }
 .title_hero-section {
   font-size: 78px;
@@ -215,4 +213,145 @@
   flex-direction: row;
   gap: 12px;
   font-size: 14px;
+}
+/*Media Querys*/
+/* ─── Tablet (≤ 1024px) ───────────────────────────── */
+@media (max-width: 1024px) {
+  .title_hero-section {
+    font-size: 56px;
+    line-height: 58px;
+    width: 100%;
+    max-width: 680px;
+  }
+
+  .hero-section_eslogan {
+    font-size: 18px;
+    width: 100%;
+    max-width: 680px;
+  }
+
+  .hero-section_search {
+    width: 380px;
+  }
+
+  .nw-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+
+  .barra_Exchange {
+    padding: 20px 20px;
+  }
+}
+
+/* ─── Mobile L (≤ 768px) ──────────────────────────── */
+@media (max-width: 768px) {
+  .hero-section {
+    padding: 0 20px;
+    align-items: flex-start;
+    justify-content: center;
+  }
+
+  .hero-section_container {
+    width: 100%;
+    padding-top: 80px;
+  }
+
+  .title_hero-section {
+    font-size: 42px;
+    line-height: 46px;
+    width: 100%;
+  }
+
+  .hero-section_eslogan {
+    font-size: 16px;
+    width: 100%;
+    margin-top: 14px;
+  }
+
+  /* Search: stack verticalmente en móvil */
+  .container_search {
+    flex-direction: column;
+    align-items: stretch;
+    gap: 0;
+  }
+
+  .hero-section_search {
+    width: 100%;
+    border-radius: 10px 10px 0 0;
+    margin-top: 30px;
+  }
+
+  .hero-button_search {
+    width: 100%;
+    border-radius: 0 0 10px 10px;
+    margin-top: 0;
+    justify-content: center;
+  }
+
+  .hero-button_search img {
+    margin-left: 0;
+    margin-right: 8px;
+  }
+
+  .category-buttons {
+    flex-wrap: wrap;
+    gap: 8px;
+  }
+
+  /* Exchange / widgets */
+  .nw-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .nw-item {
+    max-width: 100%;
+  }
+
+  .barra_Exchange {
+    padding: 16px;
+    border-radius: 14px;
+  }
+
+  .exchange-chart {
+    flex-direction: column;
+  }
+
+  .valorChange {
+    font-size: 28px;
+  }
+
+  .nw-footer {
+    flex-direction: column;
+    gap: 12px;
+    padding: 16px;
+  }
+
+  .content_porcentaje {
+    flex-wrap: wrap;
+  }
+
+  .weather-info {
+    width: auto;
+    gap: 12px;
+  }
+}
+
+/* ─── Mobile S/M (≤ 480px) ───────────────────────── */
+@media (max-width: 480px) {
+  .title_hero-section {
+    font-size: 32px;
+    line-height: 36px;
+  }
+
+  .hero-section_eslogan {
+    font-size: 14px;
+  }
+
+  .hero-section::after {
+    height: 160px;
+  }
+
+  .valorChange {
+    font-size: 24px;
+  }
 }

@@ -143,10 +143,27 @@
   font-weight: 600;
   color: #555;
 }
-
+.modal_fiel label {
+  font-size: 0.8rem;
+  font-weight: 600;
+  color: #555;
+}
 .modal_field input,
 textarea {
   padding: 10px 12px;
+  border: 1px solid #ddd;
+  background-color: #fff;
+  border-radius: 8px;
+  font-size: 0.9rem;
+  color: #1a1a2e;
+  outline: none;
+  transition:
+    border-color 0.2s,
+    box-shadow 0.2s;
+  resize: none;
+}
+.modal_fiel input {
+  padding: 10px 35px;
   border: 1px solid #ddd;
   background-color: #fff;
   border-radius: 8px;
@@ -175,6 +192,10 @@ textarea {
   resize: none;
 }
 .modal_field input:focus {
+  border-color: #c6a75e;
+  box-shadow: 0 0 0 3px rgba(198, 167, 94, 0.15);
+}
+.modal_fiel input:focus {
   border-color: #c6a75e;
   box-shadow: 0 0 0 3px rgba(198, 167, 94, 0.15);
 }
@@ -358,4 +379,19 @@ textarea {
 
 .turno_agregar:hover {
   background: rgba(198, 167, 94, 0.08);
+}
+.container_MapPopup {
+  display: flex;
+  width: 100%;
+  height: 300px;
+}
+.form-control {
+  width: 100%;
+  padding: 10px 14px;
+  border: 1px solid #d1d5db;
+  background: #fff;
+  color: #1a1a2e;
+  border-radius: 8px;
+  font-size: 14px;
+  transition: all 0.2s;
 }

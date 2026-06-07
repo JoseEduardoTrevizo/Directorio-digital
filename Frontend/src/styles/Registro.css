@@ -36,6 +36,22 @@
   margin-bottom: 8px;
   margin: auto;
 }
+.seccion_Info:focus {
+  border-color: #c6a75e;
+  box-shadow: 0 0 0 3px rgba(198, 167, 94, 0.15);
+}
+.container_direccion_cp {
+  display: flex;
+  flex-direction: row;
+  gap: 15px;
+}
+.content_direccion {
+  display: flex;
+  width: 80%;
+}
+.content_cp {
+  width: 20%;
+}
 .formulario_labelRegistro {
   display: flex;
   font-size: 14px;
@@ -51,6 +67,21 @@
   border-radius: 8px;
   font-size: 14px;
   transition: all 0.2s;
+}
+.input_cp {
+  display: flex;
+  width: 100%;
+  padding: 10px 14px;
+  border: 1px solid #d1d5db;
+  background: #fff;
+  border-radius: 8px;
+  font-size: 14px;
+}
+.input_cp:focus {
+  border-color: #c6a75e;
+  background: #ffffff;
+  box-shadow: 0 0 0 3px rgba(198, 167, 94, 0.1);
+  outline: none;
 }
 .input_Registro:focus {
   border-color: #c6a75e;

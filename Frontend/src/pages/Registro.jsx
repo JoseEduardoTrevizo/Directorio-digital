@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import Select from "react-select";
+import DireccionAutocomplete from "../utils/DireccionAutocomplete";
 import { registrarEmpresa } from "../services/registroServices.js";
 import name from "../assets/icons/account.svg";
 import lock from "../assets/icons/lock.svg";
@@ -29,6 +30,9 @@ export default function Registro() {
     nombre: "",
     email: "",
     direccion: "",
+    cp: "",
+    lat: null,
+    lng: null,
     telefono: "",
     industria: "",
     contraseña: "",
@@ -64,13 +68,13 @@ export default function Registro() {
       formData.nombre = "";
       formData.email = "";
       formData.direccion = "";
+      formData.cp = "";
+      formData.lat = null;
+      formData.lng = null;
       formData.telefono = "";
       alert("Registro exitoso. Ahora puedes iniciar sesión.");
       // navigate("/pago"); // Redirige al pago tras registro exitoso
     } catch (err) {
-      console.log("Tipo de error:", err.type);
-      console.log("Mensaje:", err.message);
-      console.log("Error completo:", err);
       if (err.type === "NETWORK_ERROR") {
         setError("⚠️ " + err.message);
       } else if (err.type === "VALIDATION_ERROR") {
@@ -86,39 +90,45 @@ export default function Registro() {
   const planes = {
     1: {
       nombre: "Plan Básico",
-      precio: "$349 MXN/mes",
+      precio: "$199 MXN/mes",
       features: [
-        "Perfil básico en el directorio",
+        "Perfil en el directorio",
         "Información de contacto",
-        "Descripción breve (150-200 palabras)",
-        "1-3 Imágenes",
-        "Enlace a sitio web",
-        "Integración Google Maps",
+        "1 Imagen para mostrar",
+        "Integración a Maps",
       ],
     },
     2: {
       nombre: "Plan PRO",
-      precio: "$699 MXN/mes",
+      precio: "$449 MXN/mes",
       features: [
         "Todo lo del Plan Básico +",
-        "4-6 imágenes para mostrar",
-        "1 Vacante al Mes",
-        'Badge "Recomendado"',
+        "5 Imágenes para mostrar",
+        "2 Vacantes simultáneas",
+        "Aparicion en carrousel (rotacion media)",
         "Estadísticas básicas de búsquedas",
       ],
     },
     3: {
       nombre: "Plan Premium",
-      precio: "$949 MXN/mes",
+      precio: "$899 MXN/mes",
       features: [
         "Todo de los Planes +",
-        "Banner publicitario rotativo en página de inicio",
-        "3 Vacantes al Mes",
-        "Posicionamiento destacado en su categoría",
-        "Diferentes ubicaciones",
+        "Carrousel destacado (rotación alta)",
+        "Vacantes ilimitadas",
+        "Multiples sucursales / ubicaciones",
         "Estadísticas avanzadas",
+        "Perfil top en directorio",
       ],
     },
+  };
+  const handleDireccionSelect = ({ direccion, lat, lng }) => {
+    setFormData((prev) => ({
+      ...prev,
+      direccion,
+      lat,
+      lng,
+    }));
   };
   return (
     <>
@@ -169,18 +179,34 @@ export default function Registro() {
                 </div>
               </div>
 
-              <div className="seccion_Info">
-                <label className="formulario_labelRegistro">Direccion</label>
-                <div className="input-container">
-                  <img src={direccion} alt="" className="input-icon" />
-                  <input
-                    className="input_Registro"
-                    placeholder="Boulevard Jorge Castillo"
-                    name="direccion"
-                    value={formData.direccion}
-                    onChange={handleChange}
-                    required
-                  />
+              <div className="seccion_Info container_direccion_cp">
+                <div className="content_direccion">
+                  <label className="formulario_labelRegistro">Direccion</label>
+
+                  <DireccionAutocomplete onSelect={handleDireccionSelect} />
+
+                  {/* Muestra la dirección seleccionada */}
+                  {formData.direccion && (
+                    <p style={{ fontSize: 12, color: "black", marginTop: 4 }}>
+                      📍 {formData.direccion}
+                    </p>
+                  )}
+                </div>
+
+                <div className="content_cp">
+                  <label className="formulario_labelRegistro">
+                    Codigo Postal
+                  </label>
+                  <div className="input-container">
+                    <input
+                      className="input_cp"
+                      placeholder="62500"
+                      name="cp"
+                      value={formData.cp}
+                      onChange={handleChange}
+                      required
+                    />
+                  </div>
                 </div>
               </div>
 

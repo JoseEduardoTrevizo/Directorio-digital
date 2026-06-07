@@ -1,0 +1,64 @@
+/* Estilos globales para Mapbox SearchBox */
+
+/* Input del SearchBox */
+mapbox-search-box {
+  --color-background: #ffffff;
+  --color-text: #042442;
+  --color-border: #cbd5e1;
+  --color-primary: #006e2f;
+  --border-radius: 8px;
+}
+
+mapbox-search-box input {
+  background-color: #ffffff !important;
+  color: #042442 !important;
+  border: 1px solid #cbd5e1 !important;
+  border-radius: 8px !important;
+  padding: 10px 16px !important;
+  font-size: 14px !important;
+}
+
+mapbox-search-box input:focus {
+  border-color: #006e2f !important;
+  box-shadow: 0 0 0 3px rgba(0, 110, 47, 0.1) !important;
+  outline: none !important;
+}
+
+/* Resultados */
+mapbox-search-box [role="listbox"] {
+  background-color: #ffffff !important;
+  border: 1px solid #cbd5e1 !important;
+  border-radius: 8px !important;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15) !important;
+  max-height: 400px !important;
+  overflow-y: auto !important;
+}
+
+/* Opciones/Sugerencias */
+mapbox-search-box [role="option"] {
+  background-color: #ffffff !important;
+  color: #042442 !important;
+  padding: 12px 16px !important;
+  border-bottom: 1px solid #f1f5f9 !important;
+  font-size: 14px !important;
+  cursor: pointer !important;
+  transition: all 0.15s ease !important;
+}
+
+mapbox-search-box [role="option"]:last-child {
+  border-bottom: none !important;
+}
+
+/* Hover en opciones - IMPORTANTE */
+mapbox-search-box [role="option"]:hover {
+  background-color: #22c55e !important;
+  color: #ffffff !important;
+  font-weight: 500 !important;
+}
+
+/* Seleccionado */
+mapbox-search-box [role="option"][aria-selected="true"] {
+  background-color: #16a34a !important;
+  color: #ffffff !important;
+  font-weight: 600 !important;
+}

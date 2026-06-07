@@ -14,8 +14,6 @@ export default function PopupHomeProfile({ onClose, onSave, empresa }) {
 
   const handleSubmit = async (evt) => {
     evt.preventDefault();
-    console.log("id", userId);
-    console.log("acerca de", formData.informacion);
     try {
       const respuesta = await actualizarPerfilService.actualizarAcercaDeEmpresa(
         userId,

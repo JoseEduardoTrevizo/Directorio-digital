@@ -1,0 +1,361 @@
+.content_headerConfig {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 20px;
+  padding: 0 20px;
+}
+.container_headerConfig {
+  display: flex;
+  color: #042442;
+}
+.header_configTitle {
+  font-size: 1.5em;
+  font-weight: 700;
+  margin: 0;
+}
+.header_configSubtitle {
+  font-size: 14px;
+  color: #374151;
+  margin: 0;
+}
+.plan_headerConfig {
+  display: flex;
+  flex-direction: row;
+  gap: 10px;
+  align-items: center;
+  color: #042442;
+  font-size: 14px;
+  background-color: #b8954d;
+  border-radius: 50px;
+  padding: 5px 15px;
+}
+.plan_titleCrown {
+  margin: 0;
+  color: #042442;
+}
+.content_renovacionConfig {
+  display: flex;
+  flex-direction: row;
+  justify-content: flex-end;
+  gap: 20px;
+  padding: 0 20px;
+}
+.renovacion_bodyConfig {
+  flex: 0 0 calc(33.333% - 14px);
+  max-width: 450px;
+  width: 100%;
+  display: flex;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.04);
+  border: 1px solid #e5e7eb;
+  border-radius: 12px;
+  background: #fff;
+  transition: all 0.2s;
+  padding: 15px;
+}
+.icon_calendar {
+  width: 24px;
+  height: 24px;
+  color: #042442;
+}
+.container_renovacion {
+  display: flex;
+  flex-direction: row;
+  gap: 10px;
+  align-items: center;
+}
+
+.container_renovacionFecha {
+  color: #042442;
+  display: flex;
+  flex-direction: column;
+}
+.text_fechaConfig {
+  margin: 0;
+}
+.content_bodyConfig {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  grid-template-rows: 1fr 1fr auto;
+  gap: 10px;
+  padding: 0 20px;
+  margin-top: 25px;
+}
+.container_cambiarPassword {
+  flex: 0 0 calc(33.333% - 14px);
+  width: 100%;
+  display: flex;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.04);
+  border: 1px solid #e5e7eb;
+  border-radius: 12px;
+  background: #fff;
+  transition: all 0.2s;
+  padding: 15px;
+  gap: 8px;
+}
+.content_titlePass {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  gap: 8px;
+  color: #b8954d;
+}
+.container_cambiarMetodoPago {
+  flex: 0 0 calc(33.333% - 14px);
+  width: 100%;
+  display: flex;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.04);
+  border: 1px solid #e5e7eb;
+  border-radius: 12px;
+  background: #fff;
+  transition: all 0.2s;
+  padding: 15px;
+}
+.container_cambiarPlan {
+  grid-column: span 2 / span 2;
+  grid-row-start: 2;
+  transition: all 0.2s;
+  flex: 0 0 calc(33.333% - 14px);
+  width: 100%;
+  display: flex;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.04);
+  border: 1px solid #e5e7eb;
+  border-radius: 12px;
+  background: #fff;
+  transition: all 0.2s;
+  padding: 15px;
+}
+.subtitleConfig_cards {
+  font-size: 1.25em;
+  color: #b8954d;
+  margin: 0;
+  margin-bottom: 8px;
+}
+.inputConfigPassword {
+  border: 1px solid #ddd;
+  background-color: #fff;
+  border-radius: 8px;
+  font-size: 0.9rem;
+  color: #1a1a2e;
+  outline: none;
+  transition:
+    border-color 0.2s,
+    box-shadow 0.2s;
+  resize: none;
+  padding: 10px 12px;
+}
+.inputConfigPassword:focus {
+  border-color: #c6a75e;
+  box-shadow: 0 0 0 3px rgba(198, 167, 94, 0.15);
+}
+.contentNewpass {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  gap: 12px;
+}
+.container_newPassword {
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+}
+.labelsugerencia {
+  font-size: 14px;
+  font-weight: 500;
+  color: #374151;
+  margin-bottom: 8px;
+  margin-top: 25px;
+}
+.container_btnConfirmPass {
+  display: flex;
+  flex-direction: row;
+  justify-content: flex-end;
+  margin-top: 15px;
+}
+.btn_newPassword {
+  padding: 10px 20px;
+  max-width: 200px;
+  width: 100%;
+  border: none;
+  border-radius: 8px;
+  background: #c6a75e;
+  color: #fff;
+  font-size: 0.9rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: background 0.2s;
+}
+.btn_newPassword:hover {
+  background: #b8954d;
+}
+
+/*Estilos de tarijeta de credito*/
+.container_headerPayment {
+  background-color: #042442;
+  color: #c6a75e;
+  padding: 15px 25px;
+  border-radius: 16px;
+}
+.text_headerPaymentTitle {
+  font-size: 1.1em;
+  font-weight: 700;
+  margin: 0;
+}
+.content_headerBody {
+  display: flex;
+  width: 60%;
+  margin-top: 50px;
+  margin-bottom: 15px;
+}
+
+.text_headerPayment {
+  display: flex;
+  justify-content: space-between;
+  font-size: 1.25em;
+  font-weight: 700;
+  margin: 0;
+  width: 100%;
+  max-width: 350px;
+}
+.content_headerFooter {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: center;
+}
+.footer_payment {
+  font-size: 1.1em;
+  margin: 0;
+  color: #c6a75e;
+}
+.container_bodyPayment {
+  display: flex;
+  justify-content: space-between;
+  margin-top: 25px;
+  gap: 8px;
+}
+.labelConfig {
+  font-size: 14px;
+  font-weight: 500;
+  color: #374151;
+  margin-bottom: 8px;
+}
+.changePayment {
+  max-width: 250px;
+}
+/*cards de planes*/
+.content_planes {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-around;
+  padding: 0 20px;
+
+  padding-top: 10px;
+}
+.plan-cardConfig {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  border: 1px solid lightgray;
+  border-radius: 10px;
+  padding: 20px;
+  width: 300px;
+  height: 500px;
+  color: black;
+  position: relative;
+  overflow: hidden;
+}
+.plan-cardConfig-popular {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  border: 3px solid #c6a75e;
+  border-radius: 10px;
+  padding: 19px;
+  width: 300px;
+  height: 500px;
+  color: black;
+  position: relative;
+  overflow: hidden;
+}
+/*Zona de peligro*/
+.container_dangerZone {
+  grid-column: span 2 / span 2;
+  grid-row-start: 3;
+  transition: all 0.2s;
+  flex: 0 0 calc(33.333% - 14px);
+  width: 100%;
+  display: flex;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.04);
+  border: 1px solid red;
+  border-radius: 12px;
+  background: #fff;
+  transition: all 0.2s;
+  padding: 15px 30px;
+}
+.container_titleDanger {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  gap: 8px;
+  margin-bottom: 15px;
+}
+.subtitleConfig_dagerZone {
+  font-size: 1.25em;
+  color: red;
+  margin: 0;
+}
+.content_dangerZone {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+}
+.content_textDanger {
+  display: flex;
+  flex-direction: column;
+}
+.subtitle_dangerZone {
+  font-size: 14px;
+  color: #042442;
+  margin: 0;
+}
+.text_dangerZone {
+  font-size: 14px;
+  color: #374151;
+  margin: 0;
+}
+.btn_dangerZone {
+  display: flex;
+  align-items: center;
+  padding: 10px 20px;
+  max-width: 200px;
+  text-align: center;
+  width: 100%;
+  border: none;
+  border-radius: 8px;
+  background: red;
+  color: #fff;
+  gap: 8px;
+  font-size: 0.9rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: background 0.2s;
+}
+.btn_dangerZone:hover {
+  background: #b30000;
+}
+.icon_dangerZone {
+  display: flex;
+  align-items: center;
+  width: 18px;
+  height: 18px;
+  color: #fff;
+}
+.icon_dangerZoneAlert {
+  display: flex;
+  align-items: center;
+  width: 18px;
+  height: 18px;
+  color: red;
+}

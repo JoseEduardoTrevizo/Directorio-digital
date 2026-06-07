@@ -14,12 +14,19 @@ export default function Profile() {
   const API_URL = import.meta.env.VITE_API_URL;
 
   const profileUserId = currentUser?.id;
+  const isOwnProfile =
+    userId != null && String(userId) === String(profileUserId);
+
+  useEffect(() => {
+    setActiveTab("acerca");
+  }, [userId]);
+
   const tabs = [
     { id: "inicio", label: "Inicio" },
     { id: "acerca", label: "Acerca de" },
-    { id: "empleos", label: "Empleos" },
+    ...(isOwnProfile ? [{ id: "empleos", label: "Vacantes" }] : []),
+    ...(isOwnProfile ? [{ id: "configuracion", label: "Configuración" }] : []),
   ];
-
   useEffect(() => {
     if (!profileUserId) return;
     fetch(`${API_URL}profile/empresa/${profileUserId}`)
@@ -41,9 +48,6 @@ export default function Profile() {
         <p className="text-chargin">Cargando...</p>
       </div>
     );
-
-  const isOwnProfile =
-    userId != null && String(userId) === String(profileUserId);
 
   const handleSave = (nuevaData) => {
     setEmpresaData((prev) => ({ ...prev, ...nuevaData })); // actualiza el estado local

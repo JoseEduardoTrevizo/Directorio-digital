@@ -1,21 +1,31 @@
 import React, { useState, useEffect } from "react";
 import { useParams } from "react-router-dom";
+import { useAuth } from "../contexts/AuthContext";
 import portada from "../assets/images/cuauhtemoc.jpg";
 import profile from "../assets/images/company-logo.jpg";
+import edit from "../assets/icons/edit.svg";
 import { obtenerEmpresaPorId } from "../services/perfilPublicoService";
 import NavigationProfile from "../components/layout/NavigationProfile";
 
 export default function PublicProfile() {
   const { id } = useParams();
+  const { userId, currentUser } = useAuth();
   const [activeTab, setActiveTab] = useState("acerca");
   const [empresaData, setEmpresaData] = useState(null);
+  const [modalTitleOpen, setModalTitleOpen] = useState(false);
+
+  const profileUserId = currentUser?.id;
+  const isOwnProfile =
+    userId != null &&
+    String(userId) === String(profileUserId) &&
+    String(empresaData?.id) === String(profileUserId);
 
   const tabs = [
     { id: "inicio", label: "Inicio" },
     { id: "acerca", label: "Acerca de" },
-    { id: "empleos", label: "Empleos" },
+    ...(isOwnProfile ? [{ id: "empleos", label: "Vacantes" }] : []),
+    ...(isOwnProfile ? [{ id: "configuracion", label: "Configuración" }] : []),
   ];
-  console.log("ID de perfil público:", id);
   useEffect(() => {
     obtenerEmpresaPorId(id)
       .then((data) => setEmpresaData(data))
@@ -38,6 +48,22 @@ export default function PublicProfile() {
                   <p className="profile-bio">{empresaData.eslogan || ""}</p>
                 </div>
               </div>
+              {isOwnProfile && (
+                <img
+                  className="iconProfile edit-title"
+                  src={edit}
+                  alt="Edit"
+                  onClick={() => setModalTitleOpen(true)}
+                  style={{ cursor: "pointer" }}
+                />
+              )}
+              {modalTitleOpen && (
+                <PopupEditTittleProfile
+                  empresa={empresaData}
+                  onClose={() => setModalTitleOpen(false)}
+                  onSave={handleSave}
+                />
+              )}
             </div>
           </div>
         </div>

@@ -7,6 +7,7 @@ import map from "../../assets/images/google-maps.jpg";
 import edit from "../../assets/icons/edit.svg";
 import PopupEditProfiel from "../../utils/PopupEditProfiel";
 import { obtenerEmpresaPorId } from "../../services/perfilPublicoService";
+import Mapa from "../../utils/Mapa";
 
 export default function CardAboutProfile({ profileUserId }) {
   const { userId, updateCurrentUser, currentUser } = useAuth();
@@ -21,13 +22,18 @@ export default function CardAboutProfile({ profileUserId }) {
       })
       .catch(console.error);
   }, [profileUserId]);
-
   if (!empresaData) return <p>Cargando...</p>;
   const isOwnProfile =
     userId != null && String(userId) === String(profileUserId);
 
   const handleSave = (nuevaData) => {
-    setEmpresaData((prev) => ({ ...prev, ...nuevaData, plan: prev.plan })); // actualiza el estado local
+    setEmpresaData((prev) => ({
+      ...prev,
+      ...nuevaData,
+      latitud: nuevaData.lat ?? prev.latitud, // ← mapea lat → latitud
+      longitud: nuevaData.lng ?? prev.longitud,
+      plan: prev.plan,
+    })); // actualiza el estado local
     updateCurrentUser({
       // actualiza el context
       email: nuevaData.email,
@@ -38,6 +44,8 @@ export default function CardAboutProfile({ profileUserId }) {
       horario_atencion: nuevaData.horario, // el context usa horario_atencion
       ubicacion: nuevaData.ubicacion,
       direccion: nuevaData.direccion,
+      latitud: nuevaData.lat ?? currentUser.latitud,
+      longitud: nuevaData.lng ?? currentUser.longitud,
       plan: currentUser.plan, // mantenemos el plan actual
     });
   };
@@ -132,15 +140,12 @@ export default function CardAboutProfile({ profileUserId }) {
           <div className="container_Contacto direccion">
             <h3 className="subtitleCard_Profile">Ubicacion en el mapa</h3>
             <div className="container_Map">
-              <img
-                className="map_Ubicacion"
-                src={map}
-                alt="Ubicacion en el mapa"
+              <Mapa
+                lat={empresaData.latitud}
+                lng={empresaData.longitud}
+                nombre={empresaData.nombre}
               />
             </div>
-            <p className="textCard_Profile ">
-              {empresaData.direccion || "Av. Reforma 222, Cuauhtémoc, CDMX"}
-            </p>
           </div>
         </div>
       </main>

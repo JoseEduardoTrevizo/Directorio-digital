@@ -16,7 +16,6 @@ export default function CardHomeProfile({ profileUserId }) {
     if (!profileUserId) return;
     obtenerEmpresaPorId(profileUserId)
       .then((data) => {
-        console.log("plan en empresaData:", data);
         setEmpresaData(data);
       })
       .catch(console.error);

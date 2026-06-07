@@ -25,7 +25,6 @@ const getHistorico = async (base = "USD", dias = 7) => {
       `${API_URL}divisas/tipo-cambio-historico?base=${base}&dias=${dias}`,
     );
 
-    console.log("respuesta", response);
     if (!response.ok)
       throw new Error("Error al obtener el histórico de tipo de cambio");
 
