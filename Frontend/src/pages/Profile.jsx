@@ -69,7 +69,7 @@ export default function Profile() {
                 <div className="profile-contentTitle-picture">
                   <img
                     className="profile-picture"
-                    src={profile}
+                    src={empresaData.picture_perfil}
                     alt="Profile"
                   />
                   <div className="profile-content-Header">

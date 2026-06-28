@@ -29,14 +29,16 @@
   box-shadow: 0 2px 12px rgba(0, 0, 0, 0.3);
 }
 .header_title {
-  color: #c6a75e;
-}
-.logoEnlace {
+  width: 250px;
+  height: 60px;
   display: flex;
   align-items: center;
-  width: 250px;
-  height: 250px;
-  margin-right: 8px;
+}
+.logoEnlace {
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+  display: block;
 }
 .title_page {
   font-family: Cambria, Cochin, Georgia, Times, "Times New Roman", serif;
@@ -216,11 +218,6 @@
 }
 /*responsive*/
 /* ─── Fix logo (bug actual, independiente del responsive) ─── */
-.logoEnlace {
-  width: 48px;
-  height: 48px;
-  object-fit: contain;
-}
 
 /* ─── Hamburguesa — oculta en desktop ───────────────────── */
 .btn-hamburger {

@@ -196,7 +196,7 @@
 /* Primera imagen ocupa todo el ancho */
 .banner_Container:first-child {
   grid-column: 1 / -1;
-  height: 250px;
+  height: 350px;
 }
 
 /* Las demás imágenes mantienen su tamaño normal */

@@ -42,7 +42,11 @@ export default function PublicProfile() {
           <div className="profile-header-content">
             <div className="profile-content">
               <div className="profile-contentTitle-picture">
-                <img className="profile-picture" src={profile} alt="Profile" />
+                <img
+                  className="profile-picture"
+                  src={empresaData.picture_perfil}
+                  alt="Profile"
+                />
                 <div className="profile-content-Header">
                   <h2 className="profile-name">{empresaData.nombre}</h2>
                   <p className="profile-bio">{empresaData.eslogan || ""}</p>

@@ -104,7 +104,8 @@ export default function Card_vacantePublicada({
           <div className="content__card-vacante-publicada--body-footer">
             <div className="content__card-vacante-publicada--body-footer-applicants">
               <h4 className="content__card-vacante-publicada--footer-location">
-                <img className="icons_footerVacante" src={eye} alt="Vistas" />5
+                <img className="icons_footerVacante" src={eye} alt="Vistas" />
+                {vacante.vistas}
               </h4>
               <p className="content__card-vacante-publicada--footer-location">
                 Vistas
@@ -112,7 +113,8 @@ export default function Card_vacantePublicada({
             </div>
             <div className="content__card-vacante-publicada--body-footer-applicants">
               <h4 className="content__card-vacante-publicada--footer-location">
-                <img src={paper} alt="Aplicaciones" />0
+                <img src={paper} alt="Aplicaciones" />
+                {vacante.aplicaciones}
               </h4>
               <p className="content__card-vacante-publicada--footer-location">
                 Aplicaciones

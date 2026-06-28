@@ -1,5 +1,10 @@
 import React, { useState, useRef } from "react";
 import iconCv from "../../assets/icons/upload_cv.svg";
+import toast from "react-hot-toast";
+import {
+  enviarAplicacion,
+  incrementarAplicaciones,
+} from "../../services/aplicacionesService";
 
 export default function Popup_cv({ onClose, onBack, vacante }) {
   const [archivo, setArchivo] = useState(null);
@@ -7,6 +12,15 @@ export default function Popup_cv({ onClose, onBack, vacante }) {
   const [numero, setNumero] = useState("");
   const [dragging, setDragging] = useState(false);
   const inputRef = useRef();
+  const [email, setEmail] = useState("");
+  const [enviando, setEnviando] = useState(false);
+  const [error, setError] = useState("");
+
+  const TIPOS_PERMITIDOS = [
+    "application/pdf",
+    "application/msword",
+    "application/vnd.openxmlformats-officedocument.wordprocessingml.document",
+  ];
 
   const handleDrop = (e) => {
     e.preventDefault();
@@ -15,11 +29,40 @@ export default function Popup_cv({ onClose, onBack, vacante }) {
     if (file) setArchivo(file);
   };
 
-  const handleSubmit = () => {
-    if (!archivo || !nombre || !numero)
-      return alert("Completa todos los campos");
+  const handleSubmit = async () => {
+    if (!archivo || !nombre || !numero || !email)
+      return setError("Completa todos los campos");
 
-    onClose();
+    if (!TIPOS_PERMITIDOS.includes(archivo.type)) {
+      return setError("Solo se aceptan archivos PDF, DOC o DOCX");
+    }
+    if (archivo.size > 4 * 1024 * 1024) {
+      return setError("El archivo no debe superar 4MB");
+    }
+
+    setEnviando(true);
+    setError("");
+
+    const formData = new FormData();
+    formData.append("nombre", nombre);
+    formData.append("telefono", numero);
+    formData.append("email", email);
+    formData.append("cv", archivo);
+
+    try {
+      await enviarAplicacion(vacante.id, formData);
+
+      incrementarAplicaciones(vacante.id).catch((err) =>
+        console.error("Error al incrementar aplicaciones:", err),
+      );
+
+      toast.success("¡Aplicación enviada! Mucha suerte 🍀");
+      onClose();
+    } catch (err) {
+      setError(err.message);
+    } finally {
+      setEnviando(false);
+    }
   };
 
   return (
@@ -81,6 +124,7 @@ export default function Popup_cv({ onClose, onBack, vacante }) {
           type="text"
           placeholder="Tu nombre completo"
           value={nombre}
+          required
           onChange={(e) => setNombre(e.target.value)}
         />
 
@@ -90,15 +134,29 @@ export default function Popup_cv({ onClose, onBack, vacante }) {
           type="text"
           placeholder="Tu número de teléfono"
           value={numero}
+          required
           onChange={(e) => setNumero(e.target.value)}
+        />
+        <p className="cv-label">Correo electrónico</p>
+        <input
+          className="cv-email-input"
+          type="email"
+          placeholder="tu@correo.com"
+          value={email}
+          required
+          onChange={(e) => setEmail(e.target.value)}
         />
 
         <div className="cv-acciones">
           <button className="btn_cancelarCV" onClick={onBack}>
             Cancelar
           </button>
-          <button className="btn_enviarCV" onClick={handleSubmit}>
-            Enviar CV
+          <button
+            className="btn_enviarCV"
+            onClick={handleSubmit}
+            disabled={enviando}
+          >
+            {enviando ? "Enviando..." : "Enviar CV"}
           </button>
         </div>
       </div>

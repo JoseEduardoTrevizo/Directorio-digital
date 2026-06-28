@@ -165,6 +165,28 @@ const activarVacante = async ({ vacanteId, estatus }) => {
   }
 };
 
+const incrementarVistas = async (idVacante) => {
+  try {
+    const response = await fetch(`${API_URL}vacantes/${idVacante}/vistas`, {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+    });
+
+    const data = await response.json();
+
+    if (!data.success) {
+      throw new Error(data.message || "Error al actualizar vistas");
+    }
+
+    return data;
+  } catch (error) {
+    console.error("Error al incrementar vistas:", error);
+    throw error;
+  }
+};
+
 export {
   obtenerVacantesPorEmpresa,
   crearVacante,
@@ -173,4 +195,5 @@ export {
   eliminarVacante,
   pausarVacante,
   activarVacante,
+  incrementarVistas,
 };

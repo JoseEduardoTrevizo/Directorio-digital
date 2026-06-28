@@ -1,12 +1,17 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useRef } from "react";
 import actualizarPerfilService from "../services/actualizarPerfilService";
+import { subirFotoPerfil } from "../services/imagenesService";
 import { useAuth } from "../contexts/AuthContext";
+import toast from "react-hot-toast";
 
 export default function PopupEditTittleProfile({ onClose, onSave, empresa }) {
   const [formData, setFormData] = useState({
     nombre: empresa.nombre || "",
     eslogan: empresa.eslogan || "",
   });
+  const [uploading, setUploading] = useState(false);
+  const [previewUrl, setPreviewUrl] = useState(empresa.picture_perfil || null);
+  const fileInputRef = useRef(null);
   const { userId, updateCurrentUser, login } = useAuth();
 
   useEffect(() => {
@@ -18,6 +23,32 @@ export default function PopupEditTittleProfile({ onClose, onSave, empresa }) {
 
   const handleChange = (e) => {
     setFormData({ ...formData, [e.target.name]: e.target.value });
+  };
+
+  const handleImageChange = async (e) => {
+    const file = e.target.files[0];
+    if (!file) return;
+    e.target.value = "";
+
+    // Preview local inmediato mientras sube
+    const localPreview = URL.createObjectURL(file);
+    setPreviewUrl(localPreview);
+
+    setUploading(true);
+    try {
+      const { url } = await subirFotoPerfil(userId, file);
+      // Reemplaza el preview local por la URL real de B2
+      setPreviewUrl(url);
+      onSave({ picture_perfil: url }); // notifica al padre para que actualice su estado
+      toast.success("Foto de perfil actualizada");
+    } catch (err) {
+      // Revierte el preview si falló
+      setPreviewUrl(empresa.picture_perfil || null);
+      toast.error(err.message || "Error al subir la foto de perfil");
+    } finally {
+      setUploading(false);
+      URL.revokeObjectURL(localPreview);
+    }
   };
 
   const handleSubmit = async (evt) => {
@@ -35,7 +66,7 @@ export default function PopupEditTittleProfile({ onClose, onSave, empresa }) {
       onClose();
     } catch (error) {
       console.error("Error:", error);
-      alert("Hubo un error al guardar los cambios");
+      toast.error("Hubo un error al guardar los cambios");
     }
   };
   return (
@@ -60,16 +91,7 @@ export default function PopupEditTittleProfile({ onClose, onSave, empresa }) {
                 placeholder={empresa.nombre || "Nombre de la empresa"}
               />
             </div>
-            <div className="modal_field">
-              <label>Imagen del perfil</label>
-              <input
-                name="imagen"
-                value={formData.informacion}
-                onChange={handleChange}
-                max={200}
-                placeholder={"Foto de perfil de la empresa"}
-              />
-            </div>
+
             <div className="modal_field modal_field--full">
               <label>Breve descripcion</label>
               <input
@@ -79,6 +101,37 @@ export default function PopupEditTittleProfile({ onClose, onSave, empresa }) {
                 placeholder={
                   empresa.eslogan || "Breve descripcion de la empresa"
                 }
+              />
+            </div>
+            <div className="modal_field">
+              <label>Imagen del perfil</label>
+              <div
+                className="perfil_upload_area"
+                onClick={() => !uploading && fileInputRef.current.click()}
+                style={{ cursor: uploading ? "not-allowed" : "pointer" }}
+              >
+                {previewUrl ? (
+                  <img
+                    src={previewUrl}
+                    alt="Foto de perfil"
+                    className="perfil_preview"
+                  />
+                ) : (
+                  <span className="perfil_placeholder">
+                    {uploading ? "Subiendo..." : "Haz clic para subir foto"}
+                  </span>
+                )}
+                {uploading && (
+                  <span className="perfil_uploading_label">Subiendo...</span>
+                )}
+              </div>
+              <input
+                ref={fileInputRef}
+                type="file"
+                accept="image/jpeg, image/png, image/webp"
+                onChange={handleImageChange}
+                style={{ display: "none" }}
+                disabled={uploading}
               />
             </div>
           </div>

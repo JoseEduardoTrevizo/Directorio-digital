@@ -32,7 +32,6 @@ export default function CardHireProfile({ profileUserId }) {
   useEffect(() => {
     fetchVacantes();
   }, [profileUserId]);
-
   const fetchVacantes = () => {
     if (!profileUserId) return;
     setLoadingVacantes(true);

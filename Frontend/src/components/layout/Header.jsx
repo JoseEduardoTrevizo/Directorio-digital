@@ -49,9 +49,9 @@ export default function Header() {
   return (
     <header className={headerClass}>
       {/* Logo */}
-      <h2 className="header_title">
+      <div className="header_title">
         <img src={enlace} alt="Enlace" className="logoEnlace" />
-      </h2>
+      </div>
 
       {/* Nav desktop */}
       <nav className={`navbar ${mobileNavOpen ? "navbar--open" : ""}`}>

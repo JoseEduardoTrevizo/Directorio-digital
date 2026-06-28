@@ -1,6 +1,13 @@
 import React, { useEffect, useState } from "react";
+import {
+  enviarAplicacion,
+  incrementarAplicaciones,
+} from "../../services/aplicacionesService";
+import toast from "react-hot-toast";
 
 export default function Popup_aplicar({ onClose, onBack, vacante }) {
+  const [enviando, setEnviando] = useState(false);
+  const [error, setError] = useState("");
   const [form, setForm] = useState({
     nombre: "",
     apellido: "",
@@ -35,9 +42,48 @@ export default function Popup_aplicar({ onClose, onBack, vacante }) {
     setForm((prev) => ({ ...prev, [name]: value }));
   };
 
-  const handleSubmit = () => {
-    // aquí llamas tu endpoint
-    onClose();
+  const handleSubmit = async () => {
+    const requeridos = [
+      "nombre",
+      "apellido",
+      "edad",
+      "domicilio",
+      "telefono",
+      "sexo",
+      "fechaNacimiento",
+      "estadoCivil",
+      "email",
+      "escolaridad",
+      "empresa",
+      "puesto",
+      "descripcion",
+    ];
+    const faltantes = requeridos.filter((campo) => !form[campo]);
+    if (faltantes.length > 0) {
+      return setError("Completa todos los campos obligatorios");
+    }
+
+    setEnviando(true);
+    setError("");
+
+    const formData = new FormData();
+    Object.entries(form).forEach(([key, value]) => {
+      if (key !== "cv" && value) formData.append(key, value);
+    });
+
+    try {
+      await enviarAplicacion(vacante.id, formData);
+      incrementarAplicaciones(vacante.id).catch((err) =>
+        console.error("Error al incrementar aplicaciones:", err),
+      );
+
+      toast.success("¡Aplicación enviada! Mucha suerte 🍀");
+      onClose();
+    } catch (err) {
+      setError(err.message);
+    } finally {
+      setEnviando(false);
+    }
   };
 
   return (
@@ -49,9 +95,7 @@ export default function Popup_aplicar({ onClose, onBack, vacante }) {
             ←
           </button>
           <div>
-            <h3 className="apply-title">
-              Completa tu información para aplicar a esta posición
-            </h3>
+            <h3 className="apply-title">Completa tu información</h3>
           </div>
         </div>
 
@@ -142,6 +186,7 @@ export default function Popup_aplicar({ onClose, onBack, vacante }) {
             className="input_aplicar"
             type="email"
             name="email"
+            required
             placeholder="Correo electrónico"
             value={form.email}
             onChange={handleChange}
@@ -243,8 +288,12 @@ export default function Popup_aplicar({ onClose, onBack, vacante }) {
           </div>
         </div>
 
-        <button className="btn_Aplicar" onClick={handleSubmit}>
-          Enviar solicitud
+        <button
+          className="btn_Aplicar"
+          onClick={handleSubmit}
+          disabled={enviando}
+        >
+          {enviando ? "Enviando..." : "Enviar solicitud"}
         </button>
       </div>
     </>

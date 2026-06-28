@@ -87,6 +87,47 @@
 .modal_form {
   padding: 20px 24px;
 }
+.perfil_upload_area {
+  width: 100%;
+  border-radius: 8px;
+  border: 2px dashed #ccc;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  overflow: hidden;
+  position: relative;
+  transition: border-color 0.2s;
+}
+
+.perfil_upload_area:hover {
+  border-color: #666;
+}
+
+.perfil_preview {
+  width: 200px;
+  height: 200px;
+  object-fit: cover;
+  border-radius: 50%;
+}
+
+.perfil_placeholder {
+  font-size: 0.75rem;
+  color: #999;
+  text-align: center;
+  padding: 8px;
+}
+
+.perfil_uploading_label {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  background: rgba(0, 0, 0, 0.5);
+  color: white;
+  font-size: 0.7rem;
+  text-align: center;
+  padding: 4px 0;
+}
 
 .modal_section {
   font-size: 0.85rem;

@@ -5,12 +5,22 @@ import imagen from "../../assets/icons/image.svg";
 import notImagen from "../../assets/icons/bid_land.svg";
 import PopupHomeProfile from "../../utils/PopupHomeProfile";
 import { obtenerEmpresaPorId } from "../../services/perfilPublicoService";
+import { toast, Toaster } from "react-hot-toast";
+import {
+  getImagenesGaleria,
+  subirImagenGaleria,
+  eliminarImagenGaleria,
+} from "../../services/imagenesService";
 
 export default function CardHomeProfile({ profileUserId }) {
   const { userId, updateCurrentUser } = useAuth();
   const [empresaData, setEmpresaData] = useState(null);
-  const [images, setImages] = useState([]);
   const [modalOpen, setModalOpen] = useState(false);
+  const [images, setImages] = useState([]); // ahora son { id, url } reales de B2
+  const [uploading, setUploading] = useState(false);
+  const [limite, setLimite] = useState(null);
+
+  const canUpload = limite === null || images.length < limite;
 
   useEffect(() => {
     if (!profileUserId) return;
@@ -20,6 +30,18 @@ export default function CardHomeProfile({ profileUserId }) {
       })
       .catch(console.error);
   }, [profileUserId]);
+
+  // Carga las imágenes reales al montar
+  useEffect(() => {
+    if (!profileUserId) return;
+    getImagenesGaleria(profileUserId)
+      .then(({ imagenes, limite }) => {
+        setImages(imagenes);
+        setLimite(limite);
+      })
+      .catch(() => toast.error("No se pudieron cargar las imágenes"));
+  }, [profileUserId]);
+
 
   const isOwnProfile =
     userId != null && String(userId) === String(profileUserId);
@@ -32,34 +54,37 @@ export default function CardHomeProfile({ profileUserId }) {
     });
   };
 
-  const handleImageChange = (e) => {
-    const files = Array.from(e.target.files);
+  const handleImageChange = async (e) => {
+    const file = e.target.files[0]; // solo uno a la vez — controlamos el límite
+    if (!file) return;
 
-    const newImages = files.map((file) => {
-      return new Promise((resolve) => {
-        const reader = new FileReader();
-        reader.onloadend = () => {
-          resolve({
-            id: Date.now() + Math.random(),
-            file: file,
-            preview: reader.result,
-          });
-        };
-        reader.readAsDataURL(file);
-      });
-    });
-
-    Promise.all(newImages).then((loadedImages) => {
-      setImages((prev) => [...prev, ...loadedImages]);
-    });
+    // Reset del input para permitir subir el mismo archivo de nuevo si se borró
+    e.target.value = "";
+    if (!canUpload) {
+      toast.error(`Límite de imágenes alcanzado (${limite})`);
+      return;
+    }
+    setUploading(true);
+    try {
+      const { url } = await subirImagenGaleria(profileUserId, file);
+      // Agrega la imagen nueva al final con un id temporal basado en url
+      setImages((prev) => [...prev, { id: Date.now(), url }]);
+      toast.success("Imagen subida correctamente");
+    } catch (err) {
+      toast.error(err.message || "Error al subir la imagen");
+    } finally {
+      setUploading(false);
+    }
   };
 
-  const handleButtonClick = () => {
-    document.getElementById("imageInput").click();
-  };
-
-  const removeImage = (id) => {
-    setImages((prev) => prev.filter((img) => img.id !== id));
+  const removeImage = async (imagenId) => {
+    try {
+      await eliminarImagenGaleria(profileUserId, imagenId);
+      setImages((prev) => prev.filter((img) => img.id !== imagenId));
+      toast.success("Imagen eliminada");
+    } catch (err) {
+      toast.error(err.message || "Error al eliminar la imagen");
+    }
   };
 
   return (
@@ -95,11 +120,11 @@ export default function CardHomeProfile({ profileUserId }) {
         </div>
 
         <div className="container_Home">
-          <h2 className="titleCard_Profile">Galeria</h2>
+          <h2 className="titleCard_Profile">Galería</h2>
           {isOwnProfile ? (
             <div className="container_UploadImage">
               <div className="upload_Area">
-                {images.length === 0 ? (
+                {images.length === 0 && !uploading ? (
                   <div className="upload_Placeholder">
                     <div className="icon_Camera">
                       <img src={imagen} alt="Cámara" />
@@ -107,89 +132,86 @@ export default function CardHomeProfile({ profileUserId }) {
                     <p className="upload_Text">
                       Agrega una imagen publicitaria
                     </p>
-
-                    <input
-                      type="file"
-                      id="imageInput"
-                      accept="image/*"
-                      multiple
-                      onChange={handleImageChange}
-                      className="input_File"
-                    />
-
-                    <button onClick={handleButtonClick} className="btn_Upload">
-                      Subir imagen
-                    </button>
                   </div>
                 ) : (
-                  <>
-                    <div className="images_Grid">
-                      {images.map((image, index) => (
-                        <div key={image.id} className="banner_Container">
-                          <button
-                            className="btn_Remove"
-                            onClick={() => removeImage(image.id)}
-                          >
-                            ✕
-                          </button>
-                          <div className="banner_Image">
-                            <img
-                              src={image.preview}
-                              alt={`Banner ${index + 1}`}
-                            />
-                          </div>
+                  <div className="images_Grid">
+                    {images.map((image, index) => (
+                      <div key={image.id} className="banner_Container">
+                        <button
+                          className="btn_Remove"
+                          onClick={() => removeImage(image.id)}
+                          disabled={uploading}
+                        >
+                          ✕
+                        </button>
+                        <div className="banner_Image">
+                          <img src={image.url} alt={`Banner ${index + 1}`} />
                         </div>
-                      ))}
-                    </div>
+                      </div>
+                    ))}
+                  </div>
+                )}
 
+                {canUpload && (
+                  <>
                     <input
                       type="file"
                       id="imageInput"
-                      accept="image/*"
-                      multiple
+                      accept="image/jpeg, image/png, image/webp"
                       onChange={handleImageChange}
                       className="input_File"
+                      disabled={uploading}
                     />
-
-                    <button onClick={handleButtonClick} className="btn_Upload">
-                      Subir imagen
+                    <button
+                      onClick={() =>
+                        document.getElementById("imageInput").click()
+                      }
+                      className="btn_Upload"
+                      disabled={uploading}
+                    >
+                      {uploading ? "Subiendo..." : "Subir imagen"}
                     </button>
                   </>
+                )}
+                {/* Mensaje cuando llegó al límite */}
+                {!canUpload && limite !== null && (
+                  <p className="upload_Text">
+                    Has alcanzado el límite de {limite} imagen
+                    {limite === 1 ? "" : "es"} de tu plan.
+                  </p>
                 )}
               </div>
             </div>
           ) : (
+            // Vista de visitante — sin cambios respecto a tu código original,
+            // pero ahora muestra URLs reales de B2 en vez de previews locales
             <div className="container_UploadImage">
               <div className="upload_Area">
                 {images.length === 0 ? (
                   <div className="upload_Placeholder">
                     <div className="icon_Camera">
-                      <img src={notImagen} alt="Cámara" />
+                      <img src={notImagen} alt="Sin imágenes" />
                     </div>
                     <p className="upload_Text">
                       La empresa aún no ha subido contenido promocional.
                     </p>
                   </div>
                 ) : (
-                  <>
-                    <div className="images_Grid">
-                      {images.map((image, index) => (
-                        <div key={image.id} className="banner_Container">
-                          <div className="banner_Image">
-                            <img
-                              src={image.preview}
-                              alt={`Banner ${index + 1}`}
-                            />
-                          </div>
+                  <div className="images_Grid">
+                    {images.map((image, index) => (
+                      <div key={image.id} className="banner_Container">
+                        <div className="banner_Image">
+                          <img src={image.url} alt={`Banner ${index + 1}`} />
                         </div>
-                      ))}
-                    </div>
-                  </>
+                      </div>
+                    ))}
+                  </div>
                 )}
               </div>
             </div>
           )}
         </div>
+        <Toaster position="top-center" />
       </main>
     </>
   );
