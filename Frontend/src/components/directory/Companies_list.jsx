@@ -10,7 +10,13 @@ export default function Companies_list({ onClick, empresa }) {
       <div className="company-card" onClick={onClick}>
         <div className="company-info">
           <span className="logo-placeholder">
-            {<img className="logo" src={defaults} alt="Logo" />}
+            {
+              <img
+                className="logo"
+                src={empresa.picture_perfil || defaults}
+                alt="Logo"
+              />
+            }
           </span>
           <div className="container_Title-card">
             <h3 className="company-name">{empresa.nombre}</h3>

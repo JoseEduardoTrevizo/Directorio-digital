@@ -30,7 +30,10 @@ export default function Popup_Company({ onClose, empresa }) {
       <div className="popup_Container">
         <div className="popup_Header">
           <div className="content-Header">
-            <img className="logo_Company" src={logoCompany} />
+            <img
+              className="logo_Company"
+              src={empresa.picture_perfil || logoCompany}
+            />
             <div className="company_Title">
               <h2 className="company_Name">{empresa.nombre}</h2>
               <p className="company_Area">{empresa.industria}</p>

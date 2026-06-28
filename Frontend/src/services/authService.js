@@ -27,7 +27,7 @@ function validateLoginInputs(email, password) {
 
   if (!password.trim()) {
     errors.password = "La contraseña es obligatoria";
-  } else if (password.length < 6) {
+  } else if (password.length < 8) {
     errors.password = "La contraseña debe tener al menos 6 caracteres";
   }
 

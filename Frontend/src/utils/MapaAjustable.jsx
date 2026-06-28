@@ -1,6 +1,33 @@
 import { useState } from "react";
-import Map, { Marker, Popup, NavigationControl } from "react-map-gl";
-import "mapbox-gl/dist/mapbox-gl.css";
+import { MapContainer, TileLayer, Marker, Popup } from "react-leaflet";
+import L from "leaflet";
+
+// Mismo fix de icono (puedes extraerlo a un archivo utils/leafletIconFix.js)
+delete L.Icon.Default.prototype._getIconUrl;
+L.Icon.Default.mergeOptions({
+  iconRetinaUrl: new URL(
+    "leaflet/dist/images/marker-icon-2x.png",
+    import.meta.url,
+  ).href,
+  iconUrl: new URL("leaflet/dist/images/marker-icon.png", import.meta.url).href,
+  shadowUrl: new URL("leaflet/dist/images/marker-shadow.png", import.meta.url)
+    .href,
+});
+
+const pinIcono = new L.DivIcon({
+  className: "",
+  html: `<div style="
+    width: 14px; height: 14px;
+    background: #c6a75e;
+    border: 2px solid white;
+    border-radius: 50%;
+    box-shadow: 0 2px 6px rgba(0,0,0,0.4);
+    cursor: grab;
+  "></div>`,
+  iconSize: [14, 14],
+  iconAnchor: [7, 7],
+  popupAnchor: [0, -12],
+});
 
 export default function MapaAjustable({ lat, lng, nombre, onCoordsChange }) {
   const [mostrarPopup, setMostrarPopup] = useState(true);
@@ -23,57 +50,49 @@ export default function MapaAjustable({ lat, lng, nombre, onCoordsChange }) {
   }
 
   return (
-    <Map
-      initialViewState={{ longitude: lng, latitude: lat, zoom: 15 }}
+    <MapContainer
+      center={[lat, lng]}
+      zoom={15}
       style={{ width: "100%", height: 400, borderRadius: 12 }}
-      mapStyle="mapbox://styles/mapbox/streets-v12"
-      mapboxAccessToken={import.meta.env.VITE_MAPBOX_TOKEN}
-      transformRequest={(url) => {
-        if (url.includes("events.mapbox.com")) return { url: "" };
-        return { url };
-      }}
     >
-      <NavigationControl position="top-right" />
+      <TileLayer url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png" />
 
       <Marker
-        longitude={lng}
-        latitude={lat}
-        color="#c6a75e"
-        draggable={true} // ← habilita el drag
-        onDragStart={() => setMostrarPopup(false)} // oculta el popup al arrastrar
-        onDragEnd={(e) => {
-          const { lng: nuevoLng, lat: nuevoLat } = e.lngLat;
-          setMostrarPopup(true);
-          onCoordsChange?.({ lat: nuevoLat, lng: nuevoLng }); // notifica al padre
+        position={[lat, lng]}
+        draggable={true}
+        eventHandlers={{
+          dragstart: () => setMostrarPopup(false),
+          dragend: (e) => {
+            // ← aquí está la diferencia clave con Mapbox
+            const { lat: nuevoLat, lng: nuevoLng } = e.target.getLatLng();
+            setMostrarPopup(true);
+            onCoordsChange?.({ lat: nuevoLat, lng: nuevoLng });
+          },
+          click: () => setMostrarPopup(true),
         }}
-        onClick={() => setMostrarPopup(true)}
-      />
-
-      {mostrarPopup && (
-        <Popup
-          longitude={lng}
-          latitude={lat}
-          anchor="bottom"
-          offset={25}
-          onClose={() => setMostrarPopup(false)}
-          closeButton={true}
-          closeOnClick={false}
-        >
-          <p
-            style={{
-              margin: 0,
-              fontWeight: 600,
-              fontSize: 13,
-              color: "#042442",
-            }}
+      >
+        {mostrarPopup && (
+          <Popup
+            offset={[0, -12]}
+            onClose={() => setMostrarPopup(false)}
+            closeButton={true}
           >
-            {nombre}
-          </p>
-          <p style={{ margin: "2px 0 0 0", fontSize: 11, color: "#64748b" }}>
-            Arrastra el pin para ajustar
-          </p>
-        </Popup>
-      )}
-    </Map>
+            <p
+              style={{
+                margin: 0,
+                fontWeight: 600,
+                fontSize: 13,
+                color: "#042442",
+              }}
+            >
+              {nombre}
+            </p>
+            <p style={{ margin: "2px 0 0 0", fontSize: 11, color: "#64748b" }}>
+              Arrastra el pin para ajustar
+            </p>
+          </Popup>
+        )}
+      </Marker>
+    </MapContainer>
   );
 }
