@@ -1,5 +1,5 @@
 import React from "react";
-import LegalPage from "../pages/Legalpage.jsx";
+import LegalPage from "../pages/LegalPage.jsx";
 const FECHA = "5 de julio de 2026";
 const CORREO = "contacto@enlacelocal.mx";
 
