@@ -1,8 +1,12 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import Select from "react-select";
 import DireccionAutocomplete from "../utils/DireccionAutocomplete";
-import { registrarEmpresa } from "../services/registroServices.js";
+import {
+  registrarEmpresa,
+  obtenerSectores,
+  obtenerSubsectores,
+} from "../services/registroServices.js";
 import name from "../assets/icons/account.svg";
 import lock from "../assets/icons/lock.svg";
 import company from "../assets/icons/apartment.svg";
@@ -11,30 +15,19 @@ import direccion from "../assets/icons/location_on.svg";
 import telefono from "../assets/icons/call_2.svg";
 
 export default function Registro() {
-  const opciones = [
-    { value: "Manufactura", label: "Manufactura" },
-    { value: "Agricultura", label: "Agricultura y Agroindustria" },
-    { value: "Construccion", label: "Construcción" },
-    { value: "Tecnologia", label: "Tecnología y Software" },
-    { value: "Salud", label: "Salud y Medicina" },
-    { value: "Educacion", label: "Educación" },
-    { value: "Transporte", label: "Transporte y Logística" },
-    { value: "Comercio", label: "Comercio y Retail" },
-    { value: "Alimentos", label: "Alimentos y Bebidas" },
-    { value: "FinancieroS", label: "Servicios Financieros" },
-    { value: "Turismo", label: "Turismo y Hospitalidad" },
-    { value: "Energia", label: "Energía y Utilities" },
-    { value: "Otro", label: "Otro" },
-  ];
+  const [sectores, setSectores] = useState([]);
+  const [subsectores, setSubsectores] = useState([]);
+  const [sectorSeleccionado, setSectorSeleccionado] = useState(null);
+  const [cargandoSubsectores, setCargandoSubsectores] = useState(false);
+
   const [formData, setFormData] = useState({
     nombre: "",
     email: "",
     direccion: "",
-    cp: "",
     lat: null,
     lng: null,
     telefono: "",
-    industria: "",
+    subsectorId: "",
     contraseña: "",
     confirmarContraseña: "",
     planId: "1", // ID del plan en tu BD
@@ -43,6 +36,19 @@ export default function Registro() {
   const [error, setError] = useState("");
   const [cargando, setCargando] = useState(false);
 
+  useEffect(() => {
+    cargarSectores();
+  }, []);
+
+  const cargarSectores = async () => {
+    try {
+      const data = await obtenerSectores();
+      setSectores(data.map((s) => ({ value: s.id, label: s.nombre })));
+    } catch (err) {
+      setError("No se pudieron cargar los sectores. Recarga la página.");
+    }
+  };
+
   const handleChange = (e) => {
     setFormData({ ...formData, [e.target.name]: e.target.value });
   };
@@ -50,6 +56,9 @@ export default function Registro() {
   const handleSubmit = async (e) => {
     e.preventDefault();
     setError("");
+    if (!formData.subsectorId) {
+      return setError("Selecciona un sector y subsector para tu empresa");
+    }
 
     // Validación de contraseñas en el frontend
     if (formData.contraseña !== formData.confirmarContraseña) {
@@ -64,11 +73,10 @@ export default function Registro() {
       await registrarEmpresa(formData);
       formData.contraseña = "";
       formData.confirmarContraseña = "";
-      formData.industria = "";
+      formData.subsectorId = "";
       formData.nombre = "";
       formData.email = "";
       formData.direccion = "";
-      formData.cp = "";
       formData.lat = null;
       formData.lng = null;
       formData.telefono = "";
@@ -130,6 +138,24 @@ export default function Registro() {
       lng,
     }));
   };
+
+  const handleSectorChange = async (selected) => {
+    setSectorSeleccionado(selected);
+    setFormData((prev) => ({ ...prev, subsectorId: "" })); // resetea subsector al cambiar sector
+    setSubsectores([]);
+
+    if (!selected) return;
+
+    try {
+      setCargandoSubsectores(true);
+      const data = await obtenerSubsectores(selected.value);
+      setSubsectores(data.map((s) => ({ value: s.id, label: s.nombre })));
+    } catch (err) {
+      setError("No se pudieron cargar los subsectores.");
+    } finally {
+      setCargandoSubsectores(false);
+    }
+  };
   return (
     <>
       <div className="containerVacantes">
@@ -179,7 +205,7 @@ export default function Registro() {
                 </div>
               </div>
 
-              <div className="seccion_Info container_direccion_cp">
+              <div className="seccion_Info">
                 <div className="content_direccion">
                   <label className="formulario_labelRegistro">Direccion</label>
 
@@ -191,22 +217,6 @@ export default function Registro() {
                       📍 {formData.direccion}
                     </p>
                   )}
-                </div>
-
-                <div className="content_cp">
-                  <label className="formulario_labelRegistro">
-                    Codigo Postal
-                  </label>
-                  <div className="input-container">
-                    <input
-                      className="input_cp"
-                      placeholder="62500"
-                      name="cp"
-                      value={formData.cp}
-                      onChange={handleChange}
-                      required
-                    />
-                  </div>
                 </div>
               </div>
 
@@ -227,15 +237,39 @@ export default function Registro() {
               </div>
 
               <div className="seccion_Info">
-                <label className="formulario_labelRegistro">Industria</label>
+                <label className="formulario_labelRegistro">Sector</label>
                 <div className="input-container">
                   <img src={company} alt="" className="input-icon" />
                   <Select
-                    options={opciones}
-                    placeholder="Selecciona tu Industria"
+                    options={sectores}
+                    placeholder="Selecciona tu sector"
                     classNamePrefix="select"
+                    value={sectorSeleccionado}
+                    onChange={handleSectorChange}
+                  />
+                </div>
+              </div>
+
+              <div className="seccion_Info">
+                <label className="formulario_labelRegistro">Subsector</label>
+                <div className="input-container">
+                  <img src={company} alt="" className="input-icon" />
+                  <Select
+                    options={subsectores}
+                    placeholder={
+                      cargandoSubsectores
+                        ? "Cargando..."
+                        : "Selecciona tu subsector"
+                    }
+                    classNamePrefix="select"
+                    isDisabled={!sectorSeleccionado || cargandoSubsectores}
+                    value={
+                      subsectores.find(
+                        (s) => s.value === formData.subsectorId,
+                      ) || null
+                    }
                     onChange={(selected) =>
-                      setFormData({ ...formData, industria: selected.value })
+                      setFormData({ ...formData, subsectorId: selected.value })
                     }
                   />
                 </div>

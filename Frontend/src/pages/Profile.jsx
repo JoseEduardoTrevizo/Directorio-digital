@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { useAuth } from "../contexts/AuthContext";
 import portada from "../assets/images/cuauhtemoc.jpg";
-import profile from "../assets/images/company-logo.jpg";
+import profile from "../assets/images/logotipo.png";
 import edit from "../assets/icons/edit.svg";
 import NavigationProfile from "../components/layout/NavigationProfile";
 import PopupEditTittleProfile from "../utils/PopupEditTittleProfile";
@@ -17,6 +17,15 @@ export default function Profile() {
   const isOwnProfile =
     userId != null && String(userId) === String(profileUserId);
 
+  const planValue = empresaData?.plan || currentUser?.plan;
+
+  const hasVacantesAccess = (plan) => {
+    const normalized = String(plan ?? "")
+      .trim()
+      .toLowerCase();
+    return ["pro", "premium", "plan pro", "plan premium"].includes(normalized);
+  };
+
   useEffect(() => {
     setActiveTab("acerca");
   }, [userId]);
@@ -24,7 +33,9 @@ export default function Profile() {
   const tabs = [
     { id: "inicio", label: "Inicio" },
     { id: "acerca", label: "Acerca de" },
-    ...(isOwnProfile ? [{ id: "empleos", label: "Vacantes" }] : []),
+    ...(isOwnProfile && hasVacantesAccess(planValue)
+      ? [{ id: "empleos", label: "Vacantes" }]
+      : []),
     ...(isOwnProfile ? [{ id: "configuracion", label: "Configuración" }] : []),
   ];
   useEffect(() => {
@@ -69,7 +80,7 @@ export default function Profile() {
                 <div className="profile-contentTitle-picture">
                   <img
                     className="profile-picture"
-                    src={empresaData.picture_perfil}
+                    src={empresaData.picture_perfil || profile}
                     alt="Profile"
                   />
                   <div className="profile-content-Header">

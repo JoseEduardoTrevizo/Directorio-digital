@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { useAuth } from "../../contexts/AuthContext";
+import { Crown } from "lucide-react";
 import edit from "../../assets/icons/edit.svg";
 import imagen from "../../assets/icons/image.svg";
 import notImagen from "../../assets/icons/bid_land.svg";
@@ -10,6 +11,7 @@ import {
   getImagenesGaleria,
   subirImagenGaleria,
   eliminarImagenGaleria,
+  seleccionarImagenCarrusel,
 } from "../../services/imagenesService";
 
 export default function CardHomeProfile({ profileUserId }) {
@@ -30,7 +32,7 @@ export default function CardHomeProfile({ profileUserId }) {
       })
       .catch(console.error);
   }, [profileUserId]);
-
+  console.log("empresaData", empresaData);
   // Carga las imágenes reales al montar
   useEffect(() => {
     if (!profileUserId) return;
@@ -41,8 +43,7 @@ export default function CardHomeProfile({ profileUserId }) {
       })
       .catch(() => toast.error("No se pudieron cargar las imágenes"));
   }, [profileUserId]);
-
-
+  console.log("images cargadas info", images);
   const isOwnProfile =
     userId != null && String(userId) === String(profileUserId);
 
@@ -87,6 +88,26 @@ export default function CardHomeProfile({ profileUserId }) {
     }
   };
 
+  const canSelectCarousel =
+    empresaData?.plan === "Plan Pro" || empresaData?.plan === "Plan Premium";
+
+  const seleccionarCarrusel = async (id) => {
+    console.log("seleccionarCarrusel", id, profileUserId);
+    await seleccionarImagenCarrusel({
+      imagenId: id,
+      profileUserId,
+    });
+
+    setImages((prev) =>
+      prev.map((img) => ({
+        ...img,
+
+        es_carrusel: img.id === id,
+      })),
+    );
+
+    toast.success("Imagen del carrusel actualizada");
+  };
   return (
     <>
       <main>
@@ -137,6 +158,22 @@ export default function CardHomeProfile({ profileUserId }) {
                   <div className="images_Grid">
                     {images.map((image, index) => (
                       <div key={image.id} className="banner_Container">
+                        {isOwnProfile && canSelectCarousel && (
+                          <button
+                            className={`btn_Carousel ${
+                              image.es_carrusel ? "active" : ""
+                            }`}
+                            onClick={() => seleccionarCarrusel(image.id)}
+                          >
+                            👑
+                            <span className="tooltipCarousel">
+                              {image.es_carrusel
+                                ? "Esta es la imagen que se muestra en el carrusel de Inicio."
+                                : "Usar como imagen del carrusel de Inicio"}
+                            </span>
+                          </button>
+                        )}
+
                         <button
                           className="btn_Remove"
                           onClick={() => removeImage(image.id)}

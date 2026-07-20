@@ -27,26 +27,35 @@ export default function CardAboutProfile({ profileUserId }) {
     userId != null && String(userId) === String(profileUserId);
 
   const handleSave = (nuevaData) => {
-    setEmpresaData((prev) => ({
-      ...prev,
-      ...nuevaData,
-      latitud: nuevaData.lat ?? prev.latitud, // ← mapea lat → latitud
-      longitud: nuevaData.lng ?? prev.longitud,
-      plan: prev.plan,
-    })); // actualiza el estado local
+    setEmpresaData((prev) => {
+      const siguiente = {
+        ...prev,
+        ...nuevaData,
+        ciudad: nuevaData.ciudad ?? nuevaData.ubicacion ?? prev.ciudad,
+        subsector: nuevaData.subsector ?? prev.subsector,
+        sector: nuevaData.sector ?? prev.sector,
+        direccion: nuevaData.direccion ?? prev.direccion,
+        latitud: nuevaData.lat ?? prev.latitud,
+        longitud: nuevaData.lng ?? prev.longitud,
+        plan: prev.plan,
+      };
+      return siguiente;
+    });
+
     updateCurrentUser({
-      // actualiza el context
       email: nuevaData.email,
       telefono: nuevaData.telefono,
-      web_site: nuevaData.website, // ojo: el context usa web_site
-      industria: nuevaData.industria,
+      web_site: nuevaData.website,
+      subsectorId: nuevaData.subsectorId,
+      subsector: nuevaData.subsector,
+      sector: nuevaData.sector,
       tamano_empresa: nuevaData.tamano_empresa,
-      horario_atencion: nuevaData.horario, // el context usa horario_atencion
-      ubicacion: nuevaData.ubicacion,
+      horario_atencion: nuevaData.horario,
+      ciudad: nuevaData.ciudad ?? nuevaData.ubicacion,
       direccion: nuevaData.direccion,
-      latitud: nuevaData.lat ?? currentUser.latitud,
-      longitud: nuevaData.lng ?? currentUser.longitud,
-      plan: currentUser.plan, // mantenemos el plan actual
+      latitud: nuevaData.lat ?? currentUser?.latitud,
+      longitud: nuevaData.lng ?? currentUser?.longitud,
+      plan: currentUser?.plan,
     });
   };
   const url = empresaData.website?.startsWith("http")
@@ -109,14 +118,14 @@ export default function CardAboutProfile({ profileUserId }) {
           <div className="container_Conacto container-Sector">
             <div>
               <h3 className="subtitleCard_Profile">Sector</h3>
-              <p className="textCard_Profile">{empresaData.industria || ""}</p>
+              <p className="textCard_Profile">{empresaData.subsector || ""}</p>
               <h3 className="subtitleCard_Profile">Tamaño de la empresa</h3>
               <p className="textCard_Profile">
                 {empresaData.tamano_empresa || "0"}
               </p>
               <h3 className="subtitleCard_Profile">Ubicación</h3>
               <p className="textCard_Profile">
-                {empresaData.ubicacion || "Cuauhtemoc, Chihuahua"}
+                {empresaData.ciudad || "Cuauhtemoc, Chihuahua"}
               </p>
             </div>
             <div className="container_Sector-horario">

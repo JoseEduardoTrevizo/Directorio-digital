@@ -17,7 +17,8 @@
   height: 150px;
   border-radius: 50%;
   object-fit: cover;
-  border: 2px solid #16a249;
+  background-color: #fff;
+  border: 2px solid #c6a75e;
 }
 .profile-header-content {
   display: flex;
@@ -31,7 +32,6 @@
   flex-direction: row;
   justify-content: space-between;
   align-items: flex-start;
-
   width: 100%;
   padding-right: 25px;
 }

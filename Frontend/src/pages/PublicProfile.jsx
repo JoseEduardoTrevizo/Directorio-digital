@@ -20,10 +20,19 @@ export default function PublicProfile() {
     String(userId) === String(profileUserId) &&
     String(empresaData?.id) === String(profileUserId);
 
+  const hasVacantesAccess = (plan) => {
+    const normalized = String(plan ?? "")
+      .trim()
+      .toLowerCase();
+    return ["pro", "premium", "plan pro", "plan premium"].includes(normalized);
+  };
+
   const tabs = [
     { id: "inicio", label: "Inicio" },
     { id: "acerca", label: "Acerca de" },
-    ...(isOwnProfile ? [{ id: "empleos", label: "Vacantes" }] : []),
+    ...(isOwnProfile && hasVacantesAccess(currentUser?.plan)
+      ? [{ id: "empleos", label: "Vacantes" }]
+      : []),
     ...(isOwnProfile ? [{ id: "configuracion", label: "Configuración" }] : []),
   ];
   useEffect(() => {

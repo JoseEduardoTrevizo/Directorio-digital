@@ -1,61 +1,51 @@
-import React from "react";
-import { useState } from "react";
+import React, { useState, useEffect } from "react";
+import { obtenerSectores } from "../../services/registroServices";
+import Select from "react-select";
 
-export default function Filter_directory() {
-  const [searchTerm, setSearchTerm] = useState("");
-  const [selectedCategory, setSelectedCategory] = useState(
-    "Todas las categorías",
-  );
-  const [selectedLetter, setSelectedLetter] = useState("Todas");
-  const companies = [
-    {
-      id: 1,
-      name: "AgroTech Solutions",
-      category: "Agrícola",
-      address: "Av. Reforma 123, Ciudad de México",
-      employees: "50-100",
-      since: "2018",
-    },
-    {
-      id: 2,
-      name: "Manufacturas del Norte",
-      category: "Manufacturera",
-      address: "Blvd. Constituyentes 456, Guadalajara",
-      employees: "200-500",
-      since: "2010",
-    },
-    {
-      id: 3,
-      name: "Alimentos Frescos SA",
-      category: "Alimenticia",
-      address: "Paseo de la Reforma 789, Ciudad de México",
-      employees: "100-200",
-      since: "2015",
-    },
-    {
-      id: 4,
-      name: "Remolques Industriales",
-      category: "Remolques",
-      address: "Av. Universidad 321, Monterrey",
-      employees: "75-150",
-      since: "2012",
-    },
-  ];
+export default function Filter_directory({
+  searchTerm,
+  setSearchTerm,
+  selectedCategory,
+  onCategoryChange,
+  selectedLetter,
+  setSelectedLetter,
+  resultsCount,
+}) {
+  const [sectores, setSectores] = useState([]);
+
+  useEffect(() => {
+    cargarSectores();
+  }, []);
+
+  const cargarSectores = async () => {
+    try {
+      const data = await obtenerSectores();
+      setSectores(data.map((s) => ({ value: s.id, label: s.nombre })));
+    } catch (err) {
+      console.error("No se pudieron cargar sectores", err);
+    }
+  };
 
   const alphabet = "ABCDEFGHIJKLMNOPQRSTUVWXYZ".split("");
 
-  const filteredCompanies = companies.filter((company) => {
-    const matchesSearch = company.name
-      .toLowerCase()
-      .includes(searchTerm.toLowerCase());
-    const matchesCategory =
-      selectedCategory === "Todas las categorías" ||
-      company.category === selectedCategory;
-    const matchesLetter =
-      selectedLetter === "Todas" ||
-      company.name[0].toUpperCase() === selectedLetter;
-    return matchesSearch && matchesCategory && matchesLetter;
-  });
+  const normalizeValue = (value) =>
+    String(value ?? "")
+      .trim()
+      .toLowerCase();
+
+  const selectOptions = [
+    { value: "Todas las categorías", label: "Todas las categorías" },
+    ...sectores.map((sector) => ({
+      value: sector.label,
+      label: sector.label,
+    })),
+  ];
+
+  const selectedOption =
+    selectOptions.find(
+      (option) =>
+        normalizeValue(option.value) === normalizeValue(selectedCategory),
+    ) || null;
 
   return (
     <div className="container_filterCompanys">
@@ -76,21 +66,16 @@ export default function Filter_directory() {
 
       <div className="filter-section">
         <label className="filter-label">Filtrar por categoría</label>
-        <select
-          className="category-select"
-          value={selectedCategory}
-          onChange={(e) => setSelectedCategory(e.target.value)}
-        >
-          <option>Todas las categorías</option>
-          <option>Agrícola y Ganadero</option>
-          <option>Tallers y Refagciones</option>
-          <option>Comida y Hospedaje</option>
-          <option>Maquinaria Industrial</option>
-          <option>Fabricas</option>
-          <option>Autos y Transportes</option>
-          <option>Materiales para Construccion</option>
-          <option>Servicios y Articulos Diversos</option>
-        </select>
+        <Select
+          classNamePrefix="select"
+          options={selectOptions}
+          value={selectedOption}
+          onChange={(selected) =>
+            onCategoryChange(selected?.value || "Todas las categorías")
+          }
+          placeholder="Selecciona un sector"
+          isSearchable={false}
+        />
       </div>
 
       <div className="filter-section">
@@ -118,9 +103,7 @@ export default function Filter_directory() {
         </div>
       </div>
 
-      <div className="results-count">
-        {filteredCompanies.length} empresas encontradas
-      </div>
+      <div className="results-count">{resultsCount} empresas encontradas</div>
     </div>
   );
 }

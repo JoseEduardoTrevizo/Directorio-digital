@@ -66,3 +66,64 @@ export const registrarEmpresa = async (datosEmpresa) => {
 
   return data;
 };
+
+export const obtenerSectores = async () => {
+  let response;
+  try {
+    response = await fetch(`${API_URL}empresas/sectores`, {
+      signal: AbortSignal.timeout(10000),
+    });
+  } catch (err) {
+    if (err.name === "TimeoutError") {
+      throw new NetworkError("La petición tardó demasiado. Intenta de nuevo.");
+    }
+    throw new NetworkError();
+  }
+
+  let data;
+  try {
+    data = await response.json();
+  } catch {
+    throw new ServerError("El servidor devolvió una respuesta inválida.");
+  }
+
+  if (!response.ok) {
+    throw new ServerError(
+      data.error || `Error al obtener sectores (${response.status}).`,
+    );
+  }
+
+  return data; // [{id, nombre}]
+};
+
+export const obtenerSubsectores = async (sectorId) => {
+  let response;
+  try {
+    response = await fetch(
+      `${API_URL}empresas/subsectores?sectorId=${sectorId}`,
+      {
+        signal: AbortSignal.timeout(10000),
+      },
+    );
+  } catch (err) {
+    if (err.name === "TimeoutError") {
+      throw new NetworkError("La petición tardó demasiado. Intenta de nuevo.");
+    }
+    throw new NetworkError();
+  }
+
+  let data;
+  try {
+    data = await response.json();
+  } catch {
+    throw new ServerError("El servidor devolvió una respuesta inválida.");
+  }
+
+  if (!response.ok) {
+    throw new ServerError(
+      data.error || `Error al obtener subsectores (${response.status}).`,
+    );
+  }
+
+  return data; // [{id, nombre}]
+};

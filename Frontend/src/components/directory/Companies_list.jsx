@@ -9,7 +9,7 @@ export default function Companies_list({ onClick, empresa }) {
     <main className="companies-list">
       <div className="company-card" onClick={onClick}>
         <div className="company-info">
-          <span className="logo-placeholder">
+          <div className="logo-placeholder">
             {
               <img
                 className="logo"
@@ -17,10 +17,10 @@ export default function Companies_list({ onClick, empresa }) {
                 alt="Logo"
               />
             }
-          </span>
+          </div>
           <div className="container_Title-card">
             <h3 className="company-name">{empresa.nombre}</h3>
-            <span className="company-category">{empresa.industria}</span>
+            <span className="company-category">{empresa.sector}</span>
           </div>
         </div>
         <div className="company-details">

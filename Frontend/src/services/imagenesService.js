@@ -81,3 +81,26 @@ export async function subirFotoPerfil(empresaId, file) {
     throw err;
   }
 }
+
+export async function seleccionarImagenCarrusel({ imagenId, profileUserId }) {
+  try {
+    const res = await fetch(
+      `${API_URL}imagenes/${profileUserId}/carrusel/${imagenId}`,
+      {
+        method: "PUT",
+        headers: {
+          Authorization: `Bearer ${localStorage.getItem("token")}`,
+        },
+      },
+    );
+    const data = await res.json();
+    if (!res.ok)
+      throw new Error(
+        data.error || "Error al seleccionar imagen para el carrusel",
+      );
+    return data;
+  } catch (err) {
+    console.error("seleccionarImagenCarrusel:", err);
+    throw err;
+  }
+}

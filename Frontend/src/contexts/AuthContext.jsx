@@ -25,16 +25,19 @@ function getUserFromToken() {
 }
 
 export function AuthProvider({ children }) {
-  // Inicializar con el usuario que ya esté en localStorage
+  // Inicializar con el usuario y el token que ya estén en localStorage
+  const [token, setToken] = useState(() => getToken());
   const [currentUser, setCurrentUser] = useState(() => getUserFromToken());
 
-  function login(token) {
-    saveToken(token);
+  function login(tokenValue) {
+    saveToken(tokenValue);
+    setToken(tokenValue);
     setCurrentUser(getUserFromToken()); // Decodifica y guarda el usuario
   }
 
   function logout() {
     removeToken();
+    setToken(null);
     setCurrentUser(null);
   }
 
@@ -43,6 +46,7 @@ export function AuthProvider({ children }) {
   }
 
   const value = {
+    token,
     currentUser, // { id, email, nombre, industria } o null
     userId: currentUser?.id || null, // Acceso rápido al ID
     isLoggedIn: !!currentUser, // true/false

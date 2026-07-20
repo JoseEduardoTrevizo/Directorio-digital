@@ -9,6 +9,8 @@ import Login from "../../pages/Login";
 import Profile from "../../pages/Profile";
 import Nosotros from "../../pages/Nosotros";
 import PublicProfile from "../../pages/PublicProfile";
+import Terminos from "../../pages/Terminos";
+import Politicas from "../../pages/Politicas";
 
 // Rutas que se pre-montan para evitar flashing
 const MAIN_PAGES = [
@@ -35,7 +37,9 @@ export default function Navigation() {
         <Route path="/login" element={<Login />} />
         <Route path="/profile" element={<Profile />} />
         <Route path="/nosotros" element={<Nosotros />} />
-        <Route path="/empresa/:id" element={<PublicProfile />} />{" "}
+        <Route path="/empresa/:id" element={<PublicProfile />} />
+        <Route path="/terminos_y_condiciones" element={<Terminos />} />
+        <Route path="/politicas_de_privacidad" element={<Politicas />} />
       </Routes>
     </div>
   );

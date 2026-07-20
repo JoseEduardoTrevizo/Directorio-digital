@@ -3,13 +3,19 @@ import { useAuth } from "../contexts/AuthContext";
 import actualizarPerfilService from "../services/actualizarPerfilService";
 import DireccionAutocomplete from "../utils/DireccionAutocomplete";
 import MapaAjustable from "../utils/MapaAjustable";
+import Select from "react-select";
+import {
+  obtenerSectores,
+  obtenerSubsectores,
+} from "../services/registroServices";
+
 export default function PopupEditProfiel({ empresa, onClose, onSave }) {
   const { userId, currentUser, updateCurrentUser, login } = useAuth();
   const [formData, setFormData] = useState({
     email: empresa.email || "",
     telefono: empresa.telefono || "",
     website: empresa.website || "",
-    industria: empresa.industria || "",
+    subsectorId: empresa.subsector_id || "",
     tamano_empresa: empresa.tamano_empresa || "",
     horario: empresa.horario || "",
     direccion: empresa.direccion || "",
@@ -17,17 +23,54 @@ export default function PopupEditProfiel({ empresa, onClose, onSave }) {
     lat: empresa.latitud || null,
     lng: empresa.longitud || null,
   });
+  const [sectores, setSectores] = useState([]);
+  const [subsectores, setSubsectores] = useState([]);
+  const [sectorSeleccionado, setSectorSeleccionado] = useState(
+    empresa.sector_id
+      ? { value: empresa.sector_id, label: empresa.sector }
+      : null,
+  );
   useEffect(() => {
     document.body.style.overflow = "hidden";
     return () => {
       document.body.style.overflow = "unset";
     };
   }, []);
+  useEffect(() => {
+    cargarSectores();
+  }, []);
+  useEffect(() => {
+    const cargarSubsectores = async () => {
+      if (!sectorSeleccionado) return;
+      try {
+        const data = await obtenerSubsectores(sectorSeleccionado.value);
+        setSubsectores(data.map((s) => ({ value: s.id, label: s.nombre })));
+      } catch (err) {
+        console.error("No se pudieron cargar subsectores", err);
+      }
+    };
+    cargarSubsectores();
+  }, [sectorSeleccionado]);
   const [turnos, setTurnos] = useState(
     empresa.horario
       ? [{ dias: "Lunes a Viernes", inicio: "9:00 AM", fin: "6:00 PM" }]
       : [{ dias: "Lunes a Viernes", inicio: "9:00 AM", fin: "6:00 PM" }],
   );
+
+  const cargarSectores = async () => {
+    try {
+      const data = await obtenerSectores();
+      setSectores(data.map((s) => ({ value: s.id, label: s.nombre })));
+    } catch (err) {
+      console.error("No se pudieron cargar sectores", err);
+    }
+  };
+
+  const handleSectorChange = (selected) => {
+    setSectorSeleccionado(selected);
+    setFormData((prev) => ({ ...prev, subsectorId: "" }));
+    setSubsectores([]);
+  };
 
   const handleChange = (e) => {
     setFormData({ ...formData, [e.target.name]: e.target.value });
@@ -36,25 +79,53 @@ export default function PopupEditProfiel({ empresa, onClose, onSave }) {
   const handleSubmit = async (evt) => {
     evt.preventDefault();
     try {
+      const sectorNombre = sectorSeleccionado?.label || empresa.sector || "";
+      const subsectorNombre =
+        subsectores.find((s) => s.value === formData.subsectorId)?.label ||
+        empresa.subsector ||
+        "";
+
+      const datosActualizados = {
+        email: formData.email,
+        telefono: formData.telefono,
+        website: formData.website,
+        subsectorId: formData.subsectorId,
+        subsector: subsectorNombre,
+        sector: sectorNombre,
+        tamano_empresa: formData.tamano_empresa,
+        horario: formData.horario,
+        ubicacion: formData.ubicacion,
+        ciudad: formData.ubicacion || empresa.ciudad || "",
+        direccion: formData.direccion || empresa.direccion,
+        lat: formData.lat,
+        lng: formData.lng,
+      };
+
       const respuesta = await actualizarPerfilService.actualizarDatosEmpresa(
         userId,
         {
-          email: formData.email,
-          telefono: formData.telefono,
-          website: formData.website,
-          industria: formData.industria,
-          tamano_empresa: formData.tamano_empresa,
-          horario: formData.horario,
-          ubicacion: formData.ubicacion,
-          direccion: formData.direccion || empresa.direccion,
-          lat: formData.lat,
-          lng: formData.lng,
+          email: datosActualizados.email,
+          telefono: datosActualizados.telefono,
+          website: datosActualizados.website,
+          subsectorId: datosActualizados.subsectorId,
+          tamano_empresa: datosActualizados.tamano_empresa,
+          horario: datosActualizados.horario,
+          ubicacion: datosActualizados.ubicacion,
+          direccion: datosActualizados.direccion,
+          lat: datosActualizados.lat,
+          lng: datosActualizados.lng,
         },
       );
 
       login(respuesta.token); // actualiza el token en el contexto
-      updateCurrentUser(formData);
-      onSave(formData); // actualiza el estado del padre
+      updateCurrentUser({
+        ...datosActualizados,
+        web_site: datosActualizados.website,
+        horario_atencion: datosActualizados.horario,
+        latitud: datosActualizados.lat,
+        longitud: datosActualizados.lng,
+      });
+      onSave(datosActualizados); // actualiza el estado del padre
       onClose();
     } catch (error) {
       console.error("Error:", error);
@@ -131,6 +202,7 @@ export default function PopupEditProfiel({ empresa, onClose, onSave }) {
                 value={formData.telefono}
                 onChange={handleChange}
                 placeholder={empresa.telefono || "+52 614-000-0000"}
+                required
               />
             </div>
             <div className="modal_field modal_field--full">
@@ -148,11 +220,30 @@ export default function PopupEditProfiel({ empresa, onClose, onSave }) {
           <div className="modal_grid">
             <div className="modal_field">
               <label>Sector</label>
-              <input
-                name="industria"
-                value={formData.industria}
-                onChange={handleChange}
-                placeholder={empresa.industria || "Tecnología"}
+              <Select
+                classNamePrefix="select"
+                options={sectores}
+                value={sectorSeleccionado}
+                onChange={handleSectorChange}
+                placeholder="Selecciona sector"
+                required
+              />
+            </div>
+            <div className="modal_field">
+              <label>Subsector</label>
+              <Select
+                classNamePrefix="select"
+                options={subsectores}
+                value={
+                  subsectores.find((s) => s.value === formData.subsectorId) ||
+                  null
+                }
+                onChange={(selected) =>
+                  setFormData({ ...formData, subsectorId: selected.value })
+                }
+                isDisabled={!sectorSeleccionado}
+                placeholder="Selecciona subsector"
+                required
               />
             </div>
             <div className="modal_field">
@@ -161,6 +252,7 @@ export default function PopupEditProfiel({ empresa, onClose, onSave }) {
                 name="tamano_empresa"
                 value={formData.tamano_empresa}
                 onChange={handleChange}
+                required
               >
                 <option value="">Selecciona un rango</option>
                 <option value="1 - 10 empleados">1 - 10 empleados</option>
@@ -186,6 +278,7 @@ export default function PopupEditProfiel({ empresa, onClose, onSave }) {
                       onChange={(e) =>
                         handleTurno(index, "dias", e.target.value)
                       }
+                      required
                     >
                       <option>Lunes a Viernes</option>
                       <option>Lunes a Sábado</option>
@@ -201,6 +294,7 @@ export default function PopupEditProfiel({ empresa, onClose, onSave }) {
                       onChange={(e) =>
                         handleTurno(index, "inicio", e.target.value)
                       }
+                      required
                     >
                       {[
                         "6:00 AM",
@@ -226,6 +320,7 @@ export default function PopupEditProfiel({ empresa, onClose, onSave }) {
                       onChange={(e) =>
                         handleTurno(index, "fin", e.target.value)
                       }
+                      required
                     >
                       {[
                         "12:00 PM",
@@ -266,12 +361,17 @@ export default function PopupEditProfiel({ empresa, onClose, onSave }) {
             </div>
             <div className="modal_field">
               <label>Ubicación</label>
-              <input
+              <select
+                classNamePrefix="select"
                 name="ubicacion"
                 value={formData.ubicacion}
                 onChange={handleChange}
-                placeholder={empresa.ubicacion || "Ciudad, Estado"}
-              />
+                required
+              >
+                <option value="">Selecciona una ciudad</option>
+                <option value="Cuauhtemoc">Cuauhtemoc</option>
+                <option value="Chihuahua">Chihuahua</option>
+              </select>
             </div>
             <div className="modal_fiel modal_field--full">
               <label>Dirección completa</label>

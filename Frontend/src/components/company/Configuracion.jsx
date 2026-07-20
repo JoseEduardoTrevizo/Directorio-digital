@@ -1,4 +1,5 @@
-import React from "react";
+import React, { useState } from "react";
+import { useNavigate } from "react-router";
 import {
   Calendar,
   KeyRound,
@@ -9,8 +10,39 @@ import {
 } from "lucide-react";
 import trash from "../../assets/icons/delete.svg";
 import lock from "../../assets/icons/lock.svg";
+import { useAuth } from "../../contexts/AuthContext";
+import configuracionService from "../../services/configuracionService";
 
 export default function Configuracion({ profileUserId }) {
+  const navigate = useNavigate();
+  const { token, currentUser } = useAuth();
+  const [loading, setLoading] = React.useState(false);
+  const [currentPassword, setCurrentPassword] = useState("");
+  const [newPassword, setNewPassword] = useState("");
+  const [confirmNewPassword, setConfirmNewPassword] = useState("");
+
+  const handleUpdatePassword = async () => {
+    const payload = {
+      currentPassword,
+      newPassword,
+      confirmNewPassword,
+    };
+    try {
+      setLoading(true);
+      // Lógica para cambiar la contraseña
+      await configuracionService.actualizarPassword({ token, payload });
+
+      localStorage.removeItem("token");
+      setCurrentPassword("");
+      setNewPassword("");
+      setConfirmNewPassword("");
+      navigate("/login");
+    } catch (error) {
+      console.error("Error al cambiar la contraseña:", error);
+    } finally {
+      setLoading(false);
+    }
+  };
   return (
     <div>
       <div className="content_headerConfig">
@@ -54,6 +86,8 @@ export default function Configuracion({ profileUserId }) {
             type="password"
             id="currentPassword"
             placeholder="Ingresa tu contraseña actual"
+            value={currentPassword}
+            onChange={(e) => setCurrentPassword(e.target.value)}
           />
           <div className="contentNewpass">
             <div className="container_newPassword">
@@ -64,7 +98,10 @@ export default function Configuracion({ profileUserId }) {
                 className="inputConfigPassword"
                 type="password"
                 id="newPassword"
+                min={8}
                 placeholder="Ingresa tu nueva contraseña"
+                value={newPassword}
+                onChange={(e) => setNewPassword(e.target.value)}
               />
             </div>
             <div className="container_newPassword">
@@ -75,7 +112,10 @@ export default function Configuracion({ profileUserId }) {
                 className="inputConfigPassword"
                 type="password"
                 id="confirmPassword"
+                min={8}
                 placeholder="Confirma tu nueva contraseña"
+                value={confirmNewPassword}
+                onChange={(e) => setConfirmNewPassword(e.target.value)}
               />
             </div>
           </div>
@@ -85,7 +125,9 @@ export default function Configuracion({ profileUserId }) {
             símbolos.
           </label>
           <div className="container_btnConfirmPass">
-            <button className="btn_newPassword">Actualizar Contraseña</button>
+            <button className="btn_newPassword" onClick={handleUpdatePassword}>
+              Actualizar Contraseña
+            </button>
           </div>
         </div>
 

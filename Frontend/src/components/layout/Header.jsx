@@ -66,7 +66,7 @@ export default function Header() {
             <NavLink to="/Directorio">Directorio</NavLink>
           </li>
           <li>
-            <NavLink to="/Empresas">ParaEmpresas</NavLink>
+            <NavLink to="/Empresas">Empresas</NavLink>
           </li>
           <li>
             <NavLink to="/Nosotros">Nosotros</NavLink>

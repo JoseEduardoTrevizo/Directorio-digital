@@ -57,9 +57,25 @@ const getClima = async (ciudad = "Cuauhtemoc") => {
     throw error;
   }
 };
+const obtenerCarruselInicio = async () => {
+  try {
+    const response = await fetch(`${API_URL}home/carrusel`);
+    if (!response.ok) throw new Error("Error al obtener el carrusel de inicio");
+    const data = await response.json();
+    return data;
+  } catch (error) {
+    if (error instanceof TypeError && error.message === "Failed to fetch") {
+      throw new Error(
+        "No se pudo conectar con el servidor. Verifica tu conexión.",
+      );
+    }
+    throw error;
+  }
+};
 
 export default {
   obtenerTipoCambioUSD,
   getHistorico,
   getClima,
+  obtenerCarruselInicio,
 };
