@@ -35,7 +35,6 @@ export default function Popup_nuevaVacante({
       document.body.style.overflow = "unset";
     };
   }, []);
-
   useEffect(() => {
     if (!empresaData) return;
     obtenerVacantesPorEmpresa(empresaData.id)

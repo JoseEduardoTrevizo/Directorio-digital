@@ -1,5 +1,4 @@
 import React, { useEffect, useState } from "react";
-import { NavLink } from "react-router";
 import { useAuth } from "../../contexts/AuthContext";
 import hire from "../../assets/icons/edit.svg";
 import business from "../../assets/icons/business_center.svg";
@@ -32,6 +31,7 @@ export default function CardHireProfile({ profileUserId }) {
   useEffect(() => {
     fetchVacantes();
   }, [profileUserId]);
+
   const fetchVacantes = () => {
     if (!profileUserId) return;
     setLoadingVacantes(true);
@@ -46,6 +46,10 @@ export default function CardHireProfile({ profileUserId }) {
 
   const isOwnProfile =
     userId != null && String(userId) === String(profileUserId);
+
+  const maxVacantesReached =
+    empresaData?.plan === "Plan Pro" &&
+    (vacantesData?.vacantes?.length ?? 0) >= 2;
 
   const handleOpenModalDelete = (vacanteId) => {
     setVacanteIdToDelete(vacanteId);
@@ -74,17 +78,24 @@ export default function CardHireProfile({ profileUserId }) {
         <div className="container_Info-hire">
           <h2 className="titleCard_Profile">Vacantes Publicadas</h2>
           {isOwnProfile && (
-            <NavLink
-              to=""
-              className="btn-hire"
+            <button
+              type="button"
+              className={`btn-hire${maxVacantesReached ? " disabled" : ""}`}
+              disabled={maxVacantesReached}
               onClick={(e) => {
                 e.preventDefault();
-                setModalOpen(true);
+                if (!maxVacantesReached) setModalOpen(true);
               }}
+              aria-disabled={maxVacantesReached}
+              title={
+                maxVacantesReached
+                  ? "Has alcanzado el límite de vacantes para tu plan"
+                  : "Nueva Vacante"
+              }
             >
-              <img src={hire} alt="Logout" className="new_hire-icon" />
+              <img src={hire} alt="Nueva vacante" className="new_hire-icon" />
               Nueva Vacante
-            </NavLink>
+            </button>
           )}
           {modalOpen && (
             <Popup_nuevaVacante

@@ -71,23 +71,37 @@ export default function Directorio() {
       .trim()
       .toLowerCase();
 
-  const filteredEmpresas = empresas
-    ? empresas.filter((empresa) => {
-        const nombre = normalizeValue(empresa.nombre);
-        const sector = normalizeValue(getSectorName(empresa));
-        const normalizedSearchTerm = normalizeValue(searchTerm);
-        const normalizedSelectedCategory = normalizeValue(selectedCategory);
-        const matchesSearch = nombre.includes(normalizedSearchTerm);
-        const matchesCategory =
-          normalizedSelectedCategory === "" ||
-          normalizedSelectedCategory === "todas las categorías" ||
-          sector === normalizedSelectedCategory;
-        const matchesLetter =
-          selectedLetter === "Todas" ||
-          nombre.charAt(0)?.toUpperCase() === selectedLetter;
+  const PRIORIDAD_PLAN = {
+    3: 1, // Premium primero
+    2: 2, // Pro segundo
+    1: 3, // Básico al final
+  };
 
-        return matchesSearch && matchesCategory && matchesLetter;
-      })
+  const ordenarPorPlan = (a, b) => {
+    const prioridadA = PRIORIDAD_PLAN[a.plan_id] ?? 4; // sin plan = último
+    const prioridadB = PRIORIDAD_PLAN[b.plan_id] ?? 4;
+    return prioridadA - prioridadB;
+  };
+
+  const filteredEmpresas = empresas
+    ? empresas
+        .filter((empresa) => {
+          const nombre = normalizeValue(empresa.nombre);
+          const sector = normalizeValue(getSectorName(empresa));
+          const normalizedSearchTerm = normalizeValue(searchTerm);
+          const normalizedSelectedCategory = normalizeValue(selectedCategory);
+          const matchesSearch = nombre.includes(normalizedSearchTerm);
+          const matchesCategory =
+            normalizedSelectedCategory === "" ||
+            normalizedSelectedCategory === "todas las categorías" ||
+            sector === normalizedSelectedCategory;
+          const matchesLetter =
+            selectedLetter === "Todas" ||
+            nombre.charAt(0)?.toUpperCase() === selectedLetter;
+
+          return matchesSearch && matchesCategory && matchesLetter;
+        })
+        .sort(ordenarPorPlan)
     : [];
 
   const totalPages = filteredEmpresas.length

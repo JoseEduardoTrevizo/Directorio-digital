@@ -32,7 +32,6 @@ export default function CardHomeProfile({ profileUserId }) {
       })
       .catch(console.error);
   }, [profileUserId]);
-  console.log("empresaData", empresaData);
   // Carga las imágenes reales al montar
   useEffect(() => {
     if (!profileUserId) return;
@@ -43,7 +42,6 @@ export default function CardHomeProfile({ profileUserId }) {
       })
       .catch(() => toast.error("No se pudieron cargar las imágenes"));
   }, [profileUserId]);
-  console.log("images cargadas info", images);
   const isOwnProfile =
     userId != null && String(userId) === String(profileUserId);
 
@@ -92,7 +90,6 @@ export default function CardHomeProfile({ profileUserId }) {
     empresaData?.plan === "Plan Pro" || empresaData?.plan === "Plan Premium";
 
   const seleccionarCarrusel = async (id) => {
-    console.log("seleccionarCarrusel", id, profileUserId);
     await seleccionarImagenCarrusel({
       imagenId: id,
       profileUserId,

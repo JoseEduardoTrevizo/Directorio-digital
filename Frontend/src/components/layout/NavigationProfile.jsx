@@ -12,7 +12,7 @@ export default function NavigationProfile({
   const { userId, currentUser } = useAuth();
   const isOwnProfile =
     userId != null && String(userId) === String(profileUserId);
-  console.log("datos de profile", currentUser.plan);
+
   return (
     <div className="container_NavigationProfile">
       <div style={{ display: activeTab === "inicio" ? "block" : "none" }}>
